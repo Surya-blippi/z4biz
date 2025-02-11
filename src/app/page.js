@@ -17,11 +17,14 @@ import {
   Globe,
   Users,
   Leaf,
+  Menu,
+  X,
 } from "lucide-react";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [currentCard, setCurrentCard] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const services = [
     {
@@ -103,8 +106,8 @@ export default function Home() {
               </div>
               <span className="text-2xl font-light tracking-wider">Z4BIZ</span>
             </div>
-            {/* Navigation Buttons */}
-            <div className="flex items-center space-x-4">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-4">
               <a
                 href="#about"
                 onClick={(e) => handleNavClick(e, "about")}
@@ -137,8 +140,71 @@ export default function Home() {
                 Contact Us →
               </button>
             </div>
+            {/* Mobile Navigation Toggle */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-8 h-8 text-white" />
+                ) : (
+                  <Menu className="w-8 h-8 text-white" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
+        {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-black/90 backdrop-blur-lg">
+            <div className="container mx-auto px-6 py-4 flex flex-col items-center space-y-4">
+              <a
+                href="#about"
+                onClick={(e) => {
+                  handleNavClick(e, "about");
+                  setMobileMenuOpen(false);
+                }}
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+              >
+                About Us
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => {
+                  handleNavClick(e, "services");
+                  setMobileMenuOpen(false);
+                }}
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+              >
+                Services
+              </a>
+              <a
+                href="#products"
+                onClick={(e) => {
+                  handleNavClick(e, "products");
+                  setMobileMenuOpen(false);
+                }}
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+              >
+                Products
+              </a>
+              <a
+                href="#resources"
+                onClick={(e) => {
+                  handleNavClick(e, "resources");
+                  setMobileMenuOpen(false);
+                }}
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+              >
+                Resources
+              </a>
+              <button className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light">
+                Contact Us →
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
       <main>
@@ -166,7 +232,7 @@ export default function Home() {
               <Bell className="w-4 h-4 mr-2 text-indigo-400" />
               Enterprise Technology Solutions
             </div>
-            <h1 className="text-7xl md:text-8xl font-light mb-6 leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-light mb-6 leading-tight tracking-tight">
               Transform Your
               <span className="block relative mt-2">
                 <span className="relative inline-block">
@@ -347,7 +413,7 @@ export default function Home() {
               Innovative solutions for modern business challenges.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
                 title: "Z-Estate",
@@ -416,7 +482,7 @@ export default function Home() {
               Stay updated with our latest news, blogs, and case studies.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* News Card */}
             <div className="relative group">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500" />
