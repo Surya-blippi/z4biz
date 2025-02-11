@@ -21,6 +21,13 @@ import {
   X,
 } from "lucide-react";
 
+// Reusable Divider Component
+const Divider = () => (
+  <div className="w-full my-16 flex justify-center">
+    <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full"></div>
+  </div>
+);
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [currentCard, setCurrentCard] = useState(0);
@@ -254,6 +261,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Divider */}
+        <Divider />
+
         {/* About Us Section */}
         <div id="about" className="mb-32 relative px-6">
           <div
@@ -348,6 +358,9 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Divider */}
+        <Divider />
+
         {/* Services Section */}
         <div id="services" className="mb-32 px-6">
           <div className="text-center mb-16">
@@ -404,6 +417,9 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* Divider */}
+        <Divider />
 
         {/* Products & Platforms Section */}
         <div id="products" className="mb-32 px-6">
@@ -473,6 +489,9 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* Divider */}
+        <Divider />
 
         {/* Resources Section */}
         <div id="resources" className="mb-32 px-6">
