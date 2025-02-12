@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  Code,
   Cpu,
   Database,
   Server,
@@ -18,13 +17,17 @@ import {
   Users,
   Leaf,
   Menu,
+  Code,
   X,
 } from "lucide-react";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 // Reusable Divider Component
 const Divider = () => (
   <div className="w-full my-16 flex justify-center">
-    <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full"></div>
+    <div className="w-24 h-1 bg-gradient-to-r from-[#4379ff] to-[#4379ff] rounded-full"></div>
   </div>
 );
 
@@ -39,27 +42,27 @@ export default function Home() {
       subtitle: "Expert Guidance for Digital Transformation",
       content:
         "We offer functional and domain consulting as well as advisory services on Dynamics 365 platforms. Our expert Solution Architects and Functional Consultants provide tailored guidance to help you maximize the value of your investment in Dynamics 365. With over 15 years of experience across complex, multi-country, and multi-entity implementations, our senior consultants bring unparalleled expertise to ensure successful outcomes.",
-      icon: Code,
+      icon: null, // icon not used here since we have a logo image for the header
       bgImage:
-        "data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%236366f1' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E",
+        "data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234379ff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E",
     },
     {
       title: "Industry Verticals",
       subtitle: "Specialized Solutions for Your Industry",
       content:
         "We enhance CRM platforms by delivering industry-specific vertical and horizontal solutions that automate end-to-end operational processes for businesses not fully aligned with standard enterprise ERP and CRM systems. Our vertical solutions for Dynamics 365 and Zoho CRM complement your existing investments, seamlessly integrating with your business applications to enforce industry best practices across all operational processes.",
-      icon: Server,
+      icon: null,
       bgImage:
-        "data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E",
+        "data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234379ff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E",
     },
     {
       title: "ESG & Data Solutions",
       subtitle: "Drive Sustainability and Data Excellence",
       content:
         "Our solution 4Scope helps organizations simplify their ESG reporting while ensuring alignment with top frameworks like GRI, SASB, and IFRS. Paired with expert consulting, 4Scope empowers businesses to meet regulatory requirements and engage stakeholders effectively. Our solution 4Vue is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With 4Vue, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data.",
-      icon: Database,
+      icon: null,
       bgImage:
-        "data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E",
+        "data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234379ff' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E",
     },
   ];
 
@@ -89,7 +92,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden scroll-smooth">
+    <div className={`${inter.className} min-h-screen bg-black text-white overflow-hidden scroll-smooth`}>
       {/* Animated Background for the rest of the page */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-tr from-indigo-950 via-black to-black" />
@@ -99,17 +102,15 @@ export default function Home() {
 
       {/* Navigation */}
       <nav
-        className={`fixed w-full z-50 transition-all duration-500 ${
-          scrolled ? "bg-black/50 backdrop-blur-lg" : ""
-        }`}
+        className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? "bg-black/50 backdrop-blur-lg" : ""}`}
       >
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-3">
               <div className="relative group">
-                <Code className="w-8 h-8 text-indigo-500" />
-                <div className="absolute -inset-2 bg-indigo-500/20 rounded-full blur group-hover:bg-indigo-500/30 transition-all duration-500" />
+                <img src="/logo.png" alt="Z4BIZ Logo" className="w-8 h-8" />
+                <div className="absolute -inset-2 bg-[#4379ff]/20 rounded-full blur group-hover:bg-[#4379ff]/30 transition-all duration-500" />
               </div>
               <span className="text-2xl font-light tracking-wider">Z4BIZ</span>
             </div>
@@ -118,28 +119,28 @@ export default function Home() {
               <a
                 href="#about"
                 onClick={(e) => handleNavClick(e, "about")}
-                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all font-light"
               >
                 About Us
               </a>
               <a
                 href="#services"
                 onClick={(e) => handleNavClick(e, "services")}
-                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all font-light"
               >
                 Services
               </a>
               <a
                 href="#products"
                 onClick={(e) => handleNavClick(e, "products")}
-                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all font-light"
               >
                 Products
               </a>
               <a
                 href="#resources"
                 onClick={(e) => handleNavClick(e, "resources")}
-                className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-all font-light"
+                className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-sm transition-all font-light"
               >
                 Resources
               </a>
@@ -149,10 +150,7 @@ export default function Home() {
             </div>
             {/* Mobile Navigation Toggle */}
             <div className="md:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2"
-              >
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2">
                 {mobileMenuOpen ? (
                   <X className="w-8 h-8 text-white" />
                 ) : (
@@ -216,27 +214,15 @@ export default function Home() {
 
       <main>
         {/* Hero Section with Background Video */}
-        <section
-          id="hero"
-          className="relative h-screen flex flex-col items-center justify-center px-6 text-center"
-        >
-          {/* Background Video */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          >
+        <section id="hero" className="section-hero relative h-screen flex flex-col items-center justify-center px-6 text-center">
+          <video autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover">
             <source src="/hero-video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          {/* Video Overlay */}
           <div className="absolute inset-0 bg-black opacity-50"></div>
-          {/* Hero Content */}
           <div className="relative z-10 max-w-4xl">
             <div className="inline-flex items-center px-4 py-2 bg-white/10 rounded-full text-sm font-light backdrop-blur-sm mb-6">
-              <Bell className="w-4 h-4 mr-2 text-indigo-400" />
+              <Bell className="w-4 h-4 mr-2 text-[#4379ff]" />
               Enterprise Technology Solutions
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-light mb-6 leading-tight tracking-tight">
@@ -244,9 +230,9 @@ export default function Home() {
               <span className="block relative mt-2">
                 <span className="relative inline-block">
                   Business
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-400 opacity-20 blur-2xl -z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#4379ff] to-[#4379ff] opacity-20 blur-2xl -z-10" />
                 </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-indigo-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4379ff] to-[#4379ff]">
                   Technology
                 </span>
               </span>
@@ -254,7 +240,7 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light mb-8">
               Empowering businesses with cutting-edge technology solutions and innovative digital transformation strategies.
             </p>
-            <button className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-indigo-400 text-white rounded-xl inline-flex items-center space-x-2 hover:opacity-90 transition-all">
+            <button className="px-8 py-3 bg-gradient-to-r from-[#4379ff] to-[#4379ff] text-white rounded-xl inline-flex items-center space-x-2 hover:opacity-90 transition-all">
               <span>Get Started</span>
               <Zap className="w-4 h-4" />
             </button>
@@ -265,9 +251,9 @@ export default function Home() {
         <Divider />
 
         {/* About Us Section */}
-        <div id="about" className="mb-32 relative px-6">
+        <section id="about" className="section-about mb-32 relative px-6">
           <div
-            className="absolute inset-0 bg-[linear-gradient(to_right,#4f46e5,#6366f1)] opacity-5"
+            className="absolute inset-0 bg-[linear-gradient(to_right,#4379ff,#4379ff)] opacity-5"
             style={{
               backgroundImage:
                 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z")',
@@ -284,15 +270,15 @@ export default function Home() {
             {/* Navigation Arrows */}
             <button
               onClick={prevCard}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-10 p-4 bg-indigo-500/20 hover:bg-indigo-500/30 rounded-full z-10 transition-transform duration-300 hover:scale-110"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-10 p-4 bg-[#4379ff]/20 hover:bg-[#4379ff]/30 rounded-full z-10 transition-transform duration-300 hover:scale-110"
             >
-              <ChevronLeft className="w-8 h-8 text-indigo-400" />
+              <ChevronLeft className="w-8 h-8 text-[#4379ff]" />
             </button>
             <button
               onClick={nextCard}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-10 p-4 bg-indigo-500/20 hover:bg-indigo-500/30 rounded-full z-10 transition-transform duration-300 hover:scale-110"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-10 p-4 bg-[#4379ff]/20 hover:bg-[#4379ff]/30 rounded-full z-10 transition-transform duration-300 hover:scale-110"
             >
-              <ChevronRight className="w-8 h-8 text-indigo-400" />
+              <ChevronRight className="w-8 h-8 text-[#4379ff]" />
             </button>
 
             {/* Cards Container */}
@@ -304,7 +290,7 @@ export default function Home() {
                 {services.map((service, index) => (
                   <div key={index} className="min-w-full px-4">
                     <div className="relative group transform transition-all duration-300 hover:scale-105">
-                      <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-3xl opacity-50 blur-sm group-hover:opacity-80"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#4379ff] to-[#4379ff] rounded-3xl opacity-50 blur-sm group-hover:opacity-80"></div>
                       <div
                         className="relative p-12 bg-black/50 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl overflow-hidden"
                         style={{
@@ -314,22 +300,19 @@ export default function Home() {
                       >
                         <div className="flex flex-col h-full relative z-10">
                           <div className="flex items-center space-x-4 mb-8">
-                            <div className="p-4 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-2xl shadow-lg">
-                              <service.icon className="w-8 h-8 text-white" />
+                            <div className="p-4 bg-gradient-to-r from-[#4379ff] to-[#4379ff] rounded-2xl shadow-lg">
+                              {/* You may remove or comment out the icon below if not needed */}
+                              {service.icon && <service.icon className="w-8 h-8 text-white" />}
                             </div>
                             <div>
-                              <h3 className="text-3xl font-light mb-2">
-                                {service.title}
-                              </h3>
-                              <p className="text-indigo-400 text-lg">
-                                {service.subtitle}
-                              </p>
+                              <h3 className="text-3xl font-light mb-2">{service.title}</h3>
+                              <p className="text-[#4379ff] text-lg">{service.subtitle}</p>
                             </div>
                           </div>
                           <p className="text-gray-300 font-light leading-relaxed text-lg mb-8">
                             {service.content}
                           </p>
-                          <button className="mt-auto inline-flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                          <button className="mt-auto inline-flex items-center space-x-2 text-[#4379ff] hover:text-[#4379ff] transition-colors">
                             <span className="text-lg">Learn More</span>
                             <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
                           </button>
@@ -349,14 +332,14 @@ export default function Home() {
                   onClick={() => setCurrentCard(index)}
                   className={`w-4 h-4 rounded-full transition-transform duration-300 hover:scale-110 ${
                     currentCard === index
-                      ? "bg-gradient-to-r from-indigo-500 to-indigo-400 shadow-lg"
-                      : "bg-indigo-500/20"
+                      ? "bg-gradient-to-r from-[#4379ff] to-[#4379ff] shadow-lg"
+                      : "bg-[#4379ff]/20"
                   }`}
                 />
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Divider */}
         <Divider />
@@ -375,7 +358,7 @@ export default function Home() {
                 title: "Dynamics365 Expert Consulting",
                 desc: "Specialized consulting services for Microsoft Dynamics 365 implementation, customization, and optimization.",
                 icon: Code,
-                gradient: "from-indigo-500 to-indigo-400",
+                gradient: "from-[#4379ff] to-[#4379ff]",
               },
               {
                 title: "Catalyst Workshops",
@@ -408,7 +391,7 @@ export default function Home() {
                   <p className="text-gray-300 font-light leading-relaxed mb-6">
                     {service.desc}
                   </p>
-                  <button className="inline-flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                  <button className="inline-flex items-center space-x-2 text-[#4379ff] hover:text-[#4379ff] transition-colors">
                     <span className="text-lg">Explore Service</span>
                     <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -504,13 +487,13 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* News Card */}
             <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500" />
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4379ff] to-[#4379ff] rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500" />
               <div className="relative p-8 bg-black/50 backdrop-blur-sm rounded-2xl border border-white/10 h-full">
                 <h3 className="text-xl font-light mb-4">News</h3>
                 <p className="text-gray-400 font-light leading-relaxed mb-6">
                   Get the latest updates on our company and industry trends.
                 </p>
-                <button className="inline-flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                <button className="inline-flex items-center space-x-2 text-[#4379ff] hover:text-[#4379ff] transition-colors">
                   <span>Read More</span>
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -519,13 +502,13 @@ export default function Home() {
 
             {/* Blogs Card */}
             <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500" />
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4379ff] to-[#4379ff] rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500" />
               <div className="relative p-8 bg-black/50 backdrop-blur-sm rounded-2xl border border-white/10 h-full">
                 <h3 className="text-xl font-light mb-4">Blogs</h3>
                 <p className="text-gray-400 font-light leading-relaxed mb-6">
                   Explore insights, tips, and trends in the technology space.
                 </p>
-                <button className="inline-flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                <button className="inline-flex items-center space-x-2 text-[#4379ff] hover:text-[#4379ff] transition-colors">
                   <span>Read More</span>
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -534,13 +517,13 @@ export default function Home() {
 
             {/* Case Studies Card */}
             <div className="relative group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500" />
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4379ff] to-[#4379ff] rounded-2xl opacity-50 group-hover:opacity-100 blur transition duration-500" />
               <div className="relative p-8 bg-black/50 backdrop-blur-sm rounded-2xl border border-white/10 h-full">
                 <h3 className="text-xl font-light mb-4">Case Studies</h3>
                 <p className="text-gray-400 font-light leading-relaxed mb-6">
                   Discover how our solutions have transformed businesses.
                 </p>
-                <button className="inline-flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                <button className="inline-flex items-center space-x-2 text-[#4379ff] hover:text-[#4379ff] transition-colors">
                   <span>Read More</span>
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </button>
