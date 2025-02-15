@@ -481,7 +481,7 @@ const Z4BIZLanding = () => {
                     <Image
                       src="/business-tech.jpg"
                       alt="Business Technology"
-                      layout="fill"
+                      fill
                       objectFit="cover"
                       className="rounded-2xl"
                       priority
