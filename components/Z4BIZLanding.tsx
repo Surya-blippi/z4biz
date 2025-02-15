@@ -289,7 +289,7 @@ const ProductsPlatforms = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-bold text-green-900 mb-4 glow"
+            className="text-3xl sm:text-4xl font-bold text-green-900 mb-4 glow"
           >
             Products &amp; Platforms
           </motion.h2>
