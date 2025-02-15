@@ -37,13 +37,15 @@ const Navigation = () => {
             {/* Logo and Brand */}
             <div className="flex items-center space-x-3">
               <motion.div whileHover={{ rotate: 180 }} transition={{ duration: 0.3 }}>
-                <Image
-                  src="/z4biz-logo.png"
-                  alt="Z4BIZ Logo"
-                  width={50}
-                  height={50}
-                  className="object-contain rounded-full"
-                />
+                <div className="relative w-12 h-12">
+                  <Image
+                    src="/z4biz-logo.png"
+                    alt="Z4BIZ Logo"
+                    layout="fill"
+                    objectFit="contain"
+                    className="rounded-full"
+                  />
+                </div>
               </motion.div>
               <span className="text-3xl font-medium text-blue-600 drop-shadow">
                 Z4BIZ
