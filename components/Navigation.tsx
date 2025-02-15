@@ -1,3 +1,4 @@
+// components/Navigation.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -44,7 +45,7 @@ const Navigation = () => {
                   className="object-contain rounded-full"
                 />
               </motion.div>
-              <span className="text-3xl font-extrabold text-white drop-shadow-lg">
+              <span className="text-3xl font-medium text-blue-600 drop-shadow">
                 Z4BIZ
               </span>
             </div>
@@ -55,11 +56,11 @@ const Navigation = () => {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-white relative group text-lg font-medium transition-colors"
+                  className="text-blue-600 relative group text-lg font-medium transition-colors"
                   whileHover={{ scale: 1.05 }}
                 >
                   {item.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300" />
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300" />
                 </motion.a>
               ))}
             </div>
@@ -67,7 +68,7 @@ const Navigation = () => {
             <div className="md:hidden">
               <motion.button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-white focus:outline-none"
+                className="text-blue-600 focus:outline-none"
                 whileHover={{ scale: 1.1 }}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,7 +96,7 @@ const Navigation = () => {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="block px-6 py-3 text-white hover:bg-blue-700 transition-colors text-lg font-medium"
+                  className="block px-6 py-3 text-blue-600 hover:bg-blue-100 transition-colors text-lg font-medium"
                 >
                   {item.label}
                 </a>
