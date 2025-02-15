@@ -1,3 +1,4 @@
+// pages/Z4BIZLanding.tsx
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -474,14 +475,15 @@ const Z4BIZLanding = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur-3xl opacity-20" />
                 <motion.div 
                   whileHover={{ scale: 1.05 }}
-                  className="relative w-full sm:w-[500px] h-[300px] sm:h-[400px] backdrop-blur-md bg-white/70 rounded-3xl shadow-xl p-4 sm:p-8 flex items-center justify-center overflow-hidden"
+                  className="relative w-full sm:w-[500px] h-64 sm:h-[400px] backdrop-blur-md bg-white/70 rounded-3xl shadow-xl p-4 sm:p-8 flex items-center justify-center overflow-hidden"
                 >
                   <div className="relative w-full h-full">
                     <Image
                       src="/business-tech.jpg"
                       alt="Business Technology"
-                      fill
-                      className="object-cover rounded-2xl"
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-2xl"
                       priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl" />
