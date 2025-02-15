@@ -1,3 +1,4 @@
+// pages/Z4BIZLanding.tsx
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -99,21 +100,26 @@ const Resources = () => {
   ];
 
   return (
-    <section id="resources" className="py-24 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+    <section
+      id="resources"
+      className="py-20 md:py-24 relative overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white"
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white" />
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10 text-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-12 glow"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Resources</h2>
-          <p className="text-lg sm:text-xl text-gray-700">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Resources
+          </h2>
+          <p className="text-base sm:text-lg text-gray-700">
             Stay updated with our latest news, blogs, and case studies.
           </p>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {resourcesData.map((resource, index) => (
             <motion.div
               key={resource.title}
@@ -123,10 +129,12 @@ const Resources = () => {
               transition={{ delay: index * 0.1 }}
               className="group glow"
             >
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-500 opacity-10 rounded-full blur-2xl transform translate-x-8 -translate-y-8 group-hover:opacity-20 transition-opacity" />
-                <div className="flex flex-col gap-4 relative">
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{resource.title}</h3>
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 opacity-10 rounded-full blur-2xl transform translate-x-6 -translate-y-6 group-hover:opacity-20 transition-opacity" />
+                <div className="flex flex-col gap-3 relative">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                    {resource.title}
+                  </h3>
                   <p className="text-base sm:text-lg text-gray-700">
                     {resource.description}
                   </p>
@@ -140,8 +148,8 @@ const Resources = () => {
         </div>
       </div>
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-gray-200 rounded-full mix-blend-multiply filter blur-2xl opacity-30" />
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-gray-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30" />
+        <div className="absolute top-10 left-10 w-24 h-24 bg-gray-200 rounded-full mix-blend-multiply filter blur-2xl opacity-30" />
+        <div className="absolute bottom-10 right-10 w-24 h-24 bg-gray-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30" />
       </div>
     </section>
   );
@@ -149,7 +157,10 @@ const Resources = () => {
 
 const Footer = () => {
   return (
-    <footer id="footer" className="relative z-10 bg-gradient-to-r from-blue-500 to-indigo-500 py-8 glow">
+    <footer
+      id="footer"
+      className="relative z-10 bg-gradient-to-r from-blue-500 to-indigo-500 py-8 glow"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-8 text-center text-white">
         <div className="mb-4">
           <h3 className="text-lg font-semibold">Call us</h3>
@@ -173,10 +184,13 @@ const Footer = () => {
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="py-24 relative overflow-hidden">
+    <section
+      id="services"
+      className="py-20 md:py-24 relative overflow-hidden bg-gradient-to-b from-white via-blue-50 to-white"
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50 to-white" />
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -185,11 +199,11 @@ const ServicesSection = () => {
           >
             Our Expertise
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-bold text-blue-950 mb-4 glow"
+            className="text-3xl sm:text-4xl font-bold text-blue-950 mb-4 glow"
           >
             Our Services
           </motion.h2>
@@ -203,7 +217,7 @@ const ServicesSection = () => {
             Expert consulting and technology solutions tailored for your business.
           </motion.p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {serviceItems.map((service, index) => (
             <motion.div
               key={service.title}
@@ -213,21 +227,25 @@ const ServicesSection = () => {
               transition={{ delay: index * 0.1 }}
               className="group glow"
             >
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-xl border border-blue-100 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden">
-                <div className={`absolute top-0 right-0 w-28 h-28 bg-gradient-to-br ${service.gradient} opacity-10 rounded-full blur-2xl transform translate-x-8 -translate-y-8 group-hover:opacity-20 transition-opacity`} />
-                <div className="flex flex-col gap-4 relative">
-                  <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-gradient-to-r ${service.gradient} transform transition-all duration-300 group-hover:scale-110 shadow-lg`}>
-                    <service.icon className="w-6 h-6 text-white" />
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-xl border border-blue-100 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden">
+                <div
+                  className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${service.gradient} opacity-10 rounded-full blur-2xl transform translate-x-6 -translate-y-6 group-hover:opacity-20 transition-opacity`}
+                />
+                <div className="flex flex-col gap-3 relative">
+                  <div
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center bg-gradient-to-r ${service.gradient} transform transition-all duration-300 group-hover:scale-110 shadow-lg`}
+                  >
+                    <service.icon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-blue-900 mb-2 transition-all duration-300">
+                    <h3 className="text-lg sm:text-xl font-bold text-blue-900 mb-1 transition-all duration-300">
                       {service.title}
                     </h3>
                     <p className="text-sm sm:text-base text-blue-700/80 leading-relaxed">
                       {service.description}
                     </p>
                   </div>
-                  <div className="mt-auto pt-2">
+                  <div className="mt-auto pt-1">
                     <motion.button
                       whileHover={{ x: 5 }}
                       className={`text-transparent bg-clip-text bg-gradient-to-r ${service.gradient} font-medium flex items-center gap-1 text-sm`}
@@ -237,7 +255,9 @@ const ServicesSection = () => {
                     </motion.button>
                   </div>
                 </div>
-                <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity`}
+                />
               </div>
             </motion.div>
           ))}
@@ -254,10 +274,10 @@ const ServicesSection = () => {
 
 const ProductsPlatforms = () => {
   return (
-    <section id="products" className="py-24 relative overflow-hidden">
+    <section id="products" className="py-20 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-green-50 to-white" />
       <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -266,7 +286,7 @@ const ProductsPlatforms = () => {
           >
             Our Products &amp; Platforms
           </motion.div>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -284,7 +304,7 @@ const ProductsPlatforms = () => {
             Innovative solutions for modern business challenges.
           </motion.p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {productItems.map((product, index) => (
             <motion.div
               key={product.title}
@@ -294,21 +314,21 @@ const ProductsPlatforms = () => {
               transition={{ delay: index * 0.1 }}
               className="group glow"
             >
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-xl border border-green-100 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden">
-                <div className={`absolute top-0 right-0 w-28 h-28 bg-gradient-to-br ${product.gradient} opacity-10 rounded-full blur-2xl transform translate-x-8 -translate-y-8 group-hover:opacity-20 transition-opacity`} />
-                <div className="flex flex-col gap-4 relative">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-r ${product.gradient} transform transition-all duration-300 group-hover:scale-110 shadow-lg`}>
-                    <product.icon className="w-6 h-6 text-white" />
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-xl border border-green-100 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden">
+                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${product.gradient} opacity-10 rounded-full blur-2xl transform translate-x-6 -translate-y-6 group-hover:opacity-20 transition-opacity`} />
+                <div className="flex flex-col gap-3 relative">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r ${product.gradient} transform transition-all duration-300 group-hover:scale-110 shadow-lg`}>
+                    <product.icon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-green-900 mb-2 transition-all duration-300">
+                    <h3 className="text-lg sm:text-xl font-bold text-green-900 mb-1 transition-all duration-300">
                       {product.title}
                     </h3>
                     <p className="text-sm sm:text-base text-green-700/80 leading-relaxed">
                       {product.description}
                     </p>
                   </div>
-                  <div className="mt-auto pt-2">
+                  <div className="mt-auto pt-1">
                     <motion.button
                       whileHover={{ x: 5 }}
                       className={`text-transparent bg-clip-text bg-gradient-to-r ${product.gradient} font-medium flex items-center gap-1 text-sm`}
