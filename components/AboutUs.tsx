@@ -1,4 +1,3 @@
-// components/AboutUs.tsx
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
@@ -12,9 +11,9 @@ interface AboutUsProps {
   serviceCards: ServiceCard[];
   currentCard: number;
   setCurrentCard: (index: number) => void;
-}
+};
 
-// Variants for card animations
+// Variants for slider animations (desktop)
 const cardVariants = {
   initial: { x: 1000, opacity: 0 },
   animate: (custom: { xPosition: number; scale: number; opacity: number }) => ({
@@ -60,9 +59,8 @@ const AboutUs = ({ serviceCards, currentCard, setCurrentCard }: AboutUsProps) =>
           </p>
         </motion.div>
 
-        {/* Main Content Area with Side Navigation */}
-        <div className="relative flex items-center justify-center gap-12">
-          {/* Left Arrow */}
+        {/* Desktop Slider View */}
+        <div className="hidden md:flex items-center justify-center gap-12">
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -72,19 +70,16 @@ const AboutUs = ({ serviceCards, currentCard, setCurrentCard }: AboutUsProps) =>
             <ChevronLeftIcon className="w-6 h-6" />
           </motion.button>
 
-          {/* Card Stack Display */}
           <div className="relative w-[800px] h-[400px] flex items-center justify-center">
             <AnimatePresence mode="popLayout">
               {serviceCards.map((card, index) => {
                 // Calculate the relative position in the stack
                 const position = (index - currentCard + serviceCards.length) % serviceCards.length;
                 const isActive = position === 0;
-                // Adjust x position, scale, and opacity based on stack order
                 const xPosition = position === 0 ? 0 : position === 1 ? 40 : position === 2 ? 80 : 100;
                 const scale = isActive ? 1 : 0.9;
                 const opacity = position >= 3 ? 0 : 1;
                 const zIndex = 10 - position;
-
                 return (
                   <motion.div
                     key={card.title}
@@ -96,9 +91,7 @@ const AboutUs = ({ serviceCards, currentCard, setCurrentCard }: AboutUsProps) =>
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     style={{ zIndex, position: 'absolute', width: '100%' }}
                   >
-                    <div className={`bg-white/95 backdrop-blur-sm rounded-2xl p-10 shadow-xl border border-blue-100
-                      ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
-                    >
+                    <div className={`bg-white/95 backdrop-blur-sm rounded-2xl p-10 shadow-xl border border-blue-100 ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}>
                       <div className="flex flex-col gap-6">
                         <div className="flex items-center gap-4">
                           <div className="w-1 h-8 bg-blue-600 rounded-full" />
@@ -117,7 +110,6 @@ const AboutUs = ({ serviceCards, currentCard, setCurrentCard }: AboutUsProps) =>
             </AnimatePresence>
           </div>
 
-          {/* Right Arrow */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -128,16 +120,24 @@ const AboutUs = ({ serviceCards, currentCard, setCurrentCard }: AboutUsProps) =>
           </motion.button>
         </div>
 
-        {/* Progress Indicators */}
-        <div className="flex justify-center mt-12 gap-3">
+        {/* Mobile Stacked View */}
+        <div className="block md:hidden space-y-6">
+          {serviceCards.map((card, index) => (
+            <div key={index} className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-blue-100">
+              <h3 className="text-xl font-bold text-blue-900 mb-2">{card.title}</h3>
+              <p className="text-base text-blue-700/80">{card.content}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Progress Indicators for Desktop */}
+        <div className="hidden md:flex justify-center mt-12 gap-3">
           {serviceCards.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentCard(index)}
               className={`h-2 transition-all duration-300 rounded-full ${
-                currentCard === index 
-                  ? 'w-8 bg-blue-600' 
-                  : 'w-2 bg-blue-200 hover:bg-blue-300'
+                currentCard === index ? 'w-8 bg-blue-600' : 'w-2 bg-blue-200 hover:bg-blue-300'
               }`}
             />
           ))}
