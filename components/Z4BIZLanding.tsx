@@ -465,17 +465,17 @@ const Z4BIZLanding = () => {
                   </motion.button>
                 </motion.div>
               </div>
-              {/* Right Content - Static Image Display */}
+              {/* Right Content - Image Container */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
-                className="relative glow"
+                className="relative w-full sm:w-[500px] h-64 sm:h-[400px] flex-shrink-0 glow"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur-3xl opacity-20" />
                 <motion.div 
                   whileHover={{ scale: 1.05 }}
-                  className="relative w-full sm:w-[500px] h-64 sm:h-[400px] backdrop-blur-md bg-white/70 rounded-3xl shadow-xl p-4 sm:p-8 flex items-center justify-center overflow-hidden"
+                  className="relative w-full h-full backdrop-blur-md bg-white/70 rounded-3xl shadow-xl p-4 sm:p-8 flex items-center justify-center overflow-hidden"
                 >
                   <div className="relative w-full h-full">
                     <Image
