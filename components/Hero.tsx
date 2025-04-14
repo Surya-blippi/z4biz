@@ -28,9 +28,17 @@ const fadeIn = {
   animate: { opacity: 1, y: 0 }
 };
 
+// Define interface for custom animation parameter
+interface CardAnimationProps {
+  xPosition: number;
+  opacity: number;
+  scale: number;
+  rotateY: number;
+}
+
 const cardVariants = {
   initial: { x: 300, opacity: 0 },
-  animate: (custom) => ({
+  animate: (custom: CardAnimationProps) => ({
     x: custom.xPosition,
     opacity: custom.opacity,
     scale: custom.scale,
@@ -39,7 +47,11 @@ const cardVariants = {
   exit: { x: -300, opacity: 0 }
 };
 
-const EnhancedHero = ({ scrollToSection }) => {
+interface HeroProps {
+  scrollToSection: (id: string) => void;
+}
+
+const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
   const [currentCard, setCurrentCard] = useState(0);
 
   const nextCard = () => {
@@ -112,7 +124,6 @@ const EnhancedHero = ({ scrollToSection }) => {
                 const scale = isActive ? 1 : 0.8;
                 const opacity = position >= 3 ? 0 : 1;
                 const rotateY = position === 0 ? 0 : 5;
-                const Icon = card.icon;
 
                 return (
                   <motion.div
@@ -131,7 +142,7 @@ const EnhancedHero = ({ scrollToSection }) => {
                         <div className="lg:w-80 flex-shrink-0">
                           <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
                             <img 
-                              src="/images/consulting-services.jpg" 
+                              src={card.imagePath} 
                               alt={card.imageAlt}
                               className="w-full h-full object-cover"
                             />
@@ -200,7 +211,7 @@ const EnhancedHero = ({ scrollToSection }) => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => scrollToSection('contact')}
+            onClick={() => scrollToSection('footer')}
             className="px-8 py-4 backdrop-blur-md bg-white/70 text-blue-600 rounded-full border border-blue-200 hover:border-blue-300 hover:bg-white/90 transition-all"
           >
             Contact Us
