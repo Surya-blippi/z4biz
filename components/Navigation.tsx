@@ -1,11 +1,11 @@
-// components/Navigation.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const navItems = [
   { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
   { label: 'Services', href: '#services' },
   { label: 'Products', href: '#products' },
   { label: 'Resources', href: '#resources' },
@@ -14,13 +14,28 @@ const navItems = [
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  // Check if we're on a services page
+  const isServicePage = router.pathname.startsWith('/services/');
+
+  // Don't render navigation on service pages
+  if (isServicePage) {
+    return null;
+  }
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    // If it's a hash link on the current page
+    if (href.startsWith('#')) {
+      const targetId = href.replace('#', '');
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // If it's a regular link to another page
+      router.push(href);
     }
     setIsOpen(false);
   };
@@ -32,25 +47,25 @@ const Navigation = () => {
       className="fixed top-0 w-full z-50 px-4 py-4"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="backdrop-blur-xl bg-white/30 rounded-3xl shadow-lg border border-white/30 px-8 py-4">
+        <div className="backdrop-blur-xl bg-white/20 rounded-3xl px-8 py-4">
           <div className="flex items-center justify-between">
             {/* Logo and Brand */}
-            <div className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center space-x-3">
               <motion.div whileHover={{ rotate: 180 }} transition={{ duration: 0.3 }}>
                 <div className="relative w-12 h-12">
                   <Image
                     src="/z4biz-logo.png"
                     alt="Z4BIZ Logo"
-                    layout="fill"
-                    objectFit="contain"
+                    width={48}
+                    height={48}
                     className="rounded-full"
                   />
                 </div>
               </motion.div>
-              <span className="text-3xl font-medium text-blue-600 drop-shadow">
+              <span className="text-3xl font-medium text-blue-600">
                 Z4BIZ
               </span>
-            </div>
+            </Link>
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
@@ -90,7 +105,7 @@ const Navigation = () => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden mt-2 rounded-xl bg-white/30 backdrop-blur-xl shadow-lg overflow-hidden"
+            className="md:hidden mt-2 rounded-xl bg-white/20 backdrop-blur-xl overflow-hidden"
           >
             <div className="flex flex-col">
               {navItems.map((item) => (
@@ -98,7 +113,7 @@ const Navigation = () => {
                   key={item.label}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="block px-6 py-3 text-blue-600 hover:bg-blue-100 transition-colors text-lg font-medium"
+                  className="block px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
                 >
                   {item.label}
                 </a>
