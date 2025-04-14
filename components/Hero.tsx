@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/solid';
 
+// Keep serviceCards and fadeIn the same
 const serviceCards = [
   {
     title: "Consulting Services",
@@ -23,8 +24,8 @@ const serviceCards = [
   }
 ];
 
-const fadeIn = { 
-  initial: { opacity: 0, y: 20 }, 
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 }
 };
 
@@ -34,36 +35,58 @@ interface CardAnimationProps {
   opacity: number;
   scale: number;
   rotateY: number;
+  zIndex: number; // Added zIndex for clearer stacking control
 }
 
+// Adjusted cardVariants - Note: Stacking logic remains, responsiveness comes from layout constraints
 const cardVariants = {
-  initial: { x: 300, opacity: 0 },
+  // Initial position off-screen to the right
+  initial: (direction: number) => ({
+    x: direction > 0 ? 300 : -300, // Start offscreen based on navigation direction
+    opacity: 0,
+    scale: 0.8,
+    rotateY: 15,
+  }),
+  // Animate to the calculated position
   animate: (custom: CardAnimationProps) => ({
     x: custom.xPosition,
     opacity: custom.opacity,
     scale: custom.scale,
     rotateY: custom.rotateY,
+    zIndex: custom.zIndex, // Apply calculated zIndex
+    transition: { type: "spring", stiffness: 300, damping: 30 },
   }),
-  exit: { x: -300, opacity: 0 }
+  // Exit animation off-screen to the left
+  exit: (direction: number) => ({
+    x: direction < 0 ? 300 : -300, // Exit offscreen based on navigation direction
+    opacity: 0,
+    scale: 0.8,
+    rotateY: -15,
+    zIndex: 0, // Ensure exiting card is behind
+    transition: { type: "spring", stiffness: 300, damping: 30 },
+  }),
 };
+
 
 interface HeroProps {
   scrollToSection: (id: string) => void;
 }
 
 const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
-  const [currentCard, setCurrentCard] = useState(0);
+  // Use state for both index and direction for better animation control
+  const [[currentCard, direction], setCurrent] = useState([0, 0]);
 
-  const nextCard = () => {
-    setCurrentCard((prev) => (prev + 1) % serviceCards.length);
+  const paginate = (newDirection: number) => {
+    const newCardIndex = (currentCard + newDirection + serviceCards.length) % serviceCards.length;
+    setCurrent([newCardIndex, newDirection]);
   };
 
-  const prevCard = () => {
-    setCurrentCard((prev) => (prev - 1 + serviceCards.length) % serviceCards.length);
-  };
+  const nextCard = () => paginate(1);
+  const prevCard = () => paginate(-1);
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 pt-20 pb-20 overflow-hidden">
+    // Adjusted padding for mobile, increased slightly on larger screens
+    <section className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 pt-16 pb-16 md:pt-20 md:pb-20 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={{
@@ -72,7 +95,8 @@ const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
           }}
           initial="initial"
           animate="animate"
-          className="text-center mb-16"
+          // Adjusted bottom margin for mobile
+          className="text-center mb-12 md:mb-16"
         >
           <motion.div
             variants={fadeIn}
@@ -80,84 +104,116 @@ const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
           >
             Enterprise Solutions & Consulting
           </motion.div>
-          <motion.h1 
+          <motion.h1
             variants={fadeIn}
-            className="text-4xl sm:text-6xl font-bold leading-tight mb-6 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-800 text-transparent bg-clip-text"
+            // Responsive text size
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-800 text-transparent bg-clip-text"
           >
             Transform Your Business
-            <br />
+            <br className="hidden sm:inline" /> {/* Keep break on larger screens */}
             With Expert Solutions
           </motion.h1>
-          <motion.p 
+          <motion.p
             variants={fadeIn}
-            className="text-lg text-blue-800/80 mb-8 leading-relaxed max-w-3xl mx-auto"
+            // Responsive text size and margin
+            className="text-base sm:text-lg text-blue-800/80 mb-8 leading-relaxed max-w-3xl mx-auto"
           >
+            {/* You can add a short subtitle here if needed */}
+            Explore our tailored services designed to drive growth and efficiency.
           </motion.p>
         </motion.div>
 
         {/* Card Carousel */}
-        <div className="relative w-full h-[600px] mt-12">
-          {/* Background Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20" />
-            <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20" />
+        {/* Adjusted height and margin for responsiveness */}
+        <div className="relative w-full min-h-[550px] md:min-h-[600px] mt-8 md:mt-12 flex items-center justify-center">
+          {/* Background Elements - Hidden on xs screens */}
+          <div className="absolute inset-0 hidden sm:block">
+            <div className="absolute top-1/4 right-1/4 w-48 h-48 md:w-64 md:h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20" />
+            <div className="absolute bottom-1/4 left-1/4 w-48 h-48 md:w-64 md:h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20" />
           </div>
 
-          {/* Card Container */}
-          <div className="relative w-full h-full flex items-center justify-center">
-            <div className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={prevCard}
-                className="p-3 bg-white rounded-full shadow-lg text-blue-600 hover:bg-blue-50 transition-colors"
-              >
-                <ChevronLeftIcon className="w-6 h-6" />
-              </motion.button>
-            </div>
+          {/* Card Navigation Button - Left */}
+          {/* Adjusted positioning and padding for mobile */}
+          <div className="absolute left-1 md:left-2 lg:left-4 top-1/2 -translate-y-1/2 z-30"> {/* Increased z-index */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={prevCard}
+              aria-label="Previous Card"
+              // Adjusted padding and icon size
+              className="p-2 md:p-3 bg-white rounded-full shadow-lg text-blue-600 hover:bg-blue-50 transition-colors"
+            >
+              <ChevronLeftIcon className="w-5 h-5 md:w-6 md:h-6" />
+            </motion.button>
+          </div>
 
-            <AnimatePresence mode="popLayout">
-              {serviceCards.map((card, index) => {
-                const position = (index - currentCard + serviceCards.length) % serviceCards.length;
-                const isActive = position === 0;
-                const xPosition = position === 0 ? 0 : position === 1 ? 60 : position === 2 ? 120 : 160;
-                const scale = isActive ? 1 : 0.8;
-                const opacity = position >= 3 ? 0 : 1;
-                const rotateY = position === 0 ? 0 : 5;
+          {/* AnimatePresence for handling enter/exit animations */}
+          {/* Use custom prop to pass direction */}
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            {/* Render only the current card based on state */}
+             {(() => {
+                const card = serviceCards[currentCard];
+                // Always render the current card in the center
+                const customProps: CardAnimationProps = {
+                    xPosition: 0,
+                    opacity: 1,
+                    scale: 1,
+                    rotateY: 0,
+                    zIndex: 2 // Highest zIndex for the active card
+                };
 
                 return (
                   <motion.div
-                    key={card.title}
-                    custom={{ xPosition, scale, opacity, rotateY }}
+                    key={currentCard} // Key changes when currentCard changes, triggering animation
+                    custom={customProps} // Pass animation props
                     variants={cardVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    style={{ position: 'absolute', width: '100%', maxWidth: '900px' }}
-                    className={isActive ? 'z-10' : 'z-0'}
+                    initial="initial" // Use variant for entry
+                    animate="animate" // Use variant for active state
+                    exit="exit"     // Use variant for exit
+                    drag="x" // Optional: allow dragging
+                    dragConstraints={{ left: 0, right: 0 }} // Optional: constrain drag
+                    dragElastic={1} // Optional: drag elasticity
+                    onDragEnd={(e, { offset, velocity }) => { // Optional: swipe gesture
+                        const swipe = Math.abs(offset.x) * velocity.x;
+                        if (swipe < -10000) {
+                            paginate(1); // Swipe left, go next
+                        } else if (swipe > 10000) {
+                            paginate(-1); // Swipe right, go prev
+                        }
+                    }}
+                    // Apply calculated zIndex and position absolutely
+                    style={{ position: 'absolute', zIndex: customProps.zIndex }}
+                    // Responsive width and general card styling
+                    className="w-[90%] sm:w-[85%] md:w-[80%] lg:w-[75%] max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl"
                   >
-                    <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 lg:p-12 shadow-xl border border-blue-100">
-                      <div className="flex flex-col lg:flex-row gap-8">
-                        <div className="lg:w-80 flex-shrink-0">
-                          <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden">
-                            <img 
-                              src={card.imagePath} 
+                    {/* Card Content Container */}
+                    <div className="bg-white/95 backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-10 shadow-xl border border-blue-100 overflow-hidden"> {/* Added overflow-hidden */}
+                      {/* Flex container for image and text (stacks vertically on mobile) */}
+                      <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
+                        {/* Image Container */}
+                        <div className="w-full lg:w-72 xl:w-80 flex-shrink-0">
+                          <div className="relative w-full aspect-video lg:aspect-[4/3] rounded-lg md:rounded-2xl overflow-hidden">
+                            <img
+                              src={card.imagePath}
                               alt={card.imageAlt}
                               className="w-full h-full object-cover"
+                              // Optimization: Add loading="lazy" if images are below the fold initially
+                              loading="lazy"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                           </div>
                         </div>
 
+                        {/* Text Content Container */}
                         <div className="flex-1">
-                          <div className="mb-8">
-                            <h3 className="text-3xl font-bold text-blue-900">
+                          <div className="mb-4 md:mb-6">
+                            {/* Responsive heading size */}
+                            <h3 className="text-2xl md:text-3xl font-bold text-blue-900">
                               {card.title}
                             </h3>
                           </div>
-                          
-                          <p className="text-blue-700/80 leading-relaxed text-lg">
+                          {/* Responsive paragraph size */}
+                          <p className="text-blue-700/80 leading-relaxed text-base md:text-lg">
                             {card.content}
                           </p>
                         </div>
@@ -165,54 +221,65 @@ const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                     </div>
                   </motion.div>
                 );
-              })}
-            </AnimatePresence>
+             })()}
+          </AnimatePresence>
 
-            <div className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={nextCard}
-                className="p-3 bg-white rounded-full shadow-lg text-blue-600 hover:bg-blue-50 transition-colors"
-              >
-                <ChevronRightIcon className="w-6 h-6" />
-              </motion.button>
-            </div>
+          {/* Card Navigation Button - Right */}
+          {/* Adjusted positioning and padding */}
+          <div className="absolute right-1 md:right-2 lg:right-4 top-1/2 -translate-y-1/2 z-30"> {/* Increased z-index */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={nextCard}
+              aria-label="Next Card"
+              // Adjusted padding and icon size
+              className="p-2 md:p-3 bg-white rounded-full shadow-lg text-blue-600 hover:bg-blue-50 transition-colors"
+            >
+              <ChevronRightIcon className="w-5 h-5 md:w-6 md:h-6" />
+            </motion.button>
           </div>
 
-          {/* Progress Indicators */}
-          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-            {serviceCards.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentCard(index)}
-                className={`h-2 transition-all duration-300 rounded-full ${
-                  currentCard === index ? 'w-8 bg-blue-600' : 'w-2 bg-blue-200 hover:bg-blue-300'
-                }`}
-              />
-            ))}
-          </div>
+          {/* Progress Indicators - Positioned below the card area */}
+           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+             {serviceCards.map((_, index) => (
+               <button
+                 key={index}
+                 onClick={() => setCurrent([index, index > currentCard ? 1 : -1])} // Update state with direction
+                 aria-label={`Go to card ${index + 1}`}
+                 className={`h-2 transition-all duration-300 rounded-full ${
+                   currentCard === index ? 'w-6 md:w-8 bg-blue-600' : 'w-2 bg-blue-200 hover:bg-blue-300'
+                 }`}
+               />
+             ))}
+           </div>
         </div>
 
         {/* Call to Action Buttons */}
-        <motion.div 
-          variants={fadeIn}
-          className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-20"
+        <motion.div
+          variants={fadeIn} // Reuse fadeIn animation
+          initial="initial"
+          animate="animate"
+          // Added transition delay for staggered effect after carousel
+          transition={{ delay: 0.3 }}
+          // Stack vertically on mobile, row on sm+, adjusted top margin
+          className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-20 md:mt-24"
         >
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => scrollToSection('services')}
-            className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full hover:shadow-lg transition-all flex items-center justify-center gap-2"
+            // Responsive padding and text size
+            className="group w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm md:text-base font-medium rounded-full hover:shadow-lg transition-all flex items-center justify-center gap-2"
           >
             <span>Explore Our Services</span>
-            <ChevronRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ChevronRightIcon className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
           </motion.button>
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => scrollToSection('footer')}
-            className="px-8 py-4 backdrop-blur-md bg-white/70 text-blue-600 rounded-full border border-blue-200 hover:border-blue-300 hover:bg-white/90 transition-all"
+             // Responsive padding and text size
+            className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 backdrop-blur-md bg-white/70 text-blue-600 text-sm md:text-base font-medium rounded-full border border-blue-200 hover:border-blue-300 hover:bg-white/90 transition-all"
           >
             Contact Us
           </motion.button>
