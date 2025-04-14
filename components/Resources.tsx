@@ -23,7 +23,7 @@ const resourcesData = [
 ];
 
 const Resources = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null); // ✅ Type fixed here
 
   return (
     <section className="relative min-h-screen py-20 overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-black">
