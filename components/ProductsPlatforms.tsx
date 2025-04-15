@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { HomeIcon, ChartBarIcon, DocumentTextIcon, ServerIcon, ShieldCheckIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 
 const productItems = [
@@ -7,37 +8,43 @@ const productItems = [
     title: "Z-Estate",
     description: "Real Estate Property Management.",
     icon: HomeIcon,
-    gradient: "from-green-500 to-teal-500"
+    gradient: "from-green-500 to-teal-500",
+    link: "#"
   },
   {
     title: "M-Stream",
     description: "Efficient Management Reporting.",
     icon: ChartBarIcon,
-    gradient: "from-orange-500 to-yellow-500"
+    gradient: "from-orange-500 to-yellow-500",
+    link: "#"
   },
   {
     title: "Calibre",
     description: "Automate RFP Response.",
     icon: DocumentTextIcon,
-    gradient: "from-red-500 to-pink-500"
+    gradient: "from-red-500 to-pink-500",
+    link: "#"
   },
   {
     title: "Data",
     description: "Data Platforms.",
     icon: ServerIcon,
-    gradient: "from-indigo-500 to-blue-500"
+    gradient: "from-indigo-500 to-blue-500",
+    link: "/products/data"
   },
   {
     title: "ESG",
     description: "Sustainability & Compliance Solutions.",
     icon: ShieldCheckIcon,
-    gradient: "from-purple-500 to-pink-500"
+    gradient: "from-purple-500 to-pink-500",
+    link: "/products/esg"
   },
   {
     title: "AI & Automation",
     description: "Intelligent Process Automation.",
     icon: Cog6ToothIcon,
-    gradient: "from-gray-500 to-blue-500"
+    gradient: "from-gray-500 to-blue-500",
+    link: "/products/ai-automation"
   }
 ];
 
@@ -85,7 +92,7 @@ const ProductsPlatforms: React.FC = () => {
             >
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-xl border border-green-100 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden">
                 <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${product.gradient} opacity-10 rounded-full blur-2xl transform translate-x-6 -translate-y-6 group-hover:opacity-20 transition-opacity`} />
-                <div className="flex flex-col gap-3 relative">
+                <div className="flex flex-col gap-3 relative h-full">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r ${product.gradient} transform transition-all duration-300 group-hover:scale-110 shadow-lg`}>
                     <product.icon className="w-5 h-5 text-white" />
                   </div>
@@ -97,14 +104,17 @@ const ProductsPlatforms: React.FC = () => {
                       {product.description}
                     </p>
                   </div>
-                  <div className="mt-auto pt-1">
-                    <motion.button
-                      whileHover={{ x: 5 }}
-                      className={`text-transparent bg-clip-text bg-gradient-to-r ${product.gradient} font-medium flex items-center gap-1 text-sm`}
-                    >
-                      Learn more
-                      <span className="transform transition-transform group-hover:translate-x-1">→</span>
-                    </motion.button>
+                  <div className="mt-auto pt-4">
+                    <Link href={product.link}>
+                      <motion.button
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.98 }}
+                        className={`px-4 py-2 rounded-lg bg-gradient-to-r ${product.gradient} text-white font-medium flex items-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 w-full justify-center sm:w-auto`}
+                      >
+                        Learn more
+                        <span className="transform transition-transform group-hover:translate-x-1">→</span>
+                      </motion.button>
+                    </Link>
                   </div>
                 </div>
                 <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${product.gradient} opacity-0 group-hover:opacity-100 transition-opacity`} />
