@@ -23,7 +23,7 @@ const navItems: NavItem[] = [
     href: '/#services',
     subItems: [
       { label: 'Dynamics 365', href: '/services/dynamics365' },
-      // { label: 'ZOHO One Implementation', href: '/services/zoho-one' },
+      { label: 'ZOHO One Implementation', href: '/services/zoho-one' },
       { label: 'Envisioning Workshops', href: '/services/envisioning-workshops' },
       { label: 'Extended IT', href: '/services/extended-it' },
       { label: 'Sustainability Consulting', href: '/services/sustainability' },
