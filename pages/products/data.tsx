@@ -13,11 +13,13 @@ import {
   BeakerIcon // Added for 4Vue (if SparklesIcon is needed elsewhere distinctly, or use SparklesIcon)
              // Using SparklesIcon as it was originally assigned and fits AI theme
 } from '@heroicons/react/24/outline';
-import ServiceNavigation from '../../components/ServiceNavigation';
+// import ServiceNavigation from '../../components/ServiceNavigation'; // REMOVED
+import Navigation from '../../components/Navigation'; // ADDED
 import Footer from '../../components/Footer';
 
 const dataServices = [
-  {
+    // ... (keep array content the same, including 4Vue)
+     {
     id: "etl-pipelines",
     title: "ETL Pipelines",
     subtitle: "Robust Data Integration & Transformation",
@@ -126,6 +128,7 @@ const DataManagementPage: React.FC = () => {
 
       <div className="flex flex-col min-h-screen relative overflow-hidden">
         {/* Global Background Colors and Decorations */}
+        {/* ... (keep background styles the same) ... */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-indigo-50 to-white" />
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-100 to-transparent opacity-70" />
@@ -133,6 +136,7 @@ const DataManagementPage: React.FC = () => {
         </div>
 
         {/* Animated blobs */}
+        {/* ... (keep animated blobs the same) ... */}
         <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
@@ -149,11 +153,14 @@ const DataManagementPage: React.FC = () => {
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <ServiceNavigation />
+        {/* <ServiceNavigation /> REMOVED */}
+        <Navigation /> {/* ADDED */}
 
-        <main className="flex-grow relative z-10 pt-24 pb-16">
+        {/* Ensure main content has padding-top */}
+        <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
+            {/* ... (keep hero section the same) ... */}
             <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-indigo-700 to-blue-700 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
@@ -229,7 +236,7 @@ const DataManagementPage: React.FC = () => {
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
                   <path
-                    fill="#4f46e5"
+                    fill="#4f46e5" // Match hero bg gradient start
                     fillOpacity="1"
                     d="M0,160L48,144C96,128,192,96,288,90.7C384,85,480,107,576,128C672,149,768,171,864,165.3C960,160,1056,128,1152,117.3C1248,107,1344,117,1392,122.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
@@ -238,6 +245,7 @@ const DataManagementPage: React.FC = () => {
             </motion.div>
 
             {/* Overview Section */}
+            {/* ... (keep overview section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -267,6 +275,7 @@ const DataManagementPage: React.FC = () => {
             </motion.div>
 
             {/* Why Choose Us */}
+            {/* ... (keep why choose us section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -277,11 +286,11 @@ const DataManagementPage: React.FC = () => {
               <div className="absolute inset-0 overflow-hidden opacity-40">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <pattern id="grid-why-data" width="40" height="40" patternUnits="userSpaceOnUse"> {/* Changed id */}
                       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(79, 70, 229, 0.3)" strokeWidth="1"/>
                     </pattern>
                   </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
+                  <rect width="100%" height="100%" fill="url(#grid-why-data)" /> {/* Changed id */}
                 </svg>
               </div>
 
@@ -315,7 +324,8 @@ const DataManagementPage: React.FC = () => {
             </motion.div>
 
             {/* Data Management Services Title Area */}
-            <div className="mb-10 text-center">
+            {/* ... (keep title area the same) ... */}
+             <div className="mb-10 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -344,6 +354,7 @@ const DataManagementPage: React.FC = () => {
             </div>
 
             {/* Service Cards Section (Now includes 4Vue) */}
+            {/* ... (keep service cards section the same) ... */}
             <motion.div
               className="space-y-16"
               variants={containerVariants}
@@ -415,6 +426,7 @@ const DataManagementPage: React.FC = () => {
             </motion.div>
 
             {/* Benefits Section */}
+            {/* ... (keep benefits section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

@@ -4,18 +4,16 @@ import { motion } from 'framer-motion';
 import {
   ShieldCheckIcon,
   DocumentChartBarIcon,
-  // DocumentTextIcon, // Removed as not used
   CloudArrowUpIcon,
-  // ChartBarIcon, // Removed as not used
-  // SparklesIcon, // *** REMOVED: Icon for 4Vue is no longer needed here ***
   ArrowRightIcon,
   GlobeAltIcon,
   BeakerIcon
 } from '@heroicons/react/24/outline';
-import ServiceNavigation from '../../components/ServiceNavigation';
+// import ServiceNavigation from '../../components/ServiceNavigation'; // REMOVED
+import Navigation from '../../components/Navigation'; // ADDED
 import Footer from '../../components/Footer';
 
-// *** REMOVED: 4Vue object from this array ***
+// Only 4Scope product definition
 const esgProducts = [
   {
     id: "4scope",
@@ -32,10 +30,10 @@ const esgProducts = [
     gradient: "from-green-500 to-emerald-600",
     bgPattern: "radial-gradient(circle at 90% 10%, rgba(16, 185, 129, 0.1) 0%, transparent 60%)"
   }
-  // 4Vue object was here
 ];
 
 const esgFrameworks = [
+  // ... (keep array content the same)
   "Global Reporting Initiative (GRI)",
   "Sustainability Accounting Standards Board (SASB)",
   "Task Force on Climate-Related Financial Disclosures (TCFD)",
@@ -75,6 +73,7 @@ const ESGPage: React.FC = () => {
 
       <div className="flex flex-col min-h-screen relative overflow-hidden">
         {/* Global Background Colors and Decorations */}
+        {/* ... (keep background styles the same) ... */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-green-50 to-white" />
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-emerald-100 to-transparent opacity-70" />
@@ -82,6 +81,7 @@ const ESGPage: React.FC = () => {
         </div>
 
         {/* Animated nature-inspired blobs */}
+        {/* ... (keep animated blobs the same) ... */}
         <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
@@ -98,11 +98,14 @@ const ESGPage: React.FC = () => {
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <ServiceNavigation />
+        {/* <ServiceNavigation /> REMOVED */}
+        <Navigation /> {/* ADDED */}
 
-        <main className="flex-grow relative z-10 pt-24 pb-16">
+        {/* Ensure main content has padding-top */}
+        <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
+            {/* ... (keep hero section the same) ... */}
             <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-green-600 to-teal-600 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
@@ -169,7 +172,7 @@ const ESGPage: React.FC = () => {
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
                   <path
-                    fill="#10b981"
+                    fill="#10b981" // Match hero bg gradient end
                     fillOpacity="1"
                     d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,96C672,96,768,128,864,154.7C960,181,1056,203,1152,197.3C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
@@ -178,6 +181,7 @@ const ESGPage: React.FC = () => {
             </motion.div>
 
             {/* Overview Section */}
+            {/* ... (keep overview section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -207,6 +211,7 @@ const ESGPage: React.FC = () => {
             </motion.div>
 
             {/* ESG Frameworks */}
+            {/* ... (keep frameworks section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -245,7 +250,8 @@ const ESGPage: React.FC = () => {
             </motion.div>
 
             {/* Product Cards Title Area */}
-            <div className="mb-10 text-center">
+            {/* ... (keep title area the same) ... */}
+             <div className="mb-10 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -274,14 +280,15 @@ const ESGPage: React.FC = () => {
             </div>
 
             {/* Product Cards Section (Only 4Scope now) */}
+            {/* ... (keep product cards section the same) ... */}
             <motion.div
-              className="space-y-16" // Might want to remove space-y-16 if only one item remains, or keep for consistency
+              className="space-y-16" // Keep for consistency or remove if only one card
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {esgProducts.map((product) => ( // This map will now only iterate once for 4Scope
+              {esgProducts.map((product) => ( // Only iterates once for 4Scope
                 <motion.div
                   key={product.id}
                   variants={itemVariants}
@@ -340,6 +347,7 @@ const ESGPage: React.FC = () => {
             </motion.div>
 
             {/* Benefits Section */}
+            {/* ... (keep benefits section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

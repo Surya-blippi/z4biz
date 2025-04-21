@@ -1,17 +1,19 @@
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
-import { 
-  CubeIcon, 
-  BuildingStorefrontIcon, 
-  ShoppingBagIcon, 
+import {
+  CubeIcon,
+  BuildingStorefrontIcon,
+  ShoppingBagIcon,
   UserGroupIcon,
-  ArrowRightIcon 
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
-import ServiceNavigation from '../../components/ServiceNavigation';
+// import ServiceNavigation from '../../components/ServiceNavigation'; // REMOVED
+import Navigation from '../../components/Navigation'; // ADDED
 import Footer from '../../components/Footer';
 
 const D365Offerings = [
+  // ... (keep array content the same)
   {
     id: "finance-operations",
     title: "D365 Finance & Operations",
@@ -84,7 +86,7 @@ const D365Offerings = [
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15
@@ -102,43 +104,48 @@ const Dynamics365Page: React.FC = () => {
     <>
       <Head>
         <title>Dynamics 365 Expert Consulting | Z4BIZ</title>
-        <meta 
-          name="description" 
-          content="Specialized consulting services for Microsoft Dynamics 365 implementation, customization, and optimization by Z4BIZ." 
+        <meta
+          name="description"
+          content="Specialized consulting services for Microsoft Dynamics 365 implementation, customization, and optimization by Z4BIZ."
         />
       </Head>
 
       <div className="flex flex-col min-h-screen relative overflow-hidden">
         {/* Global Background Colors and Decorations */}
+        {/* ... (keep background styles the same) ... */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white" />
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-100 to-transparent opacity-70" />
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-indigo-100 to-transparent opacity-70" />
         </div>
-        
+
         {/* Animated blobs */}
-        <motion.div 
+        {/* ... (keep animated blobs the same) ... */}
+        <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 right-32 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-20 left-1/4 w-80 h-80 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [0.8, 1, 0.8], rotate: [0, -90, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <ServiceNavigation />
+        {/* <ServiceNavigation /> REMOVED */}
+        <Navigation /> {/* ADDED */}
 
-        <main className="flex-grow relative z-10 pt-24 pb-16">
+        {/* Ensure main content has padding-top */}
+        <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
-            <motion.div 
+            {/* ... (keep hero section the same) ... */}
+            <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -149,7 +156,7 @@ const Dynamics365Page: React.FC = () => {
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full transform translate-x-1/3 -translate-y-1/2" />
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/20 rounded-full transform -translate-x-1/3 translate-y-1/2" />
-                  
+
                   {/* Grid pattern */}
                   <div className="absolute inset-0 grid grid-cols-10 grid-rows-10">
                     {[...Array(100)].map((_, i) => (
@@ -157,7 +164,7 @@ const Dynamics365Page: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="relative max-w-4xl mx-auto text-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -167,7 +174,7 @@ const Dynamics365Page: React.FC = () => {
                   >
                     Enterprise Solutions
                   </motion.div>
-                  
+
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -176,7 +183,7 @@ const Dynamics365Page: React.FC = () => {
                   >
                     Dynamics 365 <span className="text-blue-200">Expert Consulting</span>
                   </motion.h1>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -186,14 +193,14 @@ const Dynamics365Page: React.FC = () => {
                     Comprehensive expertise across the entire Dynamics 365 ecosystem to transform operations,
                     improve efficiency, and accelerate growth for your business.
                   </motion.p>
-                  
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
                   >
-                    <a 
-                      href="#finance-operations" 
+                    <a
+                      href="#finance-operations"
                       className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-medium rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group"
                     >
                       Explore Our Solutions
@@ -202,13 +209,13 @@ const Dynamics365Page: React.FC = () => {
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Wave Bottom Border */}
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
-                  <path 
-                    fill="#4f46e5" 
-                    fillOpacity="1" 
+                  <path
+                    fill="#4f46e5" // Match hero bg gradient end
+                    fillOpacity="1"
                     d="M0,96L48,112C96,128,192,160,288,176C384,192,480,192,576,170.7C672,149,768,107,864,101.3C960,96,1056,128,1152,133.3C1248,139,1344,117,1392,106.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
                 </svg>
@@ -216,11 +223,13 @@ const Dynamics365Page: React.FC = () => {
             </motion.div>
 
             {/* D365 Offerings */}
-            <motion.div 
+            {/* ... (keep offerings section the same) ... */}
+             <motion.div
               className="space-y-16"
               variants={containerVariants}
               initial="hidden"
-              animate="visible"
+              animate="visible" // Changed from whileInView for immediate animation
+              viewport={{ once: true }} // Keep viewport for optimization if preferred
             >
               {D365Offerings.map((offering, index) => (
                 <motion.div
@@ -236,7 +245,7 @@ const Dynamics365Page: React.FC = () => {
                       <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r ${offering.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                         <offering.icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       <div className="flex-grow">
                         {/* Title with gradient underline */}
                         <div className="relative mb-4 pb-2">
@@ -245,12 +254,12 @@ const Dynamics365Page: React.FC = () => {
                           </h2>
                           <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${offering.gradient} group-hover:w-32 transition-all duration-500`}></div>
                         </div>
-                        
+
                         {/* Description */}
                         <p className="text-blue-700/90 mb-8 text-base sm:text-lg leading-relaxed">
                           {offering.description}
                         </p>
-                        
+
                         {/* Features */}
                         <div className="mb-8 bg-blue-50/50 rounded-xl p-6">
                           <h3 className={`text-xl font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>
@@ -269,7 +278,7 @@ const Dynamics365Page: React.FC = () => {
                             ))}
                           </ul>
                         </div>
-                        
+
                         {/* Conclusion */}
                         <div className="border-t border-blue-100 pt-6">
                           <p className={`font-medium text-lg text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>

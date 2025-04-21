@@ -1,47 +1,86 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-const navItems = [
-  { label: 'Home', href: '#home' },
-  { label: 'Services', href: '#services' },
-  { label: 'Products', href: '#products' },
-  { label: 'Resources', href: '#resources' },
-  { label: 'Contact', href: '#footer' }
+interface SubNavItem {
+  label: string;
+  href: string;
+}
+
+interface NavItem {
+  label: string;
+  href: string;
+  subItems?: SubNavItem[];
+}
+
+const navItems: NavItem[] = [
+  { label: 'Home', href: '/' },
+  {
+    label: 'Services',
+    href: '/#services',
+    subItems: [
+      { label: 'Dynamics 365', href: '/services/dynamics365' },
+      // { label: 'ZOHO One Implementation', href: '/services/zoho-one' },
+      { label: 'Envisioning Workshops', href: '/services/envisioning-workshops' },
+      { label: 'Extended IT', href: '/services/extended-it' },
+      { label: 'Sustainability Consulting', href: '/services/sustainability' },
+    ],
+  },
+  {
+    label: 'Products',
+    href: '/#products',
+    subItems: [
+      // { label: 'Z-Estate', href: '/products/z-estate' },
+      // { label: 'M-Stream', href: '/products/m-stream' },
+      { label: 'ESG', href: '/products/esg' },
+      { label: 'Data', href: '/products/data' },
+      { label: 'AI & Automation', href: '/products/ai-automation' },
+    ],
+  },
+  { label: 'Resources', href: '/#resources' },
+  { label: 'Contact', href: '/#footer' }
 ];
+
+const dropdownVariants = {
+    hidden: { opacity: 0, y: -10, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.2, ease: "easeOut" } },
+    exit: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.15, ease: "easeIn" } }
+};
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const router = useRouter();
 
-  // Check if we're on a services page
-  const isServicePage = router.pathname.startsWith('/services/');
-
-  // Don't render navigation on service pages
-  if (isServicePage) {
-    return null;
-  }
-
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    // If it's a hash link on the current page
-    if (href.startsWith('#')) {
-      const targetId = href.replace('#', '');
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      // If it's a regular link to another page
-      router.push(href);
-    }
     setIsOpen(false);
+    setHoveredItem(null);
+
+    if (href.startsWith('/#') && router.pathname === '/') {
+       e.preventDefault();
+       const targetId = href.replace('/#', '');
+       const element = document.getElementById(targetId);
+       if (element) {
+         const navbarHeight = 100;
+         const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+         const offsetPosition = elementPosition - navbarHeight;
+
+         window.scrollTo({
+             top: offsetPosition,
+             behavior: 'smooth'
+         });
+       }
+    } else if (href === '/' && router.pathname === '/') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className="fixed top-0 w-full z-50 px-4 py-4"
@@ -49,9 +88,9 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto">
         <div className="backdrop-blur-xl bg-white/20 rounded-3xl px-8 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo and Brand */}
+            {/* Logo and Brand - Static Logo - No Animation */}
             <Link href="/" className="flex items-center space-x-3">
-              <motion.div whileHover={{ rotate: 180 }} transition={{ duration: 0.3 }}>
+              <motion.div> {/* Removed whileHover and transition for static logo */}
                 <div className="relative w-12 h-12">
                   <Image
                     src="/z4biz-logo.png"
@@ -66,24 +105,64 @@ const Navigation = () => {
                 Z4BIZ
               </span>
             </Link>
-            {/* Desktop Navigation */}
+
+            {/* Desktop Navigation with Dropdowns - Kept Hover Dropdown Functionality */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                <motion.a
+                <div
                   key={item.label}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-blue-600 relative group text-lg font-medium transition-colors"
-                  whileHover={{ scale: 1.05 }}
+                  className="relative"
+                  onMouseEnter={() => setHoveredItem(item.label)}
+                  onMouseLeave={() => setHoveredItem(null)}
                 >
-                  {item.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300" />
-                </motion.a>
+                  <Link href={item.href} passHref legacyBehavior>
+                      <motion.a
+                       onClick={(e) => handleNavClick(e, item.href)}
+                       className="text-blue-600 relative group text-lg font-medium transition-colors cursor-pointer flex items-center gap-1"
+                       whileHover={{ scale: 1.05 }}
+                      >
+                        {item.label}
+                        {item.subItems && (
+                            <ChevronDownIcon
+                                className={`w-5 h-5 transition-transform duration-200 ${
+                                    hoveredItem === item.label ? 'rotate-180' : ''
+                                }`}
+                            />
+                        )}
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300" />
+                      </motion.a>
+                  </Link>
+
+                  <AnimatePresence>
+                    {item.subItems && hoveredItem === item.label && (
+                      <motion.ul
+                        variants={dropdownVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-60 bg-white/90 backdrop-blur-md rounded-lg shadow-xl border border-blue-100/50 py-2 z-10 overflow-hidden"
+                      >
+                        {item.subItems.map((subItem) => (
+                          <li key={subItem.label}>
+                            <Link href={subItem.href} passHref legacyBehavior>
+                              <a
+                                onClick={(e) => handleNavClick(e, subItem.href)}
+                                className="block px-5 py-2 text-blue-700 hover:bg-blue-100/70 transition-colors whitespace-nowrap text-base font-medium"
+                              >
+                                {subItem.label}
+                              </a>
+                            </Link>
+                          </li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </div>
               ))}
             </div>
             {/* Mobile Menu Icon */}
             <div className="md:hidden">
-              <motion.button 
+              <motion.button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-blue-600 focus:outline-none"
                 whileHover={{ scale: 1.1 }}
@@ -109,14 +188,14 @@ const Navigation = () => {
           >
             <div className="flex flex-col">
               {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="block px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
-                >
-                  {item.label}
-                </a>
+                <Link key={item.label} href={item.href} passHref legacyBehavior>
+                  <a
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="block px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
+                  >
+                    {item.label}
+                  </a>
+                </Link>
               ))}
             </div>
           </motion.div>

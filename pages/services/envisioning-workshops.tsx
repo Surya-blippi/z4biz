@@ -1,18 +1,20 @@
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
-import { 
-  LightBulbIcon, 
+import {
+  LightBulbIcon,
   UserGroupIcon,
   DocumentTextIcon,
   MapIcon,
   PresentationChartBarIcon,
-  ArrowRightIcon 
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
-import ServiceNavigation from '../../components/ServiceNavigation';
+// import ServiceNavigation from '../../components/ServiceNavigation'; // REMOVED
+import Navigation from '../../components/Navigation'; // ADDED
 import Footer from '../../components/Footer';
 
 const workshopPhases = [
+  // ... (keep array content the same)
   {
     id: "preparation",
     title: "Pre-Workshop Preparation Phase",
@@ -56,6 +58,7 @@ const workshopPhases = [
 ];
 
 const outcomes = [
+  // ... (keep array content the same)
   "Understand business objectives, challenges and opportunities for improvement",
   "Provide content to drive the solution envisioning report",
   "Provide detail level inputs that can be submitted for Senior Stakeholder Approvals",
@@ -65,7 +68,7 @@ const outcomes = [
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15
@@ -83,43 +86,48 @@ const EnvisioningWorkshopsPage: React.FC = () => {
     <>
       <Head>
         <title>Envisioning Workshops | Z4BIZ</title>
-        <meta 
-          name="description" 
-          content="Interactive workshops designed to accelerate your digital transformation journey with Z4BIZ." 
+        <meta
+          name="description"
+          content="Interactive workshops designed to accelerate your digital transformation journey with Z4BIZ."
         />
       </Head>
 
       <div className="flex flex-col min-h-screen relative overflow-hidden">
         {/* Global Background Colors and Decorations */}
+        {/* ... (keep background styles the same) ... */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-purple-50 to-white" />
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-purple-100 to-transparent opacity-70" />
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-pink-100 to-transparent opacity-70" />
         </div>
-        
+
         {/* Animated blobs */}
-        <motion.div 
+        {/* ... (keep animated blobs the same) ... */}
+        <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 right-32 w-64 h-64 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-20 left-1/4 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [0.8, 1, 0.8], rotate: [0, -90, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <ServiceNavigation />
+        {/* <ServiceNavigation /> REMOVED */}
+        <Navigation /> {/* ADDED */}
 
-        <main className="flex-grow relative z-10 pt-24 pb-16">
+        {/* Ensure main content has padding-top */}
+        <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
-            <motion.div 
+            {/* ... (keep hero section the same) ... */}
+            <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -130,7 +138,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full transform translate-x-1/3 -translate-y-1/2" />
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/20 rounded-full transform -translate-x-1/3 translate-y-1/2" />
-                  
+
                   {/* Grid pattern */}
                   <div className="absolute inset-0 grid grid-cols-10 grid-rows-10">
                     {[...Array(100)].map((_, i) => (
@@ -138,7 +146,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="relative max-w-4xl mx-auto text-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -148,7 +156,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                   >
                     Digital Transformation
                   </motion.div>
-                  
+
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -157,24 +165,24 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                   >
                     Envisioning <span className="text-pink-200">Workshops</span>
                   </motion.h1>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="text-lg sm:text-xl text-purple-100 mb-8 max-w-3xl mx-auto"
                   >
-                    Align stakeholders, explore business challenges, and define a roadmap for achieving 
+                    Align stakeholders, explore business challenges, and define a roadmap for achieving
                     your digital transformation goals.
                   </motion.p>
-                  
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
                   >
-                    <a 
-                      href="#overview" 
+                    <a
+                      href="#overview"
                       className="inline-flex items-center px-6 py-3 bg-white text-purple-600 font-medium rounded-lg shadow-lg hover:bg-purple-50 transition-colors duration-300 group"
                     >
                       Discover Our Approach
@@ -183,13 +191,13 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Wave Bottom Border */}
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
-                  <path 
-                    fill="#9333ea" 
-                    fillOpacity="1" 
+                  <path
+                    fill="#9333ea" // Match hero bg gradient start
+                    fillOpacity="1"
                     d="M0,224L48,229.3C96,235,192,245,288,234.7C384,224,480,192,576,186.7C672,181,768,203,864,202.7C960,203,1056,181,1152,181.3C1248,181,1344,203,1392,213.3L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
                 </svg>
@@ -197,6 +205,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
             </motion.div>
 
             {/* Overview Section */}
+            {/* ... (keep overview section the same) ... */}
             <motion.div
               id="overview"
               initial={{ opacity: 0, y: 30 }}
@@ -212,23 +221,23 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                       <LightBulbIcon className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                  
+
                   <div className="flex-grow">
                     <h2 className="text-2xl sm:text-3xl font-bold text-purple-900 mb-6">Understanding Our Envisioning Workshops</h2>
-                    
+
                     <div className="prose prose-lg max-w-none text-purple-800/90">
                       <p>
-                        Our Envisioning Workshops are designed to align stakeholders, explore business challenges, 
-                        and define a roadmap for achieving desired outcomes. 
+                        Our Envisioning Workshops are designed to align stakeholders, explore business challenges,
+                        and define a roadmap for achieving desired outcomes.
                       </p>
                       <p>
-                        Solution envisioning involves going into further details to understand the business goals, 
-                        prioritize the top digital transformation initiatives and study and document the To-Be processes 
-                        based on desired process automation goals in order to define an optimal solution that will meet 
+                        Solution envisioning involves going into further details to understand the business goals,
+                        prioritize the top digital transformation initiatives and study and document the To-Be processes
+                        based on desired process automation goals in order to define an optimal solution that will meet
                         the Digital Transformation objectives.
                       </p>
                     </div>
-                    
+
                     <div className="mt-8 pt-6 border-t border-purple-100">
                       <h3 className="text-xl font-semibold text-purple-900 mb-4">Workshop Outcomes</h3>
                       <ul className="space-y-3">
@@ -250,6 +259,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
             </motion.div>
 
             {/* Our Approach Section */}
+            {/* ... (keep approach section the same) ... */}
             <div className="mb-10 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -279,7 +289,8 @@ const EnvisioningWorkshopsPage: React.FC = () => {
             </div>
 
             {/* Workshop Phases */}
-            <motion.div 
+            {/* ... (keep workshop phases section the same) ... */}
+            <motion.div
               className="space-y-8"
               variants={containerVariants}
               initial="hidden"
@@ -300,7 +311,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                       <div className={`flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center bg-gradient-to-r ${phase.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                         <phase.icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       <div className="flex-grow">
                         {/* Title with gradient underline */}
                         <div className="relative mb-3 pb-2">
@@ -309,7 +320,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
                           </h3>
                           <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${phase.gradient} group-hover:w-32 transition-all duration-500`}></div>
                         </div>
-                        
+
                         {/* Description */}
                         <p className="text-purple-700/90 text-base sm:text-lg leading-relaxed">
                           {phase.description}
@@ -322,6 +333,7 @@ const EnvisioningWorkshopsPage: React.FC = () => {
             </motion.div>
 
             {/* Value Proposition */}
+            {/* ... (keep value proposition section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -332,24 +344,24 @@ const EnvisioningWorkshopsPage: React.FC = () => {
               <div className="absolute inset-0 overflow-hidden opacity-40">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <pattern id="grid-value" width="40" height="40" patternUnits="userSpaceOnUse"> {/* Changed id */}
                       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(139, 92, 246, 0.3)" strokeWidth="1"/>
                     </pattern>
                   </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
+                  <rect width="100%" height="100%" fill="url(#grid-value)" /> {/* Changed id */}
                 </svg>
               </div>
-              
+
               <div className="relative">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="flex-shrink-0 w-20 h-20 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center shadow-lg">
                     <LightBulbIcon className="w-10 h-10 text-white" />
                   </div>
-                  
+
                   <div className="flex-grow text-center md:text-left">
                     <h3 className="text-2xl font-bold text-purple-900 mb-3">Expert-Led Digital Transformation</h3>
                     <p className="text-lg text-purple-800">
-                      Use our Consulting Expertise to design a structured approach that will ensure your businesses makes informed decisions, 
+                      Use our Consulting Expertise to design a structured approach that will ensure your businesses makes informed decisions,
                       minimizing risks and maximizing ROI.
                     </p>
                   </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
-import { 
-  ComputerDesktopIcon, 
+import {
+  ComputerDesktopIcon,
   GlobeAltIcon,
   BuildingOfficeIcon,
   UserGroupIcon,
@@ -10,10 +10,12 @@ import {
   ArrowsRightLeftIcon,
   CogIcon
 } from '@heroicons/react/24/outline';
-import ServiceNavigation from '../../components/ServiceNavigation';
+// import ServiceNavigation from '../../components/ServiceNavigation'; // REMOVED
+import Navigation from '../../components/Navigation'; // ADDED
 import Footer from '../../components/Footer';
 
 const developmentTeams = [
+  // ... (keep array content the same)
   {
     id: "onshore",
     title: "Onshore Development Team",
@@ -50,7 +52,8 @@ const developmentTeams = [
 ];
 
 const benefits = [
-  {
+  // ... (keep array content the same)
+   {
     title: "Cost Efficiency",
     description: "Reduce overhead and operational costs while maintaining high-quality development standards.",
     icon: CogIcon,
@@ -73,7 +76,7 @@ const benefits = [
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15
@@ -91,43 +94,48 @@ const ExtendedITPage: React.FC = () => {
     <>
       <Head>
         <title>Extended IT Solutions | Z4BIZ</title>
-        <meta 
-          name="description" 
-          content="Comprehensive IT support and infrastructure management services by Z4BIZ. Onshore and offshore development teams to enhance your business capabilities." 
+        <meta
+          name="description"
+          content="Comprehensive IT support and infrastructure management services by Z4BIZ. Onshore and offshore development teams to enhance your business capabilities."
         />
       </Head>
 
       <div className="flex flex-col min-h-screen relative overflow-hidden">
         {/* Global Background Colors and Decorations */}
+        {/* ... (keep background styles the same) ... */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-cyan-50 to-white" />
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-100 to-transparent opacity-70" />
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-cyan-100 to-transparent opacity-70" />
         </div>
-        
+
         {/* Animated blobs */}
-        <motion.div 
+        {/* ... (keep animated blobs the same) ... */}
+        <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 right-32 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-20 left-1/4 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [0.8, 1, 0.8], rotate: [0, -90, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <ServiceNavigation />
+        {/* <ServiceNavigation /> REMOVED */}
+        <Navigation /> {/* ADDED */}
 
-        <main className="flex-grow relative z-10 pt-24 pb-16">
+        {/* Ensure main content has padding-top */}
+        <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
-            <motion.div 
+            {/* ... (keep hero section the same) ... */}
+             <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -138,10 +146,10 @@ const ExtendedITPage: React.FC = () => {
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full transform translate-x-1/3 -translate-y-1/2" />
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/20 rounded-full transform -translate-x-1/3 translate-y-1/2" />
-                  
+
                   {/* Circuit-like pattern */}
                   <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute inset-0 opacity-20">
-                    <pattern id="circuit" width="80" height="80" patternUnits="userSpaceOnUse">
+                    <pattern id="circuit-it" width="80" height="80" patternUnits="userSpaceOnUse"> {/* Changed id */}
                       <path d="M0,40 L80,40 M40,0 L40,80 M20,20 L60,60 M60,20 L20,60" stroke="white" strokeWidth="1" fill="none"/>
                       <circle cx="40" cy="40" r="3" fill="white" />
                       <circle cx="20" cy="20" r="2" fill="white" />
@@ -149,10 +157,10 @@ const ExtendedITPage: React.FC = () => {
                       <circle cx="60" cy="20" r="2" fill="white" />
                       <circle cx="20" cy="60" r="2" fill="white" />
                     </pattern>
-                    <rect width="100%" height="100%" fill="url(#circuit)" />
+                    <rect width="100%" height="100%" fill="url(#circuit-it)" /> {/* Changed id */}
                   </svg>
                 </div>
-                
+
                 <div className="relative max-w-4xl mx-auto text-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -162,7 +170,7 @@ const ExtendedITPage: React.FC = () => {
                   >
                     IT Solutions
                   </motion.div>
-                  
+
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -171,7 +179,7 @@ const ExtendedITPage: React.FC = () => {
                   >
                     Extended <span className="text-cyan-200">IT Services</span>
                   </motion.h1>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -180,21 +188,21 @@ const ExtendedITPage: React.FC = () => {
                   >
                     Enhance your business capabilities with our dedicated development teams, working seamlessly with your organization to deliver exceptional results.
                   </motion.p>
-                  
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
                   >
-                    <a 
-                      href="#onshore" 
-                      className="inline-flex items-center px-6 py-3 bg-white text-cyan-600 font-medium rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group mr-4"
+                    <a
+                      href="#onshore"
+                      className="inline-flex items-center px-6 py-3 bg-white text-cyan-600 font-medium rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group mr-4 mb-4 sm:mb-0" // Added margin-bottom for mobile stacking
                     >
                       Onshore Teams
                       <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </a>
-                    <a 
-                      href="#offshore" 
+                    <a
+                      href="#offshore"
                       className="inline-flex items-center px-6 py-3 bg-blue-900/30 text-white border border-white/30 backdrop-blur-sm font-medium rounded-lg shadow-lg hover:bg-blue-900/50 transition-colors duration-300 group mt-4 sm:mt-0"
                     >
                       Offshore Teams
@@ -203,13 +211,13 @@ const ExtendedITPage: React.FC = () => {
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Wave Bottom Border */}
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
-                  <path 
-                    fill="#0891b2" 
-                    fillOpacity="1" 
+                  <path
+                    fill="#0891b2" // Match hero bg gradient start
+                    fillOpacity="1"
                     d="M0,160L48,144C96,128,192,96,288,90.7C384,85,480,107,576,128C672,149,768,171,864,165.3C960,160,1056,128,1152,117.3C1248,107,1344,117,1392,122.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
                 </svg>
@@ -217,7 +225,8 @@ const ExtendedITPage: React.FC = () => {
             </motion.div>
 
             {/* IT Teams Benefits */}
-            <motion.div
+            {/* ... (keep benefits section the same) ... */}
+             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -230,7 +239,7 @@ const ExtendedITPage: React.FC = () => {
                   Tailored solutions designed to enhance your development capabilities, reduce costs, and accelerate your digital initiatives.
                 </p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {benefits.map((benefit, index) => (
                   <motion.div
@@ -252,7 +261,8 @@ const ExtendedITPage: React.FC = () => {
             </motion.div>
 
             {/* Development Teams */}
-            <motion.div 
+            {/* ... (keep development teams section the same) ... */}
+            <motion.div
               className="space-y-16"
               variants={containerVariants}
               initial="hidden"
@@ -273,7 +283,7 @@ const ExtendedITPage: React.FC = () => {
                       <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r ${team.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                         <team.icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       <div className="flex-grow">
                         {/* Title with gradient underline */}
                         <div className="relative mb-4 pb-2">
@@ -282,12 +292,12 @@ const ExtendedITPage: React.FC = () => {
                           </h2>
                           <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${team.gradient} group-hover:w-32 transition-all duration-500`}></div>
                         </div>
-                        
+
                         {/* Description */}
                         <p className="text-blue-700/90 mb-8 text-base sm:text-lg leading-relaxed">
                           {team.description}
                         </p>
-                        
+
                         {/* Features */}
                         <div className="mb-6 bg-blue-50/50 rounded-xl p-6">
                           <h3 className={`text-xl font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${team.gradient}`}>
@@ -314,6 +324,7 @@ const ExtendedITPage: React.FC = () => {
             </motion.div>
 
             {/* Technology Stack Section */}
+            {/* ... (keep tech stack section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -331,20 +342,20 @@ const ExtendedITPage: React.FC = () => {
                   <rect x="0" y="0" width="100" height="100" fill="url(#tech-pattern)" />
                 </svg>
               </div>
-              
+
               <div className="relative">
                 <h3 className="text-2xl font-bold text-blue-900 mb-6">Technology Expertise</h3>
                 <p className="text-lg text-blue-800 mb-8">
                   Our development teams bring a wealth of expertise across numerous technologies and domains, ensuring we can meet your specific requirements:
                 </p>
-                
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {[
-                    "Microsoft Dynamics 365", "Java", ".NET", "Python", "React", "Angular", "Node.js", 
+                    "Microsoft Dynamics 365", "Java", ".NET", "Python", "React", "Angular", "Node.js",
                     "Cloud Services (AWS, Azure)", "DevOps", "Mobile Development", "AI & Machine Learning", "IoT Solutions"
                   ].map((tech, index) => (
-                    <div 
-                      key={tech} 
+                    <div
+                      key={tech}
                       className="bg-white/80 backdrop-blur-sm rounded-lg py-3 px-4 text-center text-blue-800 font-medium shadow-sm hover:shadow-md transition-shadow duration-300"
                     >
                       {tech}

@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
-import { 
-  Cog6ToothIcon, 
+import {
+  Cog6ToothIcon,
   BoltIcon,
   RocketLaunchIcon,
   ChartBarIcon,
@@ -10,10 +10,12 @@ import {
   GlobeAltIcon,
   ArrowRightIcon
 } from '@heroicons/react/24/outline';
-import ServiceNavigation from '../../components/ServiceNavigation';
+// import ServiceNavigation from '../../components/ServiceNavigation'; // REMOVED
+import Navigation from '../../components/Navigation'; // ADDED
 import Footer from '../../components/Footer';
 
 const powerPlatformServices = [
+  // ... (keep array content the same)
   {
     id: "power-automate",
     title: "Power Automate",
@@ -94,7 +96,7 @@ const powerPlatformServices = [
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15
@@ -112,43 +114,48 @@ const AIAutomationPage: React.FC = () => {
     <>
       <Head>
         <title>AI & Automation | Z4BIZ</title>
-        <meta 
-          name="description" 
-          content="Intelligent process automation with Microsoft Power Platform and CoPilot for businesses. Build apps, streamline workflows, and gain real-time insights." 
+        <meta
+          name="description"
+          content="Intelligent process automation with Microsoft Power Platform and CoPilot for businesses. Build apps, streamline workflows, and gain real-time insights."
         />
       </Head>
 
       <div className="flex flex-col min-h-screen relative overflow-hidden">
         {/* Global Background Colors and Decorations */}
-        <div className="absolute inset-0 z-0">
+        {/* ... (keep background styles the same) ... */}
+         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-white" />
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-100 to-transparent opacity-70" />
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-slate-100 to-transparent opacity-70" />
         </div>
-        
+
         {/* Animated blobs */}
-        <motion.div 
+        {/* ... (keep animated blobs the same) ... */}
+        <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 right-32 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-20 left-1/4 w-80 h-80 bg-gray-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [0.8, 1, 0.8], rotate: [0, -90, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <ServiceNavigation />
+        {/* <ServiceNavigation /> REMOVED */}
+        <Navigation /> {/* ADDED */}
 
-        <main className="flex-grow relative z-10 pt-24 pb-16">
+        {/* Ensure main content has padding-top to account for fixed Navigation */}
+        <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
-            <motion.div 
+            {/* ... (keep hero section the same) ... */}
+             <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-slate-700 to-blue-700 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -159,7 +166,7 @@ const AIAutomationPage: React.FC = () => {
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full transform translate-x-1/3 -translate-y-1/2" />
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/20 rounded-full transform -translate-x-1/3 translate-y-1/2" />
-                  
+
                   {/* Circuit pattern */}
                   <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute inset-0 opacity-20">
                     <pattern id="circuit" width="80" height="80" patternUnits="userSpaceOnUse">
@@ -173,7 +180,7 @@ const AIAutomationPage: React.FC = () => {
                     <rect width="100%" height="100%" fill="url(#circuit)" />
                   </svg>
                 </div>
-                
+
                 <div className="relative max-w-4xl mx-auto text-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -183,7 +190,7 @@ const AIAutomationPage: React.FC = () => {
                   >
                     Microsoft Power Platform & CoPilot
                   </motion.div>
-                  
+
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -192,7 +199,7 @@ const AIAutomationPage: React.FC = () => {
                   >
                     AI & <span className="text-blue-200">Automation</span>
                   </motion.h1>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -201,14 +208,14 @@ const AIAutomationPage: React.FC = () => {
                   >
                     Empower Your Business with Low-Code and AI-Enhanced Automation
                   </motion.p>
-                  
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
                   >
-                    <a 
-                      href="#power-automate" 
+                    <a
+                      href="#power-automate"
                       className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-medium rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group"
                     >
                       Explore Our Solutions
@@ -217,20 +224,22 @@ const AIAutomationPage: React.FC = () => {
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Wave Bottom Border */}
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
-                  <path 
-                    fill="#334155" 
-                    fillOpacity="1" 
+                  <path
+                    fill="#334155" // Match the hero bg gradient start color
+                    fillOpacity="1"
                     d="M0,160L48,144C96,128,192,96,288,90.7C384,85,480,107,576,128C672,149,768,171,864,165.3C960,160,1056,128,1152,117.3C1248,107,1344,117,1392,122.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
                 </svg>
               </div>
             </motion.div>
 
+
             {/* Overview Section */}
+            {/* ... (keep overview section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -245,10 +254,10 @@ const AIAutomationPage: React.FC = () => {
                       <Cog6ToothIcon className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                  
+
                   <div className="flex-grow">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Low-Code & AI-Enhanced Automation</h2>
-                    
+
                     <div className="prose prose-lg max-w-none text-gray-600">
                       <p>
                         Z4BIZ leverages Microsoft Power Platform and CoPilot to deliver fast, low-code solutions that help businesses automate processes, build custom apps, and gain real-time insights. Our AI-assisted approach ensures that businesses can innovate faster while maintaining operational efficiency, driving growth with lower development costs and quicker implementation.
@@ -260,6 +269,7 @@ const AIAutomationPage: React.FC = () => {
             </motion.div>
 
             {/* Why Choose Us */}
+            {/* ... (keep why choose us section the same) ... */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -270,31 +280,31 @@ const AIAutomationPage: React.FC = () => {
               <div className="absolute inset-0 overflow-hidden opacity-40">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <pattern id="grid-why" width="40" height="40" patternUnits="userSpaceOnUse"> {/* Changed id */}
                       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1"/>
                     </pattern>
                   </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
+                  <rect width="100%" height="100%" fill="url(#grid-why)" /> {/* Changed id */}
                 </svg>
               </div>
-              
+
               <div className="relative">
                 <h3 className="text-2xl font-bold text-slate-900 mb-6">Why Choose Microsoft Power Platform & CoPilot from Z4BIZ?</h3>
                 <p className="text-lg text-slate-700 mb-8">
                   At Z4BIZ, we combine the power of Microsoft's low-code platform with AI-driven capabilities to deliver customized solutions that align with your business goals. Our Hybrid Global Delivery Model ensures fast implementation and cost savings, helping you boost productivity and accelerate innovation.
                 </p>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
-                    "Tailored Solutions", 
-                    "Regional Expertise", 
+                    "Tailored Solutions",
+                    "Regional Expertise",
                     "Fast Implementation",
-                    "Cost Savings", 
+                    "Cost Savings",
                     "Ongoing Support",
                     "Innovation Focus"
                   ].map((feature) => (
-                    <div 
-                      key={feature} 
+                    <div
+                      key={feature}
                       className="bg-white/80 backdrop-blur-sm rounded-lg py-3 px-4 text-center text-slate-800 font-medium shadow-sm hover:shadow-md transition-shadow duration-300"
                     >
                       {feature}
@@ -304,7 +314,8 @@ const AIAutomationPage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Power Platform Services */}
+            {/* Power Platform Services Title */}
+            {/* ... (keep title section the same) ... */}
             <div className="mb-10 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -334,7 +345,8 @@ const AIAutomationPage: React.FC = () => {
             </div>
 
             {/* Service Cards */}
-            <motion.div 
+            {/* ... (keep service cards section the same) ... */}
+             <motion.div
               className="space-y-16"
               variants={containerVariants}
               initial="hidden"
@@ -355,7 +367,7 @@ const AIAutomationPage: React.FC = () => {
                       <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r ${service.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                         <service.icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       <div className="flex-grow">
                         {/* Title with gradient underline */}
                         <div className="relative mb-1 pb-2">
@@ -364,21 +376,21 @@ const AIAutomationPage: React.FC = () => {
                           </h2>
                           <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${service.gradient} group-hover:w-32 transition-all duration-500`}></div>
                         </div>
-                        
+
                         <h3 className={`text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
                           {service.subtitle}
                         </h3>
-                        
+
                         <div className="mb-4 inline-block px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-sm font-medium">
                           {service.tagline}
                         </div>
-                        
+
                         {/* Description */}
                         <p className="text-slate-700 mb-8 text-base sm:text-lg leading-relaxed">
                           {service.description}
                         </p>
-                        
-                        {/* Features */}
+
+                        {/* Benefits */}
                         <div className="mb-6 bg-slate-50 rounded-xl p-6">
                           <h3 className={`text-lg font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
                             Key Benefits of {service.title}
