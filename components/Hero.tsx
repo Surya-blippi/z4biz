@@ -85,8 +85,11 @@ const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
   const prevCard = () => paginate(-1);
 
   return (
-    // Adjusted padding for mobile, increased slightly on larger screens
-    <section className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 pt-16 pb-16 md:pt-20 md:pb-20 overflow-hidden">
+    // *** UPDATED HERE: Increased top padding (pt-24 and md:pt-28) ***
+    <section className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
+      {/* pt-16 changed to pt-24 */}
+      {/* md:pt-20 changed to md:pt-28 */}
+      {/* Increased padding ensures content starts below the fixed navigation bar */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={{
@@ -98,6 +101,7 @@ const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
           // Adjusted bottom margin for mobile
           className="text-center mb-12 md:mb-16"
         >
+          {/* This is the label that was likely getting cut off */}
           <motion.div
             variants={fadeIn}
             className="inline-block px-4 py-2 mb-4 rounded-full bg-blue-100 text-blue-700 text-sm font-medium"

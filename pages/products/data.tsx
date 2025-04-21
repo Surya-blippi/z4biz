@@ -1,15 +1,17 @@
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
-import { 
-  ServerIcon, 
+import {
+  ServerIcon,
   ArrowPathIcon,
   ChartBarIcon,
   SparklesIcon,
   LightBulbIcon,
   GlobeAltIcon,
   ArrowRightIcon,
-  CircleStackIcon
+  CircleStackIcon,
+  BeakerIcon // Added for 4Vue (if SparklesIcon is needed elsewhere distinctly, or use SparklesIcon)
+             // Using SparklesIcon as it was originally assigned and fits AI theme
 } from '@heroicons/react/24/outline';
 import ServiceNavigation from '../../components/ServiceNavigation';
 import Footer from '../../components/Footer';
@@ -45,6 +47,24 @@ const dataServices = [
     gradient: "from-blue-500 to-cyan-600",
     bgPattern: "radial-gradient(circle at 10% 90%, rgba(14, 165, 233, 0.1) 0%, transparent 60%)"
   },
+  // *** START: Added 4Vue Section ***
+  {
+    id: "4vue-data-engineering", // Changed id slightly to avoid potential conflicts if "4vue" is used elsewhere
+    title: "4Vue Platform",
+    subtitle: "AI-Powered Data Engineering for Seamless Integration",
+    tagline: "Connect. Automate. Analyze.", // Adjusted tagline for data context
+    description: "Leverage 4Vue, our AI-driven data engineering platform, to streamline data collection, transformation, and governance. Connect multiple data sources, automate complex data pipelines with a no-code interface, and derive actionable insights faster.",
+    benefits: [ // Renamed 'features' to 'benefits' for consistency
+      "Seamless Integration: Connect diverse data sources using pre-built connectors, simplifying data ingestion.",
+      "Automated Data Pipelines: Schedule pipelines for timely and accurate data flow without manual intervention.",
+      "No-Code Data Transformation: Empower users to transform data effortlessly, accelerating decision-making.",
+      "AI-Powered Analytics: Uncover hidden insights, optimize workflows, and drive decisions with embedded AI."
+    ],
+    icon: SparklesIcon, // Kept SparklesIcon as it signifies AI/Automation
+    gradient: "from-teal-500 to-cyan-600", // Gradient from original ESG definition
+    bgPattern: "radial-gradient(circle at 10% 90%, rgba(20, 184, 166, 0.1) 0%, transparent 60%)" // BG pattern from original
+  },
+  // *** END: Added 4Vue Section ***
   {
     id: "business-intelligence",
     title: "Business Intelligence",
@@ -52,7 +72,7 @@ const dataServices = [
     tagline: "Visualize. Analyze. Decide.",
     description: "Z4BIZ transforms your data into actionable insights through powerful BI solutions. We create interactive dashboards and reports that provide real-time visibility into your business performance, enabling faster, data-driven decision-making across all organizational levels.",
     benefits: [
-      "Interactive Dashboards: Build customized dashboards that display key metrics and KPIs in real-time.",
+      "Interactive Dashboards: Build customized dashboards displaying key metrics and KPIs in real-time.",
       "Self-Service Analytics: Enable non-technical users to explore data and generate insights independently.",
       "Automated Reporting: Streamline recurring report generation to save time and ensure consistent delivery."
     ],
@@ -71,7 +91,7 @@ const dataServices = [
       "Prescriptive Insights: Receive actionable recommendations to optimize business processes.",
       "Performance Optimization: Identify inefficiencies and opportunities for business improvement."
     ],
-    icon: SparklesIcon,
+    icon: SparklesIcon, // Note: SparklesIcon is now used twice. Consider if a different icon for 4Vue or Advanced Analytics is better, or if it's acceptable.
     gradient: "from-violet-500 to-purple-600",
     bgPattern: "radial-gradient(circle at 10% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 60%)"
   }
@@ -80,7 +100,7 @@ const dataServices = [
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15
@@ -97,10 +117,10 @@ const DataManagementPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Data Management | Z4BIZ</title>
-        <meta 
-          name="description" 
-          content="Harness your data's potential with ETL pipelines, data engineering, interactive BI visualizations, and advanced analytics solutions." 
+        <title>Data Management & Solutions | Z4BIZ</title> {/* Updated Title */}
+        <meta
+          name="description"
+          content="Harness your data's potential with ETL pipelines, data engineering, AI-powered platforms like 4Vue, interactive BI, and advanced analytics." /* Updated Meta */
         />
       </Head>
 
@@ -111,19 +131,19 @@ const DataManagementPage: React.FC = () => {
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-100 to-transparent opacity-70" />
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-indigo-100 to-transparent opacity-70" />
         </div>
-        
+
         {/* Animated blobs */}
-        <motion.div 
+        <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 right-32 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-20 left-1/4 w-80 h-80 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [0.8, 1, 0.8], rotate: [0, -90, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
@@ -134,7 +154,7 @@ const DataManagementPage: React.FC = () => {
         <main className="flex-grow relative z-10 pt-24 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
-            <motion.div 
+            <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-indigo-700 to-blue-700 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -145,7 +165,7 @@ const DataManagementPage: React.FC = () => {
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full transform translate-x-1/3 -translate-y-1/2" />
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/20 rounded-full transform -translate-x-1/3 translate-y-1/2" />
-                  
+
                   {/* Data flow pattern */}
                   <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="absolute inset-0 opacity-20">
                     <pattern id="dataflow" width="80" height="80" patternUnits="userSpaceOnUse">
@@ -159,7 +179,7 @@ const DataManagementPage: React.FC = () => {
                     <rect width="100%" height="100%" fill="url(#dataflow)" />
                   </svg>
                 </div>
-                
+
                 <div className="relative max-w-4xl mx-auto text-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -167,18 +187,19 @@ const DataManagementPage: React.FC = () => {
                     transition={{ delay: 0.2, duration: 0.5 }}
                     className="inline-block px-4 py-2 mb-4 rounded-full bg-white/20 backdrop-blur-sm text-white text-sm font-medium"
                   >
-                    ETL Pipelines · Data Engineering · Advanced Analytics
+                    {/* Updated Tagline */}
+                    ETL · Data Engineering · AI Integration · BI · Advanced Analytics
                   </motion.div>
-                  
+
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
                     className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
                   >
-                    Data <span className="text-blue-200">Management</span>
+                    Data <span className="text-blue-200">Management & Solutions</span> {/* Updated Heading */}
                   </motion.h1>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -187,14 +208,14 @@ const DataManagementPage: React.FC = () => {
                   >
                     Harness your data's potential with integrated solutions for modern enterprises
                   </motion.p>
-                  
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
                   >
-                    <a 
-                      href="#etl-pipelines" 
+                    <a
+                      href="#etl-pipelines"
                       className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-medium rounded-lg shadow-lg hover:bg-indigo-50 transition-colors duration-300 group"
                     >
                       Explore Our Solutions
@@ -203,13 +224,13 @@ const DataManagementPage: React.FC = () => {
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Wave Bottom Border */}
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
-                  <path 
-                    fill="#4f46e5" 
-                    fillOpacity="1" 
+                  <path
+                    fill="#4f46e5"
+                    fillOpacity="1"
                     d="M0,160L48,144C96,128,192,96,288,90.7C384,85,480,107,576,128C672,149,768,171,864,165.3C960,160,1056,128,1152,117.3C1248,107,1344,117,1392,122.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
                 </svg>
@@ -231,13 +252,13 @@ const DataManagementPage: React.FC = () => {
                       <ServerIcon className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                  
+
                   <div className="flex-grow">
                     <h2 className="text-2xl sm:text-3xl font-bold text-indigo-900 mb-6">Turn Data into Actionable Insights</h2>
-                    
+
                     <div className="prose prose-lg max-w-none text-indigo-700">
                       <p>
-                        At Z4BIZ, we help organizations transform raw data into valuable business insights through comprehensive data management solutions. Our services include building robust ETL pipelines, implementing scalable data engineering practices, creating interactive business intelligence dashboards, and applying advanced analytics to uncover hidden patterns in your data. From data collection to visualization, we ensure a seamless flow of information that drives better decision-making across your organization.
+                        At Z4BIZ, we help organizations transform raw data into valuable business insights through comprehensive data management solutions. Our services include building robust ETL pipelines, implementing scalable data engineering practices, leveraging AI-driven platforms like <strong className='text-indigo-800'>4Vue</strong> for seamless integration, creating interactive business intelligence dashboards, and applying advanced analytics to uncover hidden patterns. We ensure a seamless flow of information that drives better decision-making. {/* Added mention of 4Vue */}
                       </p>
                     </div>
                   </div>
@@ -263,34 +284,37 @@ const DataManagementPage: React.FC = () => {
                   <rect width="100%" height="100%" fill="url(#grid)" />
                 </svg>
               </div>
-              
+
               <div className="relative">
                 <h3 className="text-2xl font-bold text-indigo-900 mb-6">Why Choose Z4BIZ for Data Management?</h3>
                 <p className="text-lg text-indigo-700 mb-8">
-                  Our data management solutions are designed to tackle the complex challenges of modern enterprises while delivering measurable business value. We combine technical expertise with business acumen to ensure your data initiatives align with your strategic goals.
+                  Our data management solutions are designed to tackle complex challenges and deliver measurable value. We combine technical expertise with business acumen to align data initiatives with your strategic goals.
                 </p>
-                
+
+                {/* *** START: Why Choose Items (Including 4Vue Benefit) *** */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {[
-                    "End-to-End Solutions", 
-                    "Scalable Architecture", 
+                    "End-to-End Solutions",
+                    "Scalable Architecture",
                     "Performance Optimization",
-                    "Industry Expertise", 
+                    "AI-Powered Platform (4Vue)", // Added benefit related to 4Vue
                     "Seamless Integration",
+                    "Industry Expertise",
                     "Ongoing Support"
                   ].map((feature) => (
-                    <div 
-                      key={feature} 
+                    <div
+                      key={feature}
                       className="bg-white/80 backdrop-blur-sm rounded-lg py-3 px-4 text-center text-indigo-800 font-medium shadow-sm hover:shadow-md transition-shadow duration-300"
                     >
                       {feature}
                     </div>
                   ))}
                 </div>
+                 {/* *** END: Why Choose Items *** */}
               </div>
             </motion.div>
 
-            {/* Data Management Services */}
+            {/* Data Management Services Title Area */}
             <div className="mb-10 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -298,7 +322,7 @@ const DataManagementPage: React.FC = () => {
                 viewport={{ once: true }}
                 className="inline-block px-4 py-2 mb-4 rounded-full bg-indigo-100 text-indigo-700 text-sm font-medium"
               >
-                Our Data Services
+                Our Data Services & Platforms {/* Updated Title */}
               </motion.div>
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -315,12 +339,12 @@ const DataManagementPage: React.FC = () => {
                 transition={{ delay: 0.1 }}
                 className="text-base sm:text-xl text-indigo-600 max-w-3xl mx-auto"
               >
-                From data collection to visualization, we provide end-to-end solutions
+                From data collection to visualization and AI-driven insights, we provide end-to-end solutions.
               </motion.p>
             </div>
 
-            {/* Service Cards */}
-            <motion.div 
+            {/* Service Cards Section (Now includes 4Vue) */}
+            <motion.div
               className="space-y-16"
               variants={containerVariants}
               initial="hidden"
@@ -341,7 +365,7 @@ const DataManagementPage: React.FC = () => {
                       <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r ${service.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                         <service.icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       <div className="flex-grow">
                         {/* Title with gradient underline */}
                         <div className="relative mb-1 pb-2">
@@ -350,24 +374,25 @@ const DataManagementPage: React.FC = () => {
                           </h2>
                           <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${service.gradient} group-hover:w-32 transition-all duration-500`}></div>
                         </div>
-                        
+
                         <h3 className={`text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
                           {service.subtitle}
                         </h3>
-                        
+
                         <div className="mb-4 inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-sm font-medium">
                           {service.tagline}
                         </div>
-                        
+
                         {/* Description */}
                         <p className="text-indigo-700 mb-8 text-base sm:text-lg leading-relaxed">
                           {service.description}
                         </p>
-                        
-                        {/* Features */}
+
+                        {/* Benefits/Features */}
                         <div className="mb-6 bg-indigo-50 rounded-xl p-6">
                           <h3 className={`text-lg font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
-                            Key Benefits of {service.title}
+                             {/* Dynamic Title based on service ID */}
+                            {service.id === '4vue-data-engineering' ? `Key Features of ${service.title}` : `Key Benefits of ${service.title}`}
                           </h3>
                           <ul className="space-y-4">
                             {service.benefits.map((benefit, idx) => (
@@ -400,34 +425,34 @@ const DataManagementPage: React.FC = () => {
               <div className="absolute inset-0 opacity-10">
                 <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <pattern id="grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <pattern id="grid-data-benefits" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"> {/* Changed pattern ID */}
                       <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" strokeWidth="0.5"/>
                     </pattern>
                   </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
+                  <rect width="100%" height="100%" fill="url(#grid-data-benefits)" /> {/* Changed pattern ID */}
                 </svg>
               </div>
-              
+
               <div className="relative text-white">
                 <h2 className="text-2xl sm:text-3xl font-bold mb-6">The Impact of Effective Data Management</h2>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors duration-300">
                     <LightBulbIcon className="w-10 h-10 mb-4" />
                     <h3 className="text-xl font-semibold mb-2">Data-Driven Decisions</h3>
-                    <p className="text-white/90">Enable faster, more accurate decision-making at all levels of your organization.</p>
+                    <p className="text-white/90">Enable faster, more accurate decision-making at all levels.</p>
                   </div>
-                  
+
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors duration-300">
                     <ChartBarIcon className="w-10 h-10 mb-4" />
                     <h3 className="text-xl font-semibold mb-2">Performance Optimization</h3>
-                    <p className="text-white/90">Identify inefficiencies and opportunities for improvement across your business.</p>
+                    <p className="text-white/90">Identify inefficiencies and opportunities for business improvement.</p>
                   </div>
-                  
+
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors duration-300">
                     <GlobeAltIcon className="w-10 h-10 mb-4" />
                     <h3 className="text-xl font-semibold mb-2">Scalable Growth</h3>
-                    <p className="text-white/90">Build data infrastructure that grows with your business and adapts to changing needs.</p>
+                    <p className="text-white/90">Build data infrastructure that grows with your business needs.</p>
                   </div>
                 </div>
               </div>

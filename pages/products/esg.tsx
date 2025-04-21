@@ -1,13 +1,13 @@
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
-import { 
-  ShieldCheckIcon, 
+import {
+  ShieldCheckIcon,
   DocumentChartBarIcon,
-  DocumentTextIcon,
+  // DocumentTextIcon, // Removed as not used
   CloudArrowUpIcon,
-  ChartBarIcon,
-  SparklesIcon,
+  // ChartBarIcon, // Removed as not used
+  // SparklesIcon, // *** REMOVED: Icon for 4Vue is no longer needed here ***
   ArrowRightIcon,
   GlobeAltIcon,
   BeakerIcon
@@ -15,6 +15,7 @@ import {
 import ServiceNavigation from '../../components/ServiceNavigation';
 import Footer from '../../components/Footer';
 
+// *** REMOVED: 4Vue object from this array ***
 const esgProducts = [
   {
     id: "4scope",
@@ -30,22 +31,8 @@ const esgProducts = [
     icon: DocumentChartBarIcon,
     gradient: "from-green-500 to-emerald-600",
     bgPattern: "radial-gradient(circle at 90% 10%, rgba(16, 185, 129, 0.1) 0%, transparent 60%)"
-  },
-  {
-    id: "4vue",
-    title: "4Vue",
-    subtitle: "AI-Powered Data Engineering for Seamless Integration",
-    description: "4Vue is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With 4Vue, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data.",
-    features: [
-      "Seamless Integration: Connect to a diverse range of data sources using 4Vue's pre-built connectors, simplifying the data ingestion process",
-      "Automated Data Pipelines: Set up scheduled data pipelines to run automatically, ensuring timely and accurate data flow",
-      "No-Code Data Transformation: Use 4Vue's no-code interface to transform data effortlessly, enabling faster decision-making without the need for coding expertise",
-      "AI-Powered Analytics: Leverage AI-driven analytics to uncover insights, optimize workflows, and make data-driven decisions"
-    ],
-    icon: SparklesIcon,
-    gradient: "from-teal-500 to-cyan-600",
-    bgPattern: "radial-gradient(circle at 10% 90%, rgba(20, 184, 166, 0.1) 0%, transparent 60%)"
   }
+  // 4Vue object was here
 ];
 
 const esgFrameworks = [
@@ -62,7 +49,7 @@ const esgFrameworks = [
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15
@@ -79,10 +66,10 @@ const ESGPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>ESG Solutions | Z4BIZ</title>
-        <meta 
-          name="description" 
-          content="Sustainability & compliance solutions with 4Scope for ESG reporting and 4Vue for data engineering and analytics." 
+        <title>ESG Reporting Solutions | Z4BIZ</title> {/* Updated title */}
+        <meta
+          name="description"
+          content="Sustainability & compliance solutions with 4Scope for comprehensive ESG reporting across major frameworks." /* Updated description */
         />
       </Head>
 
@@ -93,19 +80,19 @@ const ESGPage: React.FC = () => {
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-emerald-100 to-transparent opacity-70" />
           <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-teal-100 to-transparent opacity-70" />
         </div>
-        
+
         {/* Animated nature-inspired blobs */}
-        <motion.div 
+        <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/3 right-32 w-64 h-64 bg-teal-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-20 left-1/4 w-80 h-80 bg-emerald-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [0.8, 1, 0.8], rotate: [0, -90, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
@@ -116,7 +103,7 @@ const ESGPage: React.FC = () => {
         <main className="flex-grow relative z-10 pt-24 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
-            <motion.div 
+            <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-green-600 to-teal-600 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -127,13 +114,13 @@ const ESGPage: React.FC = () => {
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full transform translate-x-1/3 -translate-y-1/2" />
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/20 rounded-full transform -translate-x-1/3 translate-y-1/2" />
-                  
+
                   {/* Leaf pattern */}
                   <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 200 200">
                     <path fill="white" d="M42.7,-62.9C53.4,-54.7,59.2,-40.6,65.2,-26.6C71.1,-12.6,77.2,1.4,75.4,14.9C73.7,28.4,64.2,41.3,52.7,50.9C41.3,60.5,27.9,66.9,14.3,69.1C0.7,71.3,-13.2,69.4,-25.2,63.5C-37.2,57.6,-47.3,47.7,-56,36.1C-64.7,24.5,-72,11.2,-74.6,-3.8C-77.2,-18.9,-75,-35.8,-65.6,-45.9C-56.2,-56,-39.5,-59.2,-24.8,-64.7C-10.1,-70.3,2.5,-78.2,16.1,-77.8C29.8,-77.3,32,-71.2,42.7,-62.9Z" transform="translate(100 100) scale(1.2)" />
                   </svg>
                 </div>
-                
+
                 <div className="relative max-w-4xl mx-auto text-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -141,49 +128,49 @@ const ESGPage: React.FC = () => {
                     transition={{ delay: 0.2, duration: 0.5 }}
                     className="inline-block px-4 py-2 mb-4 rounded-full bg-white/20 backdrop-blur-sm text-white text-sm font-medium"
                   >
-                    Environmental, Social & Governance
+                    Environmental, Social & Governance Reporting {/* Updated Tag */}
                   </motion.div>
-                  
+
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
                     className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight"
                   >
-                    ESG <span className="text-emerald-200">Solutions</span>
+                    ESG <span className="text-emerald-200">Reporting Solution</span> {/* Updated Heading */}
                   </motion.h1>
-                  
+
                   <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="text-lg sm:text-xl text-teal-100 mb-8 max-w-3xl mx-auto"
                   >
-                    Comprehensive sustainability and compliance solutions to meet your ESG reporting needs
+                    Comprehensive sustainability and compliance solutions powered by 4Scope to meet your ESG reporting needs. {/* Updated Sub-heading */}
                   </motion.p>
-                  
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
                   >
-                    <a 
-                      href="#4scope" 
+                    <a
+                      href="#4scope"
                       className="inline-flex items-center px-6 py-3 bg-white text-green-600 font-medium rounded-lg shadow-lg hover:bg-green-50 transition-colors duration-300 group"
                     >
-                      Explore Our Solutions
+                      Explore 4Scope Solution
                       <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                     </a>
                   </motion.div>
                 </div>
               </div>
-              
+
               {/* Wave Bottom Border */}
               <div className="h-16 bg-white relative -mb-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
-                  <path 
-                    fill="#10b981" 
-                    fillOpacity="1" 
+                  <path
+                    fill="#10b981"
+                    fillOpacity="1"
                     d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,96C672,96,768,128,864,154.7C960,181,1056,203,1152,197.3C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
                 </svg>
@@ -205,13 +192,13 @@ const ESGPage: React.FC = () => {
                       <ShieldCheckIcon className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                  
+
                   <div className="flex-grow">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-green-900 mb-6">Sustainability & Compliance Solutions</h2>
-                    
+                    <h2 className="text-2xl sm:text-3xl font-bold text-green-900 mb-6">Streamlined Sustainability & Compliance</h2> {/* Updated title */}
+
                     <div className="prose prose-lg max-w-none text-green-700">
                       <p>
-                        At Z4BIZ, we provide powerful software solutions to help organizations navigate the complex landscape of ESG reporting and sustainability data management. Our flagship products, 4Scope and 4Vue, work together to simplify compliance, streamline data collection, and provide actionable insights for your sustainability journey.
+                        At Z4BIZ, we provide powerful software solutions to help organizations navigate the complex landscape of ESG reporting. Our flagship product, <strong className="text-green-800">4Scope</strong>, simplifies compliance, streamlines data collection for reporting, and provides actionable insights for your sustainability journey. {/* Updated description */}
                       </p>
                     </div>
                   </div>
@@ -237,17 +224,17 @@ const ESGPage: React.FC = () => {
                   <rect width="100%" height="100%" fill="url(#leaf-grid)" />
                 </svg>
               </div>
-              
+
               <div className="relative">
-                <h3 className="text-2xl font-bold text-green-900 mb-6">Supported ESG Frameworks</h3>
+                <h3 className="text-2xl font-bold text-green-900 mb-6">Supported ESG Frameworks with 4Scope</h3> {/* Specified 4Scope */}
                 <p className="text-lg text-green-700 mb-8">
-                  Our solutions support a wide range of global sustainability and reporting frameworks to ensure your business stays compliant:
+                  Our 4Scope solution supports a wide range of global sustainability and reporting frameworks to ensure your business stays compliant:
                 </p>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   {esgFrameworks.map((framework) => (
-                    <div 
-                      key={framework} 
+                    <div
+                      key={framework}
                       className="bg-white/80 backdrop-blur-sm rounded-lg py-3 px-4 text-center text-green-800 font-medium shadow-sm hover:shadow-md transition-shadow duration-300"
                     >
                       {framework}
@@ -257,7 +244,7 @@ const ESGPage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Product Cards */}
+            {/* Product Cards Title Area */}
             <div className="mb-10 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -265,7 +252,7 @@ const ESGPage: React.FC = () => {
                 viewport={{ once: true }}
                 className="inline-block px-4 py-2 mb-4 rounded-full bg-green-100 text-green-700 text-sm font-medium"
               >
-                Our ESG Products
+                Our ESG Reporting Product
               </motion.div>
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -273,7 +260,7 @@ const ESGPage: React.FC = () => {
                 viewport={{ once: true }}
                 className="text-3xl sm:text-4xl font-bold text-green-900 mb-4"
               >
-                Innovative Sustainability Solutions
+                Introducing 4Scope
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -282,19 +269,19 @@ const ESGPage: React.FC = () => {
                 transition={{ delay: 0.1 }}
                 className="text-base sm:text-xl text-green-700 max-w-3xl mx-auto"
               >
-                Powerful tools to simplify ESG reporting and data management
+                A powerful tool to simplify your ESG reporting and compliance management.
               </motion.p>
             </div>
 
-            {/* Product Cards */}
-            <motion.div 
-              className="space-y-16"
+            {/* Product Cards Section (Only 4Scope now) */}
+            <motion.div
+              className="space-y-16" // Might want to remove space-y-16 if only one item remains, or keep for consistency
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {esgProducts.map((product) => (
+              {esgProducts.map((product) => ( // This map will now only iterate once for 4Scope
                 <motion.div
                   key={product.id}
                   variants={itemVariants}
@@ -308,7 +295,7 @@ const ESGPage: React.FC = () => {
                       <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r ${product.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
                         <product.icon className="w-8 h-8 text-white" />
                       </div>
-                      
+
                       <div className="flex-grow">
                         {/* Title with gradient underline */}
                         <div className="relative mb-2 pb-2">
@@ -317,16 +304,16 @@ const ESGPage: React.FC = () => {
                           </h2>
                           <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${product.gradient} group-hover:w-32 transition-all duration-500`}></div>
                         </div>
-                        
+
                         <h3 className={`text-xl font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${product.gradient}`}>
                           {product.subtitle}
                         </h3>
-                        
+
                         {/* Description */}
                         <p className="text-green-700 mb-8 text-base sm:text-lg leading-relaxed">
                           {product.description}
                         </p>
-                        
+
                         {/* Features */}
                         <div className="mb-6 bg-green-50/70 rounded-xl p-6">
                           <h3 className={`text-lg font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${product.gradient}`}>
@@ -363,34 +350,34 @@ const ESGPage: React.FC = () => {
               <div className="absolute inset-0 opacity-10">
                 <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <pattern id="grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <pattern id="grid-esg-benefits" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"> {/* Changed pattern ID */}
                       <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" strokeWidth="0.5"/>
                     </pattern>
                   </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
+                  <rect width="100%" height="100%" fill="url(#grid-esg-benefits)" /> {/* Changed pattern ID */}
                 </svg>
               </div>
-              
+
               <div className="relative text-white">
-                <h2 className="text-2xl sm:text-3xl font-bold mb-6">Why Choose Our ESG Solutions?</h2>
-                
+                <h2 className="text-2xl sm:text-3xl font-bold mb-6">Why Choose the 4Scope ESG Solution?</h2> {/* Updated title */}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors duration-300">
                     <GlobeAltIcon className="w-10 h-10 mb-4" />
                     <h3 className="text-xl font-semibold mb-2">Complete Compliance</h3>
-                    <p className="text-white/90">Meet requirements for all major ESG frameworks with automated reporting tools and guidance.</p>
+                    <p className="text-white/90">Meet requirements for major ESG frameworks with automated reporting.</p>
                   </div>
-                  
+
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors duration-300">
                     <CloudArrowUpIcon className="w-10 h-10 mb-4" />
                     <h3 className="text-xl font-semibold mb-2">Cloud-Based Platform</h3>
-                    <p className="text-white/90">Access your sustainability data anywhere, anytime with our secure cloud-based solutions.</p>
+                    <p className="text-white/90">Access your sustainability data anywhere, anytime securely.</p>
                   </div>
-                  
+
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-colors duration-300">
-                    <BeakerIcon className="w-10 h-10 mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">AI-Powered Insights</h3>
-                    <p className="text-white/90">Advanced analytics help you identify opportunities and risks in your sustainability performance.</p>
+                    <BeakerIcon className="w-10 h-10 mb-4" /> {/* Kept BeakerIcon, could be changed if needed */}
+                    <h3 className="text-xl font-semibold mb-2">Simplified Reporting</h3> {/* Changed from AI-Powered Insights */}
+                    <p className="text-white/90">Streamline data collection and report generation processes efficiently.</p>
                   </div>
                 </div>
               </div>
