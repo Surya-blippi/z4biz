@@ -34,7 +34,7 @@ const navItems: NavItem[] = [
     href: '/#products',
     subItems: [
       // { label: 'Z-Estate', href: '/products/z-estate' },
-      // { label: 'M-Stream', href: '/products/m-stream' },
+      { label: 'Z-Estate-FM', href: '/products/zestatefm' },
       { label: 'ESG', href: '/products/esg' },
       { label: 'Data', href: '/products/data' },
       { label: 'AI & Automation', href: '/products/ai-automation' },

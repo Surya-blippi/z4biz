@@ -12,18 +12,11 @@ const productItems = [
     link: "#"
   },
   {
-    title: "M-Stream",
-    description: "Efficient Management Reporting.",
+    title: "Z-Estate-FM",
+    description: "Facility Management Across Industries.",
     icon: ChartBarIcon,
     gradient: "from-orange-500 to-yellow-500",
-    link: "#"
-  },
-  {
-    title: "Calibre",
-    description: "Automate RFP Response.",
-    icon: DocumentTextIcon,
-    gradient: "from-red-500 to-pink-500",
-    link: "#"
+    link: "/products/zestatefm"
   },
   {
     title: "Data",
