@@ -9,13 +9,8 @@ import {
     HomeModernIcon, // Using for Hero or Masters
     ArrowRightIcon, // For CTA
     PuzzlePieceIcon, // For Modularity/Integration
-    DocumentCheckIcon, // For Tenant App features
-    UserGroupIcon, // Used multiple times, keep
-    BuildingLibraryIcon, // Used in removed coded diagram, keep if needed elsewhere
-    BuildingOfficeIcon, // Used in removed coded diagram, keep if needed elsewhere
-    BanknotesIcon as PropertyBrokerageIcon, // Alias, keep if needed elsewhere
-    WrenchScrewdriverIcon as FacilitiesMgtIcon // Alias, keep if needed elsewhere
-} from '@heroicons/react/24/solid'; // Using solid icons
+    DocumentCheckIcon // For Tenant App features
+} from '@heroicons/react/24/solid';
 
 // Assuming these components exist
 import Navigation from '../../components/Navigation'; // Adjust path
@@ -32,29 +27,30 @@ const fadeInUp = {
 };
 
 const staggerContainer = {
-    hidden: { opacity: 1 }, // Start visible for stagger trigger
+    hidden: { opacity: 1 },
     visible: {
         opacity: 1,
-        transition: { staggerChildren: 0.1 } // Faster stagger
+        transition: { staggerChildren: 0.1 }
     }
 };
 
 // *** CORRECTED scaleUp DEFINITION ***
 const scaleUp = {
-    hidden: { opacity: 0, scale: 0.9, y: 0 }, // Added y: 0
+    hidden: { opacity: 0, scale: 0.9, y: 0 }, // Kept y:0 for compatibility
     visible: {
         opacity: 1,
         scale: 1,
-        y: 0, // Added y: 0
-        transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } // Expo out ease
+        y: 0, // Kept y:0 for compatibility
+        transition: { duration: 0.6, ease: "easeOut" } // Changed ease to string
     }
 };
+
 
 // Helper to apply viewport-triggered animation easily
 const motionProps = (variants = fadeInUp) => ({
     initial: "hidden",
     whileInView: "visible",
-    viewport: { once: true, amount: 0.2 }, // Trigger sooner
+    viewport: { once: true, amount: 0.2 },
     variants
 });
 
@@ -92,7 +88,7 @@ const tenantAppFeatures = [
 
 
 const ZEstateFinalRedesignPage: React.FC = () => {
-     // Inline SVG dot pattern - ensure this is defined if used, otherwise remove style={{...}}
+     // Inline SVG dot pattern
     const dotPattern = `
         <svg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'>
             <circle cx='3' cy='3' r='0.4' fill='rgb(156 163 175 / 0.3)'/>
@@ -116,18 +112,19 @@ const ZEstateFinalRedesignPage: React.FC = () => {
 
                 <main className="flex-grow">
 
-                    {/* --- Hero Section (Zoho One Style) --- */}
+                    {/* --- Hero Section --- */}
                     <motion.section
                         className="relative bg-gradient-to-br from-indigo-600 to-blue-500 text-white pt-28 pb-36 md:pt-36 md:pb-44 overflow-hidden"
                         initial="hidden"
                         animate="visible"
-                        variants={fadeInUp}
+                        variants={fadeInUp} // Section uses simple fade-in
                     >
                          <div className="absolute inset-0 opacity-[0.04]">
                              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="heroGrid" patternUnits="userSpaceOnUse" width="30" height="30"><path d="M0 15h30 M15 0v30" stroke="white" strokeWidth="0.5" shapeRendering="crispEdges"/></pattern></defs><rect width="100%" height="100%" fill="url(#heroGrid)" /></svg>
                          </div>
 
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                            {/* Use helper for viewport trigger */}
                             <motion.div {...motionProps()}>
                                 <HomeModernIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto mb-5 text-indigo-200" />
                             </motion.div>
@@ -203,7 +200,8 @@ const ZEstateFinalRedesignPage: React.FC = () => {
 
                     {/* --- Modularity & Figure 1 Section --- */}
                     <section className="py-20 md:py-28 bg-white relative overflow-hidden">
-                         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
+                        <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
+                            {/* ... svg patterns ... */}
                             <div className="relative h-full text-lg max-w-prose mx-auto" aria-hidden="true">
                                 <svg className="absolute top-12 left-full transform translate-x-32 opacity-20" width="404" height="384" fill="none" viewBox="0 0 404 384">
                                     <defs><pattern id="pattern-modularity" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="4" height="4" className="text-indigo-200" fill="currentColor" /></pattern></defs>
@@ -230,7 +228,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                                     </p>
                                 </motion.div>
 
-                                {/* Corrected usage of motionProps with scaleUp */}
+                                {/* CORRECTED: Using motionProps helper with scaleUp */}
                                 <motion.div className="relative" {...motionProps(scaleUp)}>
                                      <div className="rounded-xl shadow-xl overflow-hidden border border-slate-200 p-2 bg-slate-50">
                                         <Image
@@ -265,7 +263,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                                 </motion.p>
                              </motion.div>
 
-                             {/* Corrected usage of motionProps with scaleUp */}
+                             {/* CORRECTED: Using motionProps helper with scaleUp */}
                              <motion.div className="max-w-6xl mx-auto" {...motionProps(scaleUp)}>
                                  <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl border border-slate-200">
                                     <Image
@@ -283,6 +281,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
 
                     {/* --- Tenant App Section --- */}
                     <section className="py-20 md:py-28 bg-gradient-to-br from-slate-800 to-gray-900 text-white relative overflow-hidden">
+                        {/* ... background elements ... */}
                          <div className="absolute inset-0 opacity-10">
                              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="tenantAppPattern" patternUnits="userSpaceOnUse" width="50" height="50"><circle cx="25" cy="25" r="1.5" fill="rgba(255,255,255,0.5)"/></pattern></defs><rect width="100%" height="100%" fill="url(#tenantAppPattern)" /></svg>
                          </div>
@@ -316,7 +315,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                                     </div>
                                 </motion.div>
 
-                                 {/* Corrected usage of motionProps with scaleUp */}
+                                 {/* CORRECTED: Using motionProps helper with scaleUp */}
                                 <motion.div className="flex justify-center lg:justify-end items-center mt-10 lg:mt-0" {...motionProps(scaleUp)}>
                                      <div className="relative w-72 h-[36rem] group">
                                          {/* ... phone mockup structure ... */}
@@ -372,6 +371,10 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                 <Footer />
 
                 <style jsx global>{`
+                     @keyframes pulse-slow { /* ... pulse definition ... */ }
+                    .animate-pulse-slow { /* ... pulse application ... */ }
+                    .animation-delay-2000 { /* ... delay ... */ }
+                    /* Re-add pulse animation if needed */
                      @keyframes pulse-slow {
                         0%, 100% { opacity: 0.6; transform: scale(1); }
                         50% { opacity: 0.8; transform: scale(1.03); }
