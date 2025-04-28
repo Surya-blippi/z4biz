@@ -40,7 +40,14 @@ const navItems: NavItem[] = [
       { label: 'AI & Automation', href: '/products/ai-automation' },
     ],
   },
-  { label: 'Resources', href: '/#resources' },
+  {
+    label: 'Resources',
+    href: '/resources',
+    subItems: [
+      { label: 'News', href: '/news' },
+      { label: 'Case Studies', href: '/case-studies' },
+    ],
+  },
   { label: 'Contact', href: '/#footer' }
 ];
 
@@ -53,6 +60,7 @@ const dropdownVariants = {
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null);
   const router = useRouter();
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -79,6 +87,10 @@ const Navigation = () => {
     }
   };
 
+  const toggleMobileSubmenu = (label: string) => {
+    setExpandedMobileItem(expandedMobileItem === label ? null : label);
+  };
+
   return (
     <motion.nav
       initial={{ y: -30, opacity: 0 }}
@@ -90,7 +102,7 @@ const Navigation = () => {
           <div className="flex items-center justify-between">
             {/* Logo and Brand - Static Logo - No Animation */}
             <Link href="/" className="flex items-center space-x-3">
-              <motion.div> {/* Removed whileHover and transition for static logo */}
+              <motion.div>
                 <div className="relative w-12 h-12">
                   <Image
                     src="/z4biz-logo.png"
@@ -188,14 +200,54 @@ const Navigation = () => {
           >
             <div className="flex flex-col">
               {navItems.map((item) => (
-                <Link key={item.label} href={item.href} passHref legacyBehavior>
-                  <a
-                    onClick={(e) => handleNavClick(e, item.href)}
-                    className="block px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
-                  >
-                    {item.label}
-                  </a>
-                </Link>
+                <div key={item.label} className="border-b border-blue-100/20 last:border-b-0">
+                  {item.subItems ? (
+                    <div>
+                      <button
+                        onClick={() => toggleMobileSubmenu(item.label)}
+                        className="flex justify-between items-center w-full px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
+                      >
+                        {item.label}
+                        <ChevronDownIcon
+                          className={`w-5 h-5 transition-transform duration-200 ${
+                            expandedMobileItem === item.label ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+                      
+                      <AnimatePresence>
+                        {expandedMobileItem === item.label && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="bg-blue-50/50"
+                          >
+                            {item.subItems.map((subItem) => (
+                              <Link key={subItem.label} href={subItem.href} passHref legacyBehavior>
+                                <a
+                                  onClick={(e) => handleNavClick(e, subItem.href)}
+                                  className="block px-10 py-2 text-blue-700 hover:bg-blue-100/70 transition-colors text-base font-medium"
+                                >
+                                  {subItem.label}
+                                </a>
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link href={item.href} passHref legacyBehavior>
+                      <a
+                        onClick={(e) => handleNavClick(e, item.href)}
+                        className="block px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
+                      >
+                        {item.label}
+                      </a>
+                    </Link>
+                  )}
+                </div>
               ))}
             </div>
           </motion.div>
