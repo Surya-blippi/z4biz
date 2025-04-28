@@ -1,260 +1,272 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronRightIcon, ChevronLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-interface SubNavItem {
-  label: string;
-  href: string;
-}
-
-interface NavItem {
-  label: string;
-  href: string;
-  subItems?: SubNavItem[];
-}
-
-const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
-  {
-    label: 'Services',
-    href: '/#services',
-    subItems: [
-      { label: 'Dynamics 365', href: '/services/dynamics365' },
-      { label: 'ZOHO One Implementation', href: '/services/zoho-one' },
-      { label: 'Envisioning Workshops', href: '/services/envisioning-workshops' },
-      { label: 'Extended IT', href: '/services/extended-it' },
-      { label: 'Sustainability Consulting', href: '/services/sustainability' },
-    ],
-  },
-  {
-    label: 'Products',
-    href: '/#products',
-    subItems: [
-      { label: 'Z-Estate', href: '/products/zestate' },
-      { label: 'Z-Estate-FM', href: '/products/zestatefm' },
-      { label: 'ESG', href: '/products/esg' },
-      { label: 'Data', href: '/products/data' },
-      { label: 'AI & Automation', href: '/products/ai-automation' },
-    ],
-  },
-  {
-    label: 'Resources',
-    href: '/resources',
-    subItems: [
-      { label: 'News', href: '/news' },
-      { label: 'Case Studies', href: '/case-studies' },
-    ],
-  },
-  { label: 'Contact', href: '/#footer' }
+// --- Data remains the same ---
+const serviceCards = [
+    {
+        id: 1,
+        title: "Consulting Services",
+        content: "We offer functional and domain consulting as well as advisory services on Dynamics 365 platforms. Our expert Solution Architects and Functional Consultants provide tailored guidance to help you maximize the value of your investment in Dynamics 365. With over 15 years of experience across complex, multi-country, and multi-entity implementations, our senior consultants bring unparalleled expertise to ensure successful outcomes.",
+        imageAlt: "Enterprise Consulting Services",
+        imagePath: "/images/consulting-services.jpg"
+    },
+    {
+        id: 2,
+        title: "Industry Verticals and Product Development",
+        content: "We enhance CRM platforms by delivering industry-specific vertical and horizontal solutions that automate end-to-end operational processes for businesses not fully aligned with standard enterprise ERP and CRM systems. Our vertical solutions for Dynamics 365 and Zoho CRM complement your existing investments, seamlessly integrating with your business applications to enforce industry best practices across all operational processes.",
+        imageAlt: "Industry Solutions Development",
+        imagePath: "/images/industry-verticals.jpg"
+    },
+    {
+        id: 3,
+        title: "ESG & Data Solutions",
+        content: "Drive Sustainability and Data Excellence. Our solution 4Scope helps organizations simplify their ESG reporting while ensuring alignment with top frameworks like GRI, SASB, and IFRS. Paired with expert consulting, 4Scope empowers businesses to meet regulatory requirements and engage stakeholders effectively. Our solution 4Vue is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With 4Vue, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data.",
+        imageAlt: "ESG and Data Analytics",
+        imagePath: "/images/esg-solutions.jpg"
+    }
 ];
 
-const dropdownVariants = {
-    hidden: { opacity: 0, y: -10, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.2, ease: "easeOut" } },
-    exit: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.15, ease: "easeIn" } }
+// --- Animation Variants ---
+const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }
 };
 
-const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null);
-  const router = useRouter();
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.1,
+        },
+    },
+};
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    setIsOpen(false);
-    setHoveredItem(null);
+const slideVariants = {
+    enter: (direction: number) => ({
+        x: direction > 0 ? '100%' : '-100%',
+        opacity: 0,
+        transition: { type: 'spring', stiffness: 300, damping: 30 }
+    }),
+    center: {
+        zIndex: 1, // Content is at zIndex 1
+        x: 0,
+        opacity: 1,
+        transition: { type: 'spring', stiffness: 300, damping: 30, duration: 0.5 }
+    },
+    exit: (direction: number) => ({
+        zIndex: 0,
+        x: direction < 0 ? '100%' : '-100%',
+        opacity: 0,
+        transition: { type: 'spring', stiffness: 300, damping: 30 }
+    })
+};
 
-    if (href.startsWith('/#') && router.pathname === '/') {
-       e.preventDefault();
-       const targetId = href.replace('/#', '');
-       const element = document.getElementById(targetId);
-       if (element) {
-         const navbarHeight = 100;
-         const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-         const offsetPosition = elementPosition - navbarHeight;
+// --- Component ---
+interface HeroProps {
+    scrollToSection: (id: string) => void;
+}
 
-         window.scrollTo({
-             top: offsetPosition,
-             behavior: 'smooth'
-         });
-       }
-    } else if (href === '/' && router.pathname === '/') {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
+const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
+    const [[activeIndex, direction], setActive] = useState([0, 0]);
+    const [isHovered, setIsHovered] = useState(false);
 
-  const toggleMobileSubmenu = (label: string) => {
-    setExpandedMobileItem(expandedMobileItem === label ? null : label);
-  };
+    const paginate = (newDirection: number) => {
+        const newIndex = (activeIndex + newDirection + serviceCards.length) % serviceCards.length;
+        setActive([newIndex, newDirection]);
+    };
 
-  return (
-    <motion.nav
-      initial={{ y: -30, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="fixed top-0 w-full z-50 px-4 py-4"
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="backdrop-blur-xl bg-white/20 rounded-3xl px-8 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo and Brand - Static Logo - No Animation */}
-            <Link href="/" className="flex items-center space-x-3">
-              <motion.div>
-                <div className="relative w-12 h-12">
-                  <Image
-                    src="/z4biz-logo.png"
-                    alt="Z4BIZ Logo"
-                    width={48}
-                    height={48}
-                    className="rounded-full"
-                  />
-                </div>
-              </motion.div>
-              <span className="text-3xl font-medium text-blue-600">
-                Z4BIZ
-              </span>
-            </Link>
+    const currentService = serviceCards[activeIndex];
 
-            {/* Desktop Navigation with Dropdowns - Kept Hover Dropdown Functionality */}
-            <div className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <div
-                  key={item.label}
-                  className="relative"
-                  onMouseEnter={() => setHoveredItem(item.label)}
-                  onMouseLeave={() => setHoveredItem(null)}
-                >
-                  <Link href={item.href} passHref legacyBehavior>
-                      <motion.a
-                       onClick={(e) => handleNavClick(e, item.href)}
-                       className="text-blue-600 relative group text-lg font-medium transition-colors cursor-pointer flex items-center gap-1"
-                       whileHover={{ scale: 1.05 }}
-                      >
-                        {item.label}
-                        {item.subItems && (
-                            <ChevronDownIcon
-                                className={`w-5 h-5 transition-transform duration-200 ${
-                                    hoveredItem === item.label ? 'rotate-180' : ''
-                                }`}
-                            />
-                        )}
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300" />
-                      </motion.a>
-                  </Link>
+    return (
+        // ***** PADDING FIX APPLIED HERE *****
+        // Removed py-*, added specific pt-* and pb-*
+        <section className="relative pt-32 pb-12 sm:pt-32 sm:pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
+        {/*
+            pt-32: Base top padding (8rem) for mobile to clear navbar
+            pb-12: Original bottom padding from py-12
+            sm:pt-32: Keep same top padding for small screens
+            sm:pb-16: Original bottom padding from sm:py-16
+            lg:pt-32: Keep same top padding for large screens (adjust if desktop nav height differs)
+            lg:pb-24: Original bottom padding from lg:py-24
+            Adjust pt values if your navbar height is significantly different
+        */}
 
-                  <AnimatePresence>
-                    {item.subItems && hoveredItem === item.label && (
-                      <motion.ul
-                        variants={dropdownVariants}
+            {/* Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 -z-10"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(237,242,255,0.6)_0%,rgba(255,255,255,0)_70%)] -z-10"></div>
+
+            {/* Decorative Elements - Simplified for mobile */}
+            <div className="absolute top-0 right-0 w-full max-w-sm -z-10 opacity-50 md:opacity-100">
+                <svg width="404" height="392" fill="none" viewBox="0 0 404 392">
+                    <defs>
+                         {/* Unique ID for SVG pattern */}
+                        <pattern id="pattern-squares-hero" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <rect x="0" y="0" width="4" height="4" fill="rgba(99, 102, 241, 0.08)" />
+                        </pattern>
+                    </defs>
+                     {/* Use unique ID */}
+                    <rect width="404" height="392" fill="url(#pattern-squares-hero)" />
+                </svg>
+            </div>
+
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
+                {/* Main Content Grid - Mobile First */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+                    {/* Text Content Column - Now order-1 by default */}
+                    <motion.div
+                        variants={staggerContainer}
                         initial="hidden"
                         animate="visible"
-                        exit="exit"
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-60 bg-white/90 backdrop-blur-md rounded-lg shadow-xl border border-blue-100/50 py-2 z-10 overflow-hidden"
-                      >
-                        {item.subItems.map((subItem) => (
-                          <li key={subItem.label}>
-                            <Link href={subItem.href} passHref legacyBehavior>
-                              <a
-                                onClick={(e) => handleNavClick(e, subItem.href)}
-                                className="block px-5 py-2 text-blue-700 hover:bg-blue-100/70 transition-colors whitespace-nowrap text-base font-medium"
-                              >
-                                {subItem.label}
-                              </a>
-                            </Link>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-            {/* Mobile Menu Icon */}
-            <div className="md:hidden">
-              <motion.button
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-blue-600 focus:outline-none"
-                whileHover={{ scale: 1.1 }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  {isOpen ? (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  ) : (
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                  )}
-                </svg>
-              </motion.button>
-            </div>
-          </div>
-        </div>
-        {/* Mobile Dropdown Menu */}
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="md:hidden mt-2 rounded-xl bg-white/20 backdrop-blur-xl overflow-hidden"
-          >
-            <div className="flex flex-col">
-              {navItems.map((item) => (
-                <div key={item.label} className="border-b border-blue-100/20 last:border-b-0">
-                  {item.subItems ? (
-                    <div>
-                      <button
-                        onClick={() => toggleMobileSubmenu(item.label)}
-                        className="flex justify-between items-center w-full px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
-                      >
-                        {item.label}
-                        <ChevronDownIcon
-                          className={`w-5 h-5 transition-transform duration-200 ${
-                            expandedMobileItem === item.label ? 'rotate-180' : ''
-                          }`}
-                        />
-                      </button>
-                      
-                      <AnimatePresence>
-                        {expandedMobileItem === item.label && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="bg-blue-50/50"
-                          >
-                            {item.subItems.map((subItem) => (
-                              <Link key={subItem.label} href={subItem.href} passHref legacyBehavior>
-                                <a
-                                  onClick={(e) => handleNavClick(e, subItem.href)}
-                                  className="block px-10 py-2 text-blue-700 hover:bg-blue-100/70 transition-colors text-base font-medium"
-                                >
-                                  {subItem.label}
-                                </a>
-                              </Link>
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                        className="order-1 lg:order-1"
+                    >
+                        <motion.div variants={fadeInUp} className="mb-5 sm:mb-6 text-center lg:text-left">
+                            <span className="inline-block text-indigo-600 font-semibold text-base sm:text-lg mb-2">Enterprise Solutions & Consulting</span>
+                            {/* Reduced base font size for better mobile fit */}
+                            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight">
+                                Driving Success Through{" "}
+                                <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                                    Expert Consulting
+                                </span>
+                            </h1>
+                        </motion.div>
+
+                        <motion.p
+                            variants={fadeInUp}
+                            className="text-base sm:text-lg text-gray-600 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
+                        >
+                            Explore our tailored services designed to drive growth and efficiency.
+                        </motion.p>
+
+                        {/* CTA Buttons */}
+                        <motion.div
+                            variants={fadeInUp}
+                            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                        >
+                            <button
+                                onClick={() => scrollToSection('services')}
+                                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 sm:px-8 sm:py-4 text-base font-medium text-white bg-gradient-to-r from-indigo-600 to-blue-600 rounded-lg shadow-lg hover:shadow-indigo-500/20 transition-shadow duration-300 group"
+                            >
+                                Explore Services
+                                <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                            </button>
+                            <button
+                                onClick={() => scrollToSection('footer')}
+                                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 sm:px-8 sm:py-4 text-base font-medium text-indigo-600 bg-white border border-indigo-200 rounded-lg hover:bg-indigo-50 hover:border-indigo-300 transition-colors duration-200"
+                            >
+                                Contact Us
+                            </button>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* Service Card - Now order-2 by default */}
+                    <div className="order-2 lg:order-2 mb-8 lg:mb-0">
+                        {/* Card Container */}
+                        <motion.div
+                            className="relative mx-auto max-w-lg lg:max-w-none"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                        >
+                            {/* Navigation Arrows */}
+                            <div className="absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-5 md:-left-7 z-30">
+                                <button onClick={() => paginate(-1)} className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-lg hover:bg-indigo-50 transition-colors text-indigo-600 focus:outline-none" aria-label="Previous Service">
+                                    <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                                </button>
+                            </div>
+                            <div className="absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-5 md:-right-7 z-30">
+                                <button onClick={() => paginate(1)} className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-lg hover:bg-indigo-50 transition-colors text-indigo-600 focus:outline-none" aria-label="Next Service">
+                                    <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                                </button>
+                            </div>
+
+                            {/* Service Card Content */}
+                            <div
+                                className="relative bg-white rounded-2xl shadow-xl sm:shadow-2xl border border-indigo-50 overflow-hidden"
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}
+                                onTouchStart={() => setIsHovered(true)}
+                                onTouchEnd={() => setIsHovered(false)}
+                            >
+                                <AnimatePresence initial={false} custom={direction} mode="wait">
+                                    <motion.div key={currentService.id} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" className="w-full">
+                                        {/* Image Header */}
+                                        <div className="relative h-48 sm:h-56 md:h-64 w-full">
+                                            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-10"></div>
+                                            <img src={currentService.imagePath} alt={currentService.imageAlt} className="w-full h-full object-cover object-center" style={{ transition: "transform 8s ease-out", transform: isHovered ? "scale(1.05)" : "scale(1)" }} loading="eager" />
+                                            <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 z-20 text-white">
+                                                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">{currentService.title}</h3>
+                                            </div>
+                                        </div>
+                                        {/* Content Area */}
+                                        <div className="p-4 sm:p-6 md:p-8">
+                                            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{currentService.content}</p>
+                                        </div>
+                                    </motion.div>
+                                </AnimatePresence>
+                                {/* Progress Indicator */}
+                                <div className="absolute bottom-0 left-0 right-0 z-20 px-4 py-3 sm:px-6 sm:py-4 flex justify-center gap-2">
+                                    {serviceCards.map((_, index) => (
+                                        <button key={index} onClick={() => setActive([index, index > activeIndex ? 1 : -1])} className={`h-2 rounded-full transition-all duration-300 ${activeIndex === index ? 'w-8 bg-indigo-500' : 'w-4 bg-gray-300 hover:bg-gray-400'}`} aria-label={`Go to service ${index + 1}`} />
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
-                  ) : (
-                    <Link href={item.href} passHref legacyBehavior>
-                      <a
-                        onClick={(e) => handleNavClick(e, item.href)}
-                        className="block px-6 py-3 text-blue-600 hover:bg-blue-100/50 transition-colors text-lg font-medium"
-                      >
-                        {item.label}
-                      </a>
-                    </Link>
-                  )}
                 </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </motion.nav>
-  );
+
+                {/* Logo Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                    className="flex flex-col items-center justify-center mt-16 lg:mt-24"
+                >
+                    <div className="text-center mb-6 sm:mb-8">
+                        <h2 className="text-base sm:text-lg font-medium text-gray-500 mb-2">Trusted By Leading Platforms</h2>
+                        <div className="h-px w-20 bg-gray-200 mx-auto"></div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 md:gap-24">
+                        <motion.div className="flex flex-col items-center" whileHover={{ scale: 1.02 }}>
+                            <div className="relative h-12 sm:h-16 md:h-20 w-48 sm:w-64 md:w-80">
+                                <Image src="/images/microsoft-logo.png" alt="Microsoft Logo" layout="fill" objectFit="contain" priority />
+                            </div>
+                            <p className="text-xs sm:text-sm text-center text-indigo-700 font-medium mt-2">Microsoft Partner</p>
+                        </motion.div>
+                        <motion.div className="flex flex-col items-center mt-4 sm:mt-0" whileHover={{ scale: 1.02 }}>
+                            <div className="relative h-10 sm:h-14 md:h-16 w-40 sm:w-56 md:w-72">
+                                <Image src="/images/zoho-logo.png" alt="Zoho Logo" layout="fill" objectFit="contain" priority />
+                            </div>
+                            <p className="text-xs sm:text-sm text-center text-indigo-700 font-medium mt-2">Zoho Partner</p>
+                        </motion.div>
+                    </div>
+                </motion.div>
+
+            </div> {/* End Container */}
+
+            {/* Global Styles */}
+            <style jsx global>{`
+                @media (prefers-reduced-motion: reduce) {
+                    *, ::before, ::after {
+                        animation-duration: 0.01ms !important;
+                        animation-iteration-count: 1 !important;
+                        transition-duration: 0.01ms !important;
+                        scroll-behavior: auto !important;
+                    }
+                }
+                @media (max-width: 640px) {
+                    .container {
+                        padding-left: 16px;
+                        padding-right: 16px;
+                    }
+                }
+            `}</style>
+        </section>
+    );
 };
 
-export default Navigation;
+export default MobileOptimizedHero;
