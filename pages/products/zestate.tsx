@@ -9,14 +9,19 @@ import {
     HomeModernIcon, // Using for Hero or Masters
     ArrowRightIcon, // For CTA
     PuzzlePieceIcon, // For Modularity/Integration
-    DocumentCheckIcon // Ensure this is imported for Tenant App features
-} from '@heroicons/react/24/solid';
+    DocumentCheckIcon, // For Tenant App features
+    UserGroupIcon, // Used multiple times, keep
+    BuildingLibraryIcon, // Used in removed coded diagram, keep if needed elsewhere
+    BuildingOfficeIcon, // Used in removed coded diagram, keep if needed elsewhere
+    BanknotesIcon as PropertyBrokerageIcon, // Alias, keep if needed elsewhere
+    WrenchScrewdriverIcon as FacilitiesMgtIcon // Alias, keep if needed elsewhere
+} from '@heroicons/react/24/solid'; // Using solid icons
 
 // Assuming these components exist
 import Navigation from '../../components/Navigation'; // Adjust path
 import Footer from '../../components/Footer';       // Adjust path
 
-// --- Animation Variants (Inspired by ZohoOnePage) ---
+// --- Animation Variants ---
 const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -34,16 +39,16 @@ const staggerContainer = {
     }
 };
 
-// *** ADDED scaleUp DEFINITION ***
+// *** CORRECTED scaleUp DEFINITION ***
 const scaleUp = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: { opacity: 0, scale: 0.9, y: 0 }, // Added y: 0
     visible: {
         opacity: 1,
         scale: 1,
+        y: 0, // Added y: 0
         transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } // Expo out ease
     }
 };
-
 
 // Helper to apply viewport-triggered animation easily
 const motionProps = (variants = fadeInUp) => ({
@@ -88,8 +93,12 @@ const tenantAppFeatures = [
 
 const ZEstateFinalRedesignPage: React.FC = () => {
      // Inline SVG dot pattern - ensure this is defined if used, otherwise remove style={{...}}
-    const dotPattern = `...`;
-    const encodedDotPattern = `...`;
+    const dotPattern = `
+        <svg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'>
+            <circle cx='3' cy='3' r='0.4' fill='rgb(156 163 175 / 0.3)'/>
+        </svg>
+    `;
+    const encodedDotPattern = `url("data:image/svg+xml,${encodeURIComponent(dotPattern)}")`;
 
     return (
         <>
@@ -110,16 +119,15 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                     {/* --- Hero Section (Zoho One Style) --- */}
                     <motion.section
                         className="relative bg-gradient-to-br from-indigo-600 to-blue-500 text-white pt-28 pb-36 md:pt-36 md:pb-44 overflow-hidden"
-                        initial="hidden" // Changed from "initial"
-                        animate="visible" // Changed from "animate"
-                        variants={fadeInUp} // Use base fadeInUp for section entrance
+                        initial="hidden"
+                        animate="visible"
+                        variants={fadeInUp}
                     >
                          <div className="absolute inset-0 opacity-[0.04]">
                              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="heroGrid" patternUnits="userSpaceOnUse" width="30" height="30"><path d="M0 15h30 M15 0v30" stroke="white" strokeWidth="0.5" shapeRendering="crispEdges"/></pattern></defs><rect width="100%" height="100%" fill="url(#heroGrid)" /></svg>
                          </div>
 
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                             {/* Use motionProps helper for consistency */}
                             <motion.div {...motionProps()}>
                                 <HomeModernIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto mb-5 text-indigo-200" />
                             </motion.div>
@@ -146,7 +154,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                             </motion.div>
                         </div>
                          <div className="absolute bottom-0 left-0 w-full h-16 md:h-20" style={{ transform: 'translateY(1px)' }}>
-                            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" fill="#f8fafc">
+                            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" fill="#f8fafc"> {/* slate-50 */}
                                 <polygon points="0,100 100,0 100,100" />
                             </svg>
                         </div>
@@ -157,7 +165,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                              <motion.div
                                 className="max-w-3xl mx-auto text-center mb-16 md:mb-20"
-                                {...motionContainerProps()} // Apply container props for stagger trigger
+                                {...motionContainerProps()}
                              >
                                 <motion.h2 className="text-base font-semibold text-indigo-600 tracking-wide uppercase" variants={fadeInUp}>
                                     Core Functions
@@ -172,12 +180,12 @@ const ZEstateFinalRedesignPage: React.FC = () => {
 
                             <motion.div
                                 className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-6xl mx-auto"
-                                {...motionContainerProps()} // Apply container props for stagger trigger
+                                {...motionContainerProps()}
                             >
                                 {featureListItems.map((item) => (
                                     <motion.div
                                         key={item.id}
-                                        variants={fadeInUp} // Items use fadeInUp
+                                        variants={fadeInUp}
                                         className="flex items-start p-6 bg-white rounded-xl shadow-md border border-slate-200 hover:shadow-lg transition-shadow duration-300"
                                     >
                                         <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-100 to-blue-100 text-indigo-600 flex items-center justify-center mr-5">
@@ -195,10 +203,8 @@ const ZEstateFinalRedesignPage: React.FC = () => {
 
                     {/* --- Modularity & Figure 1 Section --- */}
                     <section className="py-20 md:py-28 bg-white relative overflow-hidden">
-                         {/* Background decoration */}
-                        <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
-                            {/* ... svg patterns ... */}
-                             <div className="relative h-full text-lg max-w-prose mx-auto" aria-hidden="true">
+                         <div className="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
+                            <div className="relative h-full text-lg max-w-prose mx-auto" aria-hidden="true">
                                 <svg className="absolute top-12 left-full transform translate-x-32 opacity-20" width="404" height="384" fill="none" viewBox="0 0 404 384">
                                     <defs><pattern id="pattern-modularity" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><rect x="0" y="0" width="4" height="4" className="text-indigo-200" fill="currentColor" /></pattern></defs>
                                     <rect width="404" height="384" fill="url(#pattern-modularity)" />
@@ -224,7 +230,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                                     </p>
                                 </motion.div>
 
-                                {/* Using scaleUp for the image container */}
+                                {/* Corrected usage of motionProps with scaleUp */}
                                 <motion.div className="relative" {...motionProps(scaleUp)}>
                                      <div className="rounded-xl shadow-xl overflow-hidden border border-slate-200 p-2 bg-slate-50">
                                         <Image
@@ -246,7 +252,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                              <motion.div
                                 className="max-w-3xl mx-auto text-center mb-16 md:mb-20"
-                                {...motionContainerProps()} // Use container props
+                                {...motionContainerProps()}
                             >
                                 <motion.h2 className="text-base font-semibold text-blue-600 tracking-wide uppercase" variants={fadeInUp}>
                                     Integrated Workflow
@@ -259,7 +265,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                                 </motion.p>
                              </motion.div>
 
-                             {/* Using scaleUp for the image container */}
+                             {/* Corrected usage of motionProps with scaleUp */}
                              <motion.div className="max-w-6xl mx-auto" {...motionProps(scaleUp)}>
                                  <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl border border-slate-200">
                                     <Image
@@ -275,16 +281,14 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                         </div>
                     </section>
 
-                    {/* --- Tenant App Section (Zoho One Style) --- */}
+                    {/* --- Tenant App Section --- */}
                     <section className="py-20 md:py-28 bg-gradient-to-br from-slate-800 to-gray-900 text-white relative overflow-hidden">
-                         {/* Background decoration */}
                          <div className="absolute inset-0 opacity-10">
                              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="tenantAppPattern" patternUnits="userSpaceOnUse" width="50" height="50"><circle cx="25" cy="25" r="1.5" fill="rgba(255,255,255,0.5)"/></pattern></defs><rect width="100%" height="100%" fill="url(#tenantAppPattern)" /></svg>
                          </div>
 
                         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                                {/* Text & Features Column */}
                                 <motion.div {...motionContainerProps()}>
                                     <motion.h2 className="text-base font-semibold text-cyan-400 tracking-wide uppercase" variants={fadeInUp}>
                                         Tenant Engagement Hub
@@ -312,8 +316,7 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                                     </div>
                                 </motion.div>
 
-                                {/* Visual Column (Phone Mockup) */}
-                                {/* Using scaleUp for the mockup */}
+                                 {/* Corrected usage of motionProps with scaleUp */}
                                 <motion.div className="flex justify-center lg:justify-end items-center mt-10 lg:mt-0" {...motionProps(scaleUp)}>
                                      <div className="relative w-72 h-[36rem] group">
                                          {/* ... phone mockup structure ... */}
