@@ -68,8 +68,50 @@ const motionContainerProps = (variants = staggerContainer, amount = 0.1) => ({
     variants
 });
 
+// TypeScript interfaces for data structures
+interface SolutionHighlightItem {
+    title: string;
+    description: string;
+    icon?: React.ElementType;
+}
+
+interface BenefitItem {
+    title: string;
+    description: string;
+    icon?: React.ElementType;
+}
+
+interface ChallengePoint {
+    primary?: string;
+    points?: string[];
+}
+
+interface Pillar {
+    title: string;
+    icon: React.ElementType;
+    points: string[];
+}
+
+interface CaseStudy {
+    id: string;
+    title: string;
+    subtitle: string;
+    icon: React.ElementType;
+    challenge?: {
+        primary: string;
+        points?: string[];
+    };
+    overview?: string[];
+    solution?: string[];
+    keyHighlights?: string[];
+    solutionHighlights?: SolutionHighlightItem[];
+    benefits?: BenefitItem[];
+    results?: string[];
+    pillars?: Pillar[];
+}
+
 // --- Case Study Data Structure ---
-const caseStudies = [
+const caseStudies: CaseStudy[] = [
      {
         id: 'contract-management',
         title: 'Derivative Contract Management System',
@@ -203,8 +245,29 @@ const caseStudies = [
      }
 ];
 
+// --- Component Props Interfaces ---
+interface SolutionHighlightProps {
+    item: SolutionHighlightItem;
+}
+
+interface BenefitCardProps {
+    item: BenefitItem;
+}
+
+interface ResultItemProps {
+    point: string;
+}
+
+interface ChallengePointProps {
+    point: string;
+}
+
+interface SectionDividerProps {
+    text: string;
+}
+
 // --- Helper Components for Solution/Highlight Items ---
-const SolutionHighlight = ({ item }) => (
+const SolutionHighlight: React.FC<SolutionHighlightProps> = ({ item }) => (
     <div className="flex items-start space-x-3 bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
         {item.icon && (
             <div className="flex-shrink-0 w-10 h-10 mt-1 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center">
@@ -218,7 +281,7 @@ const SolutionHighlight = ({ item }) => (
     </div>
 );
 
-const BenefitCard = ({ item }) => (
+const BenefitCard: React.FC<BenefitCardProps> = ({ item }) => (
     <div className="flex flex-col items-center p-6 bg-white rounded-xl shadow-md border-t-4 border-emerald-500 hover:shadow-lg transition-all duration-300">
         <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
             {item.icon && <item.icon className="w-8 h-8" />}
@@ -228,21 +291,21 @@ const BenefitCard = ({ item }) => (
     </div>
 );
 
-const ResultItem = ({ point }) => (
+const ResultItem: React.FC<ResultItemProps> = ({ point }) => (
     <div className="flex items-start space-x-3 p-4 bg-gradient-to-r from-white to-emerald-50 rounded-lg border-l-4 border-emerald-500">
         <CheckCircleIcon className="w-5 h-5 mt-0.5 text-emerald-500 flex-shrink-0" />
         <p className="text-sm text-slate-700">{point}</p>
     </div>
 );
 
-const ChallengePoint = ({ point }) => (
+const ChallengePoint: React.FC<ChallengePointProps> = ({ point }) => (
     <div className="flex items-start space-x-3 my-1.5">
         <div className="w-1.5 h-1.5 mt-2 rounded-full bg-red-500 flex-shrink-0"></div>
         <p className="text-sm text-slate-700">{point}</p>
     </div>
 );
 
-const SectionDivider = ({ text }) => (
+const SectionDivider: React.FC<SectionDividerProps> = ({ text }) => (
     <div className="flex items-center my-12">
         <div className="flex-grow h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
         <span className="px-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">{text}</span>
@@ -251,7 +314,7 @@ const SectionDivider = ({ text }) => (
 );
 
 // --- Case Studies Page Component ---
-const CaseStudiesPage = () => {
+const CaseStudiesPage: React.FC = () => {
     return (
         <>
             <Head>
@@ -327,10 +390,10 @@ const CaseStudiesPage = () => {
                                                 Business Challenge
                                             </h3>
                                             <p className="text-base text-slate-700 font-medium mb-4 border-l-4 border-red-300 pl-4">
-                                                {caseStudies[0].challenge.primary}
+                                                {caseStudies[0].challenge?.primary}
                                             </p>
                                             <div className="space-y-2">
-                                                {caseStudies[0].challenge.points.map((point, i) => (
+                                                {caseStudies[0].challenge?.points?.map((point, i) => (
                                                     <ChallengePoint key={i} point={point} />
                                                 ))}
                                             </div>
@@ -343,7 +406,7 @@ const CaseStudiesPage = () => {
                                             Our Solution
                                         </h3>
                                         <div className="grid grid-cols-1 gap-4">
-                                            {caseStudies[0].solutionHighlights.map((item, i) => (
+                                            {caseStudies[0].solutionHighlights?.map((item, i) => (
                                                 <SolutionHighlight key={i} item={item} />
                                             ))}
                                         </div>
@@ -373,10 +436,10 @@ const CaseStudiesPage = () => {
                                                 Information Access Challenge
                                             </h3>
                                             <p className="text-base text-slate-700 mb-4">
-                                                {caseStudies[1].challenge.primary}
+                                                {caseStudies[1].challenge?.primary}
                                             </p>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6">
-                                                {caseStudies[1].challenge.points.map((point, i) => (
+                                                {caseStudies[1].challenge?.points?.map((point, i) => (
                                                     <div key={i} className="bg-blue-50 p-3 rounded-lg text-sm text-blue-800 font-medium">
                                                         {point}
                                                     </div>
@@ -419,7 +482,7 @@ const CaseStudiesPage = () => {
                                             </h3>
                                             
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                {caseStudies[1].solutionHighlights.map((item, i) => (
+                                                {caseStudies[1].solutionHighlights?.map((item, i) => (
                                                     <SolutionHighlight key={i} item={item} />
                                                 ))}
                                             </div>
@@ -450,7 +513,7 @@ const CaseStudiesPage = () => {
                                                 Business Overview
                                             </h3>
                                             <div className="space-y-3">
-                                                {caseStudies[2].overview.map((point, i) => (
+                                                {caseStudies[2].overview?.map((point, i) => (
                                                     <p key={i} className="text-sm text-slate-700">{point}</p>
                                                 ))}
                                             </div>
@@ -462,7 +525,7 @@ const CaseStudiesPage = () => {
                                                 Our Solution
                                             </h3>
                                             <div className="space-y-3">
-                                                {caseStudies[2].solution.map((point, i) => (
+                                                {caseStudies[2].solution?.map((point, i) => (
                                                     <p key={i} className="text-sm text-slate-700">{point}</p>
                                                 ))}
                                             </div>
@@ -471,7 +534,7 @@ const CaseStudiesPage = () => {
 
                                     <motion.div className="lg:col-span-7" variants={fadeInRight}>
                                         <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-200">
-                                            <div className="relative mb-10">
+                                            <div className="relative mb-6">
                                                 <div className="absolute -top-12 -left-12 w-24 h-24 bg-amber-100 rounded-full flex items-center justify-center">
                                                     <WrenchScrewdriverIcon className="w-12 h-12 text-amber-600" />
                                                 </div>
@@ -482,7 +545,7 @@ const CaseStudiesPage = () => {
                                             </h3>
                                             
                                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                                                {caseStudies[2].benefits.map((benefit, i) => (
+                                                {caseStudies[2].benefits?.map((benefit, i) => (
                                                     <BenefitCard key={i} item={benefit} />
                                                 ))}
                                             </div>
@@ -493,7 +556,7 @@ const CaseStudiesPage = () => {
                                                     Results Achieved
                                                 </h4>
                                                 <div className="space-y-3">
-                                                    {caseStudies[2].results.map((result, i) => (
+                                                    {caseStudies[2].results?.map((result, i) => (
                                                         <ResultItem key={i} point={result} />
                                                     ))}
                                                 </div>
@@ -527,7 +590,7 @@ const CaseStudiesPage = () => {
                                                 Business Challenge
                                             </h3>
                                             <p className="text-base text-slate-700 leading-relaxed">
-                                                {caseStudies[3].challenge.primary}
+                                                {caseStudies[3].challenge?.primary}
                                             </p>
                                             
                                             <div className="mt-6 bg-red-50 p-4 rounded-lg border-l-4 border-red-300">
@@ -559,13 +622,13 @@ const CaseStudiesPage = () => {
                                                 Solution Approach
                                             </h3>
                                             <p className="text-base text-slate-700 mb-4">
-                                                {caseStudies[3].solution[0]}
+                                                {caseStudies[3].solution?.[0]}
                                             </p>
                                             
                                             <div className="space-y-3 mt-6">
                                                 <h4 className="font-medium text-green-700">Process Flow:</h4>
                                                 <div className="bg-white p-4 rounded-lg">
-                                                    {caseStudies[3].keyHighlights.map((highlight, i) => (
+                                                    {caseStudies[3].keyHighlights?.map((highlight, i) => (
                                                         <div key={i} className="flex items-start space-x-3 mb-4 last:mb-0">
                                                             <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs font-bold">
                                                                 {i+1}
@@ -584,7 +647,7 @@ const CaseStudiesPage = () => {
                                             Solution Highlights & Benefits
                                         </h3>
                                         <div className="grid grid-cols-1 gap-4">
-                                            {caseStudies[3].solutionHighlights.map((item, i) => (
+                                            {caseStudies[3].solutionHighlights?.map((item, i) => (
                                                 <SolutionHighlight key={i} item={item} />
                                             ))}
                                         </div>
@@ -630,7 +693,7 @@ const CaseStudiesPage = () => {
 
                                 <motion.div variants={fadeInUp} className="max-w-5xl mx-auto">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                        {caseStudies[4].pillars.map((pillar, i) => (
+                                        {caseStudies[4].pillars?.map((pillar, i) => (
                                             <motion.div 
                                                 key={pillar.title} 
                                                 className="bg-gradient-to-b from-blue-50 to-white rounded-2xl shadow-md border border-blue-100 overflow-hidden"
