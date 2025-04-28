@@ -9,7 +9,7 @@ const productItems = [
     description: "Real Estate Property Management.",
     icon: HomeIcon,
     gradient: "from-green-500 to-teal-500",
-    link: "#"
+    link: "/products/zestate"
   },
   {
     title: "Z-Estate-FM",

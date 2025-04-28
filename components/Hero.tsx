@@ -1,296 +1,295 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/solid';
+import { ChevronRightIcon, ChevronLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
 
-// Keep serviceCards and fadeIn the same
+// --- Data remains the same - Using ORIGINAL text ---
 const serviceCards = [
-  {
-    title: "Consulting Services",
-    content: "We offer functional and domain consulting as well as advisory services on Dynamics 365 platforms. Our expert Solution Architects and Functional Consultants provide tailored guidance to help you maximize the value of your investment in Dynamics 365. With over 15 years of experience across complex, multi-country, and multi-entity implementations, our senior consultants bring unparalleled expertise to ensure successful outcomes.",
-    imageAlt: "Enterprise Consulting Services",
-    imagePath: "/images/consulting-services.jpg"
-  },
-  {
-    title: "Industry Verticals and Product Development",
-    content: "We enhance CRM platforms by delivering industry-specific vertical and horizontal solutions that automate end-to-end operational processes for businesses not fully aligned with standard enterprise ERP and CRM systems. Our vertical solutions for Dynamics 365 and Zoho CRM complement your existing investments, seamlessly integrating with your business applications to enforce industry best practices across all operational processes.",
-    imageAlt: "Industry Solutions Development",
-    imagePath: "/images/industry-verticals.jpg"
-  },
-  {
-    title: "ESG & Data Solutions",
-    content: "Drive Sustainability and Data Excellence. Our solution 4Scope helps organizations simplify their ESG reporting while ensuring alignment with top frameworks like GRI, SASB, and IFRS. Paired with expert consulting, 4Scope empowers businesses to meet regulatory requirements and engage stakeholders effectively. Our solution 4Vue is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With 4Vue, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data.",
-    imageAlt: "ESG and Data Analytics",
-    imagePath: "/images/esg-solutions.jpg"
-  }
+    {
+        id: 1,
+        title: "Consulting Services",
+        content: "We offer functional and domain consulting as well as advisory services on Dynamics 365 platforms. Our expert Solution Architects and Functional Consultants provide tailored guidance to help you maximize the value of your investment in Dynamics 365. With over 15 years of experience across complex, multi-country, and multi-entity implementations, our senior consultants bring unparalleled expertise to ensure successful outcomes.",
+        imageAlt: "Enterprise Consulting Services",
+        imagePath: "/images/consulting-services.jpg"
+    },
+    {
+        id: 2,
+        title: "Industry Verticals and Product Development",
+        content: "We enhance CRM platforms by delivering industry-specific vertical and horizontal solutions that automate end-to-end operational processes for businesses not fully aligned with standard enterprise ERP and CRM systems. Our vertical solutions for Dynamics 365 and Zoho CRM complement your existing investments, seamlessly integrating with your business applications to enforce industry best practices across all operational processes.",
+        imageAlt: "Industry Solutions Development",
+        imagePath: "/images/industry-verticals.jpg"
+    },
+    {
+        id: 3,
+        title: "ESG & Data Solutions",
+        content: "Drive Sustainability and Data Excellence. Our solution 4Scope helps organizations simplify their ESG reporting while ensuring alignment with top frameworks like GRI, SASB, and IFRS. Paired with expert consulting, 4Scope empowers businesses to meet regulatory requirements and engage stakeholders effectively. Our solution 4Vue is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With 4Vue, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data.",
+        imageAlt: "ESG and Data Analytics",
+        imagePath: "/images/esg-solutions.jpg"
+    }
 ];
 
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 }
+
+// --- Animation Variants (Defined ONCE here) ---
+const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.2,
+        },
+    },
 };
 
-// Define interface for custom animation parameter
-interface CardAnimationProps {
-  xPosition: number;
-  opacity: number;
-  scale: number;
-  rotateY: number;
-  zIndex: number; // Added zIndex for clearer stacking control
-}
+const fadeInUp = {
+    hidden: { opacity: 0, y: 25 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 20 } },
+};
 
-// Adjusted cardVariants - Note: Stacking logic remains, responsiveness comes from layout constraints
 const cardVariants = {
-  // Initial position off-screen to the right
-  initial: (direction: number) => ({
-    x: direction > 0 ? 300 : -300, // Start offscreen based on navigation direction
-    opacity: 0,
-    scale: 0.8,
-    rotateY: 15,
-  }),
-  // Animate to the calculated position
-  animate: (custom: CardAnimationProps) => ({
-    x: custom.xPosition,
-    opacity: custom.opacity,
-    scale: custom.scale,
-    rotateY: custom.rotateY,
-    zIndex: custom.zIndex, // Apply calculated zIndex
-    transition: { type: "spring", stiffness: 300, damping: 30 },
-  }),
-  // Exit animation off-screen to the left
-  exit: (direction: number) => ({
-    x: direction < 0 ? 300 : -300, // Exit offscreen based on navigation direction
-    opacity: 0,
-    scale: 0.8,
-    rotateY: -15,
-    zIndex: 0, // Ensure exiting card is behind
-    transition: { type: "spring", stiffness: 300, damping: 30 },
-  }),
+    enter: (direction: number) => ({
+        x: direction > 0 ? '100%' : '-100%',
+        opacity: 0,
+        scale: 0.9,
+        transition: { type: 'spring', stiffness: 300, damping: 30 }
+    }),
+    center: {
+        zIndex: 1,
+        x: 0,
+        opacity: 1,
+        scale: 1,
+        transition: { type: 'spring', stiffness: 300, damping: 30, duration: 0.5 }
+    },
+    exit: (direction: number) => ({
+        zIndex: 0,
+        x: direction < 0 ? '100%' : '-100%',
+        opacity: 0,
+        scale: 0.9,
+        transition: { type: 'spring', stiffness: 300, damping: 30 }
+    }),
 };
 
+// --- Component ---
 
 interface HeroProps {
-  scrollToSection: (id: string) => void;
+    scrollToSection: (id: string) => void;
 }
 
-const EnhancedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
-  // Use state for both index and direction for better animation control
-  const [[currentCard, direction], setCurrent] = useState([0, 0]);
+// Renamed to reflect pattern + optimization
+const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) => {
+    const [[activeIndex, direction], setActive] = useState([0, 0]);
 
-  const paginate = (newDirection: number) => {
-    const newCardIndex = (currentCard + newDirection + serviceCards.length) % serviceCards.length;
-    setCurrent([newCardIndex, newDirection]);
-  };
+    const paginate = (newDirection: number) => {
+        const newIndex = (activeIndex + newDirection + serviceCards.length) % serviceCards.length;
+        setActive([newIndex, newDirection]);
+    };
 
-  const nextCard = () => paginate(1);
-  const prevCard = () => paginate(-1);
+    const currentService = serviceCards[activeIndex];
 
-  return (
-    // *** UPDATED HERE: Increased top padding (pt-24 and md:pt-28) ***
-    <section className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50 pt-24 pb-16 md:pt-28 md:pb-20 overflow-hidden">
-      {/* pt-16 changed to pt-24 */}
-      {/* md:pt-20 changed to md:pt-28 */}
-      {/* Increased padding ensures content starts below the fixed navigation bar */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={{
-            animate: { transition: { staggerChildren: 0.1 } },
-            initial: {},
-          }}
-          initial="initial"
-          animate="animate"
-          // Adjusted bottom margin for mobile
-          className="text-center mb-12 md:mb-16"
+    // Inline SVG for a subtle dot pattern background
+    const dotPattern = `
+        <svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'>
+            <circle cx='1' cy='1' r='1' fill='rgb(203 213 225 / 0.15)'/> {/* Slightly more transparent */}
+        </svg>
+    `;
+    const encodedDotPattern = `url("data:image/svg+xml,${encodeURIComponent(dotPattern)}")`;
+
+    return (
+        // Section: Added pattern style + mobile padding optimization
+        <section
+            className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-bl from-blue-50 via-slate-50 to-purple-50 pt-24 pb-20 md:pt-32 md:pb-28"
+            style={{ backgroundImage: encodedDotPattern, backgroundSize: '12px 12px' }}
         >
-          {/* This is the label that was likely getting cut off */}
-          <motion.div
-            variants={fadeIn}
-            className="inline-block px-4 py-2 mb-4 rounded-full bg-blue-100 text-blue-700 text-sm font-medium"
-          >
-            Enterprise Solutions & Consulting
-          </motion.div>
-          <motion.h1
-            variants={fadeIn}
-            // Responsive text size
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6 bg-gradient-to-r from-blue-900 via-blue-700 to-blue-800 text-transparent bg-clip-text"
-          >
-            Transform Your Business
-            <br className="hidden sm:inline" /> {/* Keep break on larger screens */}
-            With Expert Solutions
-          </motion.h1>
-          <motion.p
-            variants={fadeIn}
-            // Responsive text size and margin
-            className="text-base sm:text-lg text-blue-800/80 mb-8 leading-relaxed max-w-3xl mx-auto"
-          >
-            {/* You can add a short subtitle here if needed */}
-            Explore our tailored services designed to drive growth and efficiency.
-          </motion.p>
-        </motion.div>
+            {/* Decorative Background Elements: Mobile opacity optimization */}
+            <div className="absolute inset-0 z-0 overflow-hidden opacity-30 md:opacity-40">
+                <div className="absolute -top-1/4 left-0 w-72 h-72 md:w-96 md:h-96 bg-blue-200 rounded-full filter blur-3xl mix-blend-multiply animate-pulse-slow"></div>
+                <div className="absolute -bottom-1/4 right-0 w-72 h-72 md:w-96 md:h-96 bg-purple-200 rounded-full filter blur-3xl mix-blend-multiply animation-delay-2000 animate-pulse-slow"></div>
+            </div>
 
-        {/* Card Carousel */}
-        {/* Adjusted height and margin for responsiveness */}
-        <div className="relative w-full min-h-[550px] md:min-h-[600px] mt-8 md:mt-12 flex items-center justify-center">
-          {/* Background Elements - Hidden on xs screens */}
-          <div className="absolute inset-0 hidden sm:block">
-            <div className="absolute top-1/4 right-1/4 w-48 h-48 md:w-64 md:h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20" />
-            <div className="absolute bottom-1/4 left-1/4 w-48 h-48 md:w-64 md:h-64 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20" />
-          </div>
+            {/* Container: z-index + mobile padding */}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                {/* Grid Layout: Mobile gap optimization */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
 
-          {/* Card Navigation Button - Left */}
-          {/* Adjusted positioning and padding for mobile */}
-          <div className="absolute left-1 md:left-2 lg:left-4 top-1/2 -translate-y-1/2 z-30"> {/* Increased z-index */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={prevCard}
-              aria-label="Previous Card"
-              // Adjusted padding and icon size
-              className="p-2 md:p-3 bg-white rounded-full shadow-lg text-blue-600 hover:bg-blue-50 transition-colors"
-            >
-              <ChevronLeftIcon className="w-5 h-5 md:w-6 md:h-6" />
-            </motion.button>
-          </div>
+                    {/* --- Left Column: Text Content --- */}
+                    {/* Mobile alignment + text size optimization */}
+                    <motion.div
+                        className="text-center lg:text-left"
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate="show"
+                    >
+                        {/* Label */}
+                        <motion.div
+                            variants={fadeInUp}
+                            className="inline-block px-5 py-2 mb-5 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 text-sm font-semibold shadow-sm border border-blue-200/50"
+                        >
+                            Enterprise Solutions & Consulting
+                        </motion.div>
 
-          {/* AnimatePresence for handling enter/exit animations */}
-          {/* Use custom prop to pass direction */}
-          <AnimatePresence initial={false} custom={direction} mode="popLayout">
-            {/* Render only the current card based on state */}
-             {(() => {
-                const card = serviceCards[currentCard];
-                // Always render the current card in the center
-                const customProps: CardAnimationProps = {
-                    xPosition: 0,
-                    opacity: 1,
-                    scale: 1,
-                    rotateY: 0,
-                    zIndex: 2 // Highest zIndex for the active card
-                };
+                        {/* Headline: Mobile margin optimization */}
+                        <motion.h1
+                            variants={fadeInUp}
+                            className="text-4xl sm:text-5xl xl:text-6xl font-bold leading-tight mb-5 md:mb-6 text-slate-800"
+                        >
+                            Driving Success Through
+                            <br className="hidden sm:inline" />
+                            <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+                                Expert Consulting
+                            </span>
+                        </motion.h1>
 
-                return (
-                  <motion.div
-                    key={currentCard} // Key changes when currentCard changes, triggering animation
-                    custom={customProps} // Pass animation props
-                    variants={cardVariants}
-                    initial="initial" // Use variant for entry
-                    animate="animate" // Use variant for active state
-                    exit="exit"     // Use variant for exit
-                    drag="x" // Optional: allow dragging
-                    dragConstraints={{ left: 0, right: 0 }} // Optional: constrain drag
-                    dragElastic={1} // Optional: drag elasticity
-                    onDragEnd={(e, { offset, velocity }) => { // Optional: swipe gesture
-                        const swipe = Math.abs(offset.x) * velocity.x;
-                        if (swipe < -10000) {
-                            paginate(1); // Swipe left, go next
-                        } else if (swipe > 10000) {
-                            paginate(-1); // Swipe right, go prev
-                        }
-                    }}
-                    // Apply calculated zIndex and position absolutely
-                    style={{ position: 'absolute', zIndex: customProps.zIndex }}
-                    // Responsive width and general card styling
-                    className="w-[90%] sm:w-[85%] md:w-[80%] lg:w-[75%] max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl"
-                  >
-                    {/* Card Content Container */}
-                    <div className="bg-white/95 backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-10 shadow-xl border border-blue-100 overflow-hidden"> {/* Added overflow-hidden */}
-                      {/* Flex container for image and text (stacks vertically on mobile) */}
-                      <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
-                        {/* Image Container */}
-                        <div className="w-full lg:w-72 xl:w-80 flex-shrink-0">
-                          <div className="relative w-full aspect-video lg:aspect-[4/3] rounded-lg md:rounded-2xl overflow-hidden">
-                            <img
-                              src={card.imagePath}
-                              alt={card.imageAlt}
-                              className="w-full h-full object-cover"
-                              // Optimization: Add loading="lazy" if images are below the fold initially
-                              loading="lazy"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                          </div>
+                        {/* Subtitle: Mobile text size + margin optimization */}
+                        <motion.p
+                            variants={fadeInUp}
+                            className="text-base sm:text-lg text-slate-600 mb-8 md:mb-10 max-w-xl mx-auto lg:mx-0"
+                        >
+                            Explore our tailored services designed to drive growth and efficiency.
+                        </motion.p>
+
+                        {/* --- CTAs --- */}
+                        {/* Mobile gap + button padding optimization */}
+                        <motion.div
+                            variants={fadeInUp}
+                            className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-3 sm:gap-4"
+                        >
+                            {/* Buttons */}
+                            <motion.button
+                                whileHover={{ scale: 1.03, y: -2, boxShadow: "0 12px 25px -8px rgba(99, 102, 241, 0.4)" }}
+                                whileTap={{ scale: 0.98, y: 0 }}
+                                onClick={() => scrollToSection('services')}
+                                className="w-full sm:w-auto group px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2"
+                            >
+                                <span>Explore Services</span>
+                                <ArrowRightIcon className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1.5 flex-shrink-0" />
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.03, y: -2, backgroundColor: 'rgba(255, 255, 255, 1)', borderColor: 'rgb(129 140 248)' }}
+                                whileTap={{ scale: 0.98, y: 0 }}
+                                onClick={() => scrollToSection('footer')}
+                                className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 backdrop-blur-sm bg-white/80 text-blue-700 text-base font-semibold rounded-full border-2 border-blue-200/80 hover:border-indigo-300 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
+                            >
+                                Contact Us
+                            </motion.button>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* --- Right Column: Carousel --- */}
+                     {/* Mobile margin + height optimization */}
+                    <div className="relative w-full mt-8 lg:mt-0 min-h-[520px] sm:min-h-[550px] md:min-h-[580px] flex items-center justify-center">
+                        {/* Navigation Buttons: Mobile padding + icon size optimization */}
+                        <motion.button
+                            onClick={() => paginate(-1)}
+                            aria-label="Previous Service"
+                            className="absolute -left-2 sm:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-20 p-2.5 sm:p-3.5 bg-white/90 backdrop-blur-md rounded-full shadow-lg hover:shadow-xl border border-slate-200/70 hover:bg-white transition-all text-blue-600 hover:text-blue-700"
+                            whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}
+                        >
+                            <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </motion.button>
+                        <motion.button
+                            onClick={() => paginate(1)}
+                            aria-label="Next Service"
+                            className="absolute -right-2 sm:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-20 p-2.5 sm:p-3.5 bg-white/90 backdrop-blur-md rounded-full shadow-lg hover:shadow-xl border border-slate-200/70 hover:bg-white transition-all text-blue-600 hover:text-blue-700"
+                            whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}
+                        >
+                            <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </motion.button>
+
+                        {/* Carousel Inner Container: Mobile height optimization */}
+                        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl h-[480px] sm:h-[520px] md:h-[550px] overflow-hidden relative">
+                            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                                <motion.div
+                                    key={currentService.id}
+                                    className="absolute inset-0 w-full h-full cursor-grab flex items-center justify-center p-1"
+                                    variants={cardVariants}
+                                    custom={direction}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                    drag="x"
+                                    dragConstraints={{ left: 0, right: 0 }}
+                                    dragElastic={0.15}
+                                    onDragEnd={(e, { offset, velocity }) => {
+                                        const swipePower = Math.abs(offset.x) * velocity.x;
+                                        if (swipePower < -8000) paginate(1);
+                                        else if (swipePower > 8000) paginate(-1);
+                                    }}
+                                >
+                                    {/* Card Content Wrapper */}
+                                    <div className="w-full h-full bg-gradient-to-br from-white via-white to-slate-50/50 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-400 overflow-hidden flex flex-col border border-slate-200/60">
+                                        {/* Image Area: Mobile height optimization */}
+                                        <div className="w-full h-[40%] sm:h-[45%] flex-shrink-0 relative overflow-hidden">
+                                            <img
+                                                src={currentService.imagePath}
+                                                alt={currentService.imageAlt}
+                                                className="w-full h-full object-cover"
+                                                loading="lazy"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent"></div>
+                                        </div>
+                                        {/* Text Area: Mobile padding + text size optimization */}
+                                        <div className="flex-grow p-4 sm:p-6 md:p-8 flex flex-col justify-start overflow-y-auto custom-scrollbar">
+                                            {/* Card Title: Mobile text size optimization */}
+                                            <h3 className="text-lg md:text-xl font-semibold text-slate-800 mb-2 sm:mb-3">
+                                                {currentService.title}
+                                            </h3>
+                                            {/* Card Content: Mobile text size optimization */}
+                                            <p className="text-sm md:text-base text-slate-600 leading-relaxed flex-grow">
+                                                {currentService.content}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </AnimatePresence>
                         </div>
 
-                        {/* Text Content Container */}
-                        <div className="flex-1">
-                          <div className="mb-4 md:mb-6">
-                            {/* Responsive heading size */}
-                            <h3 className="text-2xl md:text-3xl font-bold text-blue-900">
-                              {card.title}
-                            </h3>
-                          </div>
-                          {/* Responsive paragraph size */}
-                          <p className="text-blue-700/80 leading-relaxed text-base md:text-lg">
-                            {card.content}
-                          </p>
+                        {/* Progress Indicators: Mobile positioning optimization */}
+                        <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2.5 z-20">
+                            {serviceCards.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setActive([index, index > activeIndex ? 1 : -1])}
+                                    aria-label={`Go to service ${index + 1}`}
+                                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ease-in-out ${
+                                        activeIndex === index ? 'bg-blue-600 scale-125 ring-2 ring-blue-300 ring-offset-1' : 'bg-slate-300 hover:bg-slate-400'
+                                    }`}
+                                />
+                            ))}
                         </div>
-                      </div>
                     </div>
-                  </motion.div>
-                );
-             })()}
-          </AnimatePresence>
+                </div>
+            </div>
+             {/* Global Styles: Remain the same */}
+             <style jsx global>{`
+                @keyframes pulse-slow {
+                    0%, 100% { opacity: 0.4; transform: scale(1); }
+                    50% { opacity: 0.6; transform: scale(1.05); }
+                }
+                .animate-pulse-slow {
+                    animation: pulse-slow 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+                }
+                .animation-delay-2000 {
+                    animation-delay: 2s;
+                }
 
-          {/* Card Navigation Button - Right */}
-          {/* Adjusted positioning and padding */}
-          <div className="absolute right-1 md:right-2 lg:right-4 top-1/2 -translate-y-1/2 z-30"> {/* Increased z-index */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={nextCard}
-              aria-label="Next Card"
-              // Adjusted padding and icon size
-              className="p-2 md:p-3 bg-white rounded-full shadow-lg text-blue-600 hover:bg-blue-50 transition-colors"
-            >
-              <ChevronRightIcon className="w-5 h-5 md:w-6 md:h-6" />
-            </motion.button>
-          </div>
-
-          {/* Progress Indicators - Positioned below the card area */}
-           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-             {serviceCards.map((_, index) => (
-               <button
-                 key={index}
-                 onClick={() => setCurrent([index, index > currentCard ? 1 : -1])} // Update state with direction
-                 aria-label={`Go to card ${index + 1}`}
-                 className={`h-2 transition-all duration-300 rounded-full ${
-                   currentCard === index ? 'w-6 md:w-8 bg-blue-600' : 'w-2 bg-blue-200 hover:bg-blue-300'
-                 }`}
-               />
-             ))}
-           </div>
-        </div>
-
-        {/* Call to Action Buttons */}
-        <motion.div
-          variants={fadeIn} // Reuse fadeIn animation
-          initial="initial"
-          animate="animate"
-          // Added transition delay for staggered effect after carousel
-          transition={{ delay: 0.3 }}
-          // Stack vertically on mobile, row on sm+, adjusted top margin
-          className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-20 md:mt-24"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => scrollToSection('services')}
-            // Responsive padding and text size
-            className="group w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm md:text-base font-medium rounded-full hover:shadow-lg transition-all flex items-center justify-center gap-2"
-          >
-            <span>Explore Our Services</span>
-            <ChevronRightIcon className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => scrollToSection('footer')}
-             // Responsive padding and text size
-            className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 backdrop-blur-md bg-white/70 text-blue-600 text-sm md:text-base font-medium rounded-full border border-blue-200 hover:border-blue-300 hover:bg-white/90 transition-all"
-          >
-            Contact Us
-          </motion.button>
-        </motion.div>
-      </div>
-    </section>
-  );
+                /* Custom Scrollbar for Webkit (Chrome, Safari, Edge) & Firefox */
+                .custom-scrollbar {
+                    scrollbar-width: thin; /* Firefox */
+                    scrollbar-color: rgba(156, 163, 175, 0.4) transparent; /* Firefox: thumb track */
+                }
+                .custom-scrollbar::-webkit-scrollbar {
+                    width: 6px; /* Width for Webkit */
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: transparent; /* Track for Webkit */
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background-color: rgba(156, 163, 175, 0.4); /* gray-400 thumb */
+                    border-radius: 20px;
+                    border: 3px solid transparent; /* Creates padding around thumb */
+                }
+             `}</style>
+        </section>
+    );
 };
 
-export default EnhancedHero;
+export default EnhancedHeroPatternOptimized;

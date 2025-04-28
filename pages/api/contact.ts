@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { Resend } from 'resend'; // Import Resend
 
-// Temporary fix if @types/nodemailer is not installed
-// Remove this and install @types/nodemailer in local dev for better type safety
-declare module 'nodemailer';
-import nodemailer from 'nodemailer';
+// Initialize Resend with API Key from environment variable
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 type ResponseData = {
   success?: boolean;
@@ -31,16 +30,7 @@ export default async function handler(
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT) || 587,
-      secure: process.env.EMAIL_SECURE === 'true',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
+    // Construct HTML content (same as before)
     const htmlContent = `
       <h2>New Contact Form Submission</h2>
       <p><strong>Name:</strong> ${name}</p>
@@ -52,30 +42,28 @@ export default async function handler(
       <p>${message.replace(/\n/g, '<br>')}</p>
     `;
 
-    const mailOptions = {
-      from: process.env.EMAIL_FROM || `"Z4BIZ Website" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_TO || 'info@z4biz.com',
-      replyTo: email,
+    // Send email using Resend
+    const { data, error } = await resend.emails.send({
+      from: process.env.EMAIL_FROM || 'Website Contact <onboarding@resend.dev>', // Use a verified sender
+      to: process.env.EMAIL_TO || 'info@z4biz.com', // Recipient
+      reply_to: email, // Set reply-to to the user's email
       subject: `Website Contact Form: ${subject || 'New Message'}`,
-      text: `
-Name: ${name}
-Email: ${email}
-${phone ? `Phone: ${phone}\n` : ''}
-${company ? `Company: ${company}\n` : ''}
-${subject ? `Subject: ${subject}\n` : ''}
-
-Message:
-${message}
-      `,
       html: htmlContent,
-    };
+    });
 
-    await transporter.sendMail(mailOptions);
+    // Check for Resend API errors
+    if (error) {
+      console.error('Resend Error:', error);
+      return res.status(400).json({ error: 'Failed to send email via Resend.' });
+    }
 
+    // Success
+    console.log('Resend Success:', data);
     return res.status(200).json({
       success: true,
       message: 'Thank you! Your message has been sent successfully.',
     });
+
   } catch (error) {
     console.error('Error sending email:', error);
     return res.status(500).json({
