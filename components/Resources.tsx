@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Link from 'next/link'; // Import the Link component
+import Link from 'next/link';
 import { ChevronRightIcon } from 'lucide-react';
 
 const resourcesData = [
@@ -8,14 +8,14 @@ const resourcesData = [
     description: "Get the latest updates on our company and industry trends.",
     color: "from-purple-500 to-pink-500",
     bgGlow: "from-purple-300 to-pink-300",
-    link: "/news" // Example link for News (adjust if needed)
+    link: "/news"
   },
   {
     title: "Case Studies",
     description: "Discover how our solutions have transformed businesses.",
     color: "from-emerald-500 to-teal-500",
     bgGlow: "from-emerald-300 to-teal-300",
-    link: "/case-studies" // Set the link for Case Studies
+    link: "/case-studies"
   }
 ];
 
@@ -25,7 +25,7 @@ const Resources = () => {
   return (
     <section className="relative min-h-screen py-20 overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-black">
       {/* Animated background elements */}
-      <div className="absolute inset-0 z-0"> {/* Ensure background is behind content */}
+      <div className="absolute inset-0 z-0">
         <div className="absolute w-full h-full overflow-hidden">
           {[...Array(15)].map((_, i) => (
             <div
@@ -50,7 +50,7 @@ const Resources = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header section */}
         <div className="text-center mb-16 md:mb-20 relative">
-           <div className="absolute -top-20 sm:-top-28 left-1/2 transform -translate-x-1/2 w-[30rem] h-[30rem] sm:w-[40rem] sm:h-[40rem] bg-indigo-600/15 rounded-full blur-[100px] opacity-50 animate-pulse pointer-events-none"></div>
+          <div className="absolute -top-20 sm:-top-28 left-1/2 transform -translate-x-1/2 w-[30rem] h-[30rem] sm:w-[40rem] sm:h-[40rem] bg-indigo-600/15 rounded-full blur-[100px] opacity-50 animate-pulse pointer-events-none"></div>
           <div className="inline-block relative">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-slate-100 to-blue-100 bg-clip-text text-transparent mb-5 animate-shine tracking-tight">
               Explore Our Insights
@@ -64,48 +64,48 @@ const Resources = () => {
         {/* Resources grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
           {resourcesData.map((resource, index) => (
-            <div // Use motion.div if Framer Motion is imported and animations are desired
+            <Link 
+              href={resource.link} 
               key={resource.title}
-              className="group relative rounded-2xl overflow-hidden border border-slate-800/50 bg-slate-900/30 backdrop-blur-lg shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:border-slate-700/70"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              style={{ transform: 'translateZ(0)' }}
+              className="block transition-transform duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900 rounded-2xl"
             >
-              {/* Background Glow on Hover */}
-               <div
+              <div
+                className="group relative h-full rounded-2xl overflow-hidden border border-slate-800/50 bg-slate-900/30 backdrop-blur-lg shadow-lg transition-all duration-300 hover:shadow-blue-500/20 hover:border-slate-700/70 cursor-pointer"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                style={{ transform: 'translateZ(0)' }}
+              >
+                {/* Background Glow on Hover */}
+                <div
                   className={`absolute inset-0 z-0 transition-opacity duration-500 ease-out ${hoveredIndex === index ? 'opacity-100' : 'opacity-0'}`}
                   aria-hidden="true"
                 >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${resource.bgGlow} opacity-30 blur-3xl`} />
-                    <div className={`absolute -inset-4 bg-gradient-to-r ${resource.color} opacity-15 blur-2xl animate-pulse`} style={{ animationDuration: '5s' }}/>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${resource.bgGlow} opacity-30 blur-3xl`} />
+                  <div className={`absolute -inset-4 bg-gradient-to-r ${resource.color} opacity-15 blur-2xl animate-pulse`} style={{ animationDuration: '5s' }}/>
                 </div>
 
-               {/* Card Content */}
-              <div className="relative p-8 z-10">
-                 {/* Corner accents */}
-                 <div className={`absolute top-0 left-0 h-8 w-8 border-t border-l rounded-tl-2xl transition-all duration-300 ${hoveredIndex === index ? 'border-blue-400/60' : 'border-slate-700/0 group-hover:border-slate-700/40'}`}></div>
-                 <div className={`absolute bottom-0 right-0 h-8 w-8 border-b border-r rounded-br-2xl transition-all duration-300 ${hoveredIndex === index ? 'border-purple-400/60' : 'border-slate-700/0 group-hover:border-slate-700/40'}`}></div>
+                {/* Card Content */}
+                <div className="relative p-8 z-10 h-full flex flex-col">
+                  {/* Corner accents */}
+                  <div className={`absolute top-0 left-0 h-8 w-8 border-t border-l rounded-tl-2xl transition-all duration-300 ${hoveredIndex === index ? 'border-blue-400/60' : 'border-slate-700/0 group-hover:border-slate-700/40'}`}></div>
+                  <div className={`absolute bottom-0 right-0 h-8 w-8 border-b border-r rounded-br-2xl transition-all duration-300 ${hoveredIndex === index ? 'border-purple-400/60' : 'border-slate-700/0 group-hover:border-slate-700/40'}`}></div>
 
-                <div className="space-y-4 relative">
-                  <h3 className={`text-2xl font-bold bg-gradient-to-r ${resource.color} bg-clip-text text-transparent mb-2`}>
-                    {resource.title}
-                  </h3>
-                  <p className="text-slate-300/90 text-base leading-relaxed">
-                    {resource.description}
-                  </p>
+                  <div className="space-y-4 flex-grow">
+                    <h3 className={`text-2xl font-bold bg-gradient-to-r ${resource.color} bg-clip-text text-transparent mb-2`}>
+                      {resource.title}
+                    </h3>
+                    <p className="text-slate-300/90 text-base leading-relaxed">
+                      {resource.description}
+                    </p>
+                  </div>
 
-                  {/* --- UPDATED LINK --- */}
-                  <Link href={resource.link || '#'} passHref legacyBehavior>
-                      <a className="inline-flex items-center space-x-1.5 text-white group/button font-medium text-sm transition-colors duration-300 hover:text-cyan-300 pt-2">
-                         <span>Read More</span>
-                         <ChevronRightIcon className="w-4 h-4 transform transition-transform duration-300 group-hover/button:translate-x-1" />
-                      </a>
-                  </Link>
-                  {/* --- END OF UPDATED LINK --- */}
-
+                  <div className="inline-flex items-center space-x-1.5 text-white group/button font-medium text-sm transition-colors duration-300 group-hover:text-cyan-300 pt-4">
+                    <span>Read More</span>
+                    <ChevronRightIcon className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" />
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
