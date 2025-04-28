@@ -86,7 +86,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 -z-10"></div>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(237,242,255,0.6)_0%,rgba(255,255,255,0)_70%)] -z-10"></div>
-            
+
             {/* Decorative Elements - Simplified for mobile */}
             <div className="absolute top-0 right-0 w-full max-w-sm -z-10 opacity-50 md:opacity-100">
                 <svg width="404" height="392" fill="none" viewBox="0 0 404 392">
@@ -98,46 +98,8 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                     <rect width="404" height="392" fill="url(#pattern-squares)" />
                 </svg>
             </div>
-            
+
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Logo Section - Mobile Optimized */}
-                <motion.div 
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="flex flex-col items-center justify-center mb-10 sm:mb-16"
-                >
-                    <div className="text-center mb-5">
-                        <h2 className="text-lg font-medium text-indigo-600 mb-2">Trusted Technology Partners</h2>
-                        <div className="h-px w-24 bg-indigo-100 mx-auto"></div>
-                    </div>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 md:gap-24">
-                        <motion.div 
-                            className="relative h-12 sm:h-16 md:h-20 w-48 sm:w-64 md:w-80"
-                            whileHover={{ scale: 1.02 }}
-                        >
-                            <Image 
-                                src="/images/microsoft-logo.png" 
-                                alt="Microsoft Partner" 
-                                layout="fill" 
-                                objectFit="contain"
-                                priority
-                            />
-                        </motion.div>
-                        <motion.div 
-                            className="relative h-10 sm:h-14 md:h-16 w-40 sm:w-56 md:w-72 mt-4 sm:mt-0"
-                            whileHover={{ scale: 1.02 }}
-                        >
-                            <Image 
-                                src="/images/zoho-logo.png" 
-                                alt="Zoho Partner" 
-                                layout="fill" 
-                                objectFit="contain"
-                                priority
-                            />
-                        </motion.div>
-                    </div>
-                </motion.div>
 
                 {/* Main Content Grid - Mobile First */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -177,7 +139,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                 Explore Services
                                 <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                             </button>
-                            
+
                             <button
                                 onClick={() => scrollToSection('footer')}
                                 className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 sm:px-8 sm:py-4 text-base font-medium text-indigo-600 bg-white border border-indigo-200 rounded-lg hover:bg-indigo-50 hover:border-indigo-300 transition-colors duration-200"
@@ -190,7 +152,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                     {/* Service Card - Mobile Optimized */}
                     <div className="order-1 lg:order-2 mb-8 lg:mb-0">
                         {/* Card Container */}
-                        <motion.div 
+                        <motion.div
                             className="relative mx-auto max-w-lg lg:max-w-none"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -198,7 +160,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                         >
                             {/* Navigation Arrows - Larger hit area for mobile */}
                             <div className="absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-5 md:-left-7 z-10">
-                                <button 
+                                <button
                                     onClick={() => paginate(-1)}
                                     className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-lg hover:bg-indigo-50 transition-colors text-indigo-600 focus:outline-none"
                                     aria-label="Previous Service"
@@ -207,7 +169,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                 </button>
                             </div>
                             <div className="absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-5 md:-right-7 z-10">
-                                <button 
+                                <button
                                     onClick={() => paginate(1)}
                                     className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-lg hover:bg-indigo-50 transition-colors text-indigo-600 focus:outline-none"
                                     aria-label="Next Service"
@@ -217,7 +179,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                             </div>
 
                             {/* Service Card */}
-                            <div 
+                            <div
                                 className="relative bg-white rounded-2xl shadow-xl sm:shadow-2xl overflow-hidden border border-indigo-50"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
@@ -237,11 +199,11 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                         {/* Image Header - Adjusted height for mobile */}
                                         <div className="relative h-48 sm:h-56 md:h-64 w-full">
                                             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-10"></div>
-                                            <img 
-                                                src={currentService.imagePath} 
+                                            <img
+                                                src={currentService.imagePath}
                                                 alt={currentService.imageAlt}
                                                 className="w-full h-full object-cover object-center"
-                                                style={{ 
+                                                style={{
                                                     transition: "transform 8s ease-out",
                                                     transform: isHovered ? "scale(1.05)" : "scale(1)"
                                                 }}
@@ -253,7 +215,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                                 </h3>
                                             </div>
                                         </div>
-                                        
+
                                         {/* Content Area - Adjusted padding for mobile */}
                                         <div className="p-4 sm:p-6 md:p-8">
                                             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -262,7 +224,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                         </div>
                                     </motion.div>
                                 </AnimatePresence>
-                                
+
                                 {/* Progress Indicator - Larger for touch targets */}
                                 <div className="absolute bottom-0 left-0 right-0 z-20 px-4 py-3 sm:px-6 sm:py-4 flex justify-center gap-2">
                                     {serviceCards.map((_, index) => (
@@ -279,9 +241,62 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                             </div>
                         </motion.div>
                     </div>
-                </div>
-            </div>
-            
+                </div> {/* End Main Content Grid */}
+
+                {/* Logo Section - Relocated and Updated */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5 }} // Slightly delayed after main content
+                    className="flex flex-col items-center justify-center mt-16 lg:mt-24" // Added top margin
+                >
+                    <div className="text-center mb-6 sm:mb-8">
+                        <h2 className="text-base sm:text-lg font-medium text-gray-500 mb-2">Trusted By Leading Platforms</h2>
+                        <div className="h-px w-20 bg-gray-200 mx-auto"></div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 md:gap-24">
+                        {/* Microsoft Logo and Label */}
+                        <motion.div
+                            className="flex flex-col items-center"
+                            whileHover={{ scale: 1.02 }}
+                        >
+                            <div className="relative h-12 sm:h-16 md:h-20 w-48 sm:w-64 md:w-80">
+                                <Image
+                                    src="/images/microsoft-logo.png"
+                                    alt="Microsoft Logo"
+                                    layout="fill"
+                                    objectFit="contain"
+                                    priority
+                                />
+                            </div>
+                            <p className="text-xs sm:text-sm text-center text-indigo-700 font-medium mt-2">
+                                Microsoft Partner
+                            </p>
+                        </motion.div>
+
+                        {/* Zoho Logo and Label */}
+                        <motion.div
+                            className="flex flex-col items-center mt-4 sm:mt-0"
+                            whileHover={{ scale: 1.02 }}
+                        >
+                            <div className="relative h-10 sm:h-14 md:h-16 w-40 sm:w-56 md:w-72">
+                                <Image
+                                    src="/images/zoho-logo.png"
+                                    alt="Zoho Logo"
+                                    layout="fill"
+                                    objectFit="contain"
+                                    priority
+                                />
+                            </div>
+                             <p className="text-xs sm:text-sm text-center text-indigo-700 font-medium mt-2">
+                                Zoho Partner
+                            </p>
+                        </motion.div>
+                    </div>
+                </motion.div>
+
+            </div> {/* End Container */}
+
             {/* Add mobile-specific styles to keep animations light for mobile devices */}
             <style jsx global>{`
                 @media (prefers-reduced-motion: reduce) {
@@ -292,7 +307,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                         scroll-behavior: auto !important;
                     }
                 }
-                
+
                 @media (max-width: 640px) {
                     .container {
                         padding-left: 16px;
