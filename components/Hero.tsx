@@ -52,7 +52,7 @@ const slideVariants = {
         transition: { type: 'spring', stiffness: 300, damping: 30 }
     }),
     center: {
-        zIndex: 1,
+        zIndex: 1, // Content is at zIndex 1
         x: 0,
         opacity: 1,
         transition: { type: 'spring', stiffness: 300, damping: 30, duration: 0.5 }
@@ -151,15 +151,15 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
 
                     {/* Service Card - Mobile Optimized */}
                     <div className="order-1 lg:order-2 mb-8 lg:mb-0">
-                        {/* Card Container */}
+                        {/* Card Container - Relative position established here */}
                         <motion.div
                             className="relative mx-auto max-w-lg lg:max-w-none"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.3 }}
                         >
-                            {/* Navigation Arrows - Larger hit area for mobile */}
-                            <div className="absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-5 md:-left-7 z-10">
+                            {/* Navigation Arrows - Increased z-index */}
+                            <div className="absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-5 md:-left-7 z-30"> {/* Increased z-index */}
                                 <button
                                     onClick={() => paginate(-1)}
                                     className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-lg hover:bg-indigo-50 transition-colors text-indigo-600 focus:outline-none"
@@ -168,7 +168,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                     <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </button>
                             </div>
-                            <div className="absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-5 md:-right-7 z-10">
+                            <div className="absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-5 md:-right-7 z-30"> {/* Increased z-index */}
                                 <button
                                     onClick={() => paginate(1)}
                                     className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-lg hover:bg-indigo-50 transition-colors text-indigo-600 focus:outline-none"
@@ -178,15 +178,16 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                 </button>
                             </div>
 
-                            {/* Service Card */}
+                            {/* Service Card - overflow-hidden removed from here to prevent clipping arrows */}
                             <div
-                                className="relative bg-white rounded-2xl shadow-xl sm:shadow-2xl overflow-hidden border border-indigo-50"
+                                className="relative bg-white rounded-2xl shadow-xl sm:shadow-2xl border border-indigo-50 overflow-hidden" // Added overflow-hidden back here for rounded corners
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                                 onTouchStart={() => setIsHovered(true)}
                                 onTouchEnd={() => setIsHovered(false)}
                             >
                                 <AnimatePresence initial={false} custom={direction} mode="wait">
+                                    {/* Sliding Content */}
                                     <motion.div
                                         key={currentService.id}
                                         custom={direction}
@@ -194,11 +195,13 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                         initial="enter"
                                         animate="center"
                                         exit="exit"
-                                        className="w-full"
+                                        className="w-full" // This div slides
                                     >
-                                        {/* Image Header - Adjusted height for mobile */}
+                                        {/* Image Header */}
                                         <div className="relative h-48 sm:h-56 md:h-64 w-full">
+                                            {/* Gradient overlay - z-10 within this container */}
                                             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/70 z-10"></div>
+                                            {/* Image - base layer (z-0 within this container) */}
                                             <img
                                                 src={currentService.imagePath}
                                                 alt={currentService.imageAlt}
@@ -209,6 +212,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                                 }}
                                                 loading="eager"
                                             />
+                                            {/* Title text - z-20 within this container */}
                                             <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 z-20 text-white">
                                                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
                                                     {currentService.title}
@@ -216,7 +220,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                             </div>
                                         </div>
 
-                                        {/* Content Area - Adjusted padding for mobile */}
+                                        {/* Content Area */}
                                         <div className="p-4 sm:p-6 md:p-8">
                                             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                                                 {currentService.content}
@@ -225,7 +229,7 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                     </motion.div>
                                 </AnimatePresence>
 
-                                {/* Progress Indicator - Larger for touch targets */}
+                                {/* Progress Indicator - Needs to be above the sliding content */}
                                 <div className="absolute bottom-0 left-0 right-0 z-20 px-4 py-3 sm:px-6 sm:py-4 flex justify-center gap-2">
                                     {serviceCards.map((_, index) => (
                                         <button
@@ -238,9 +242,9 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                         />
                                     ))}
                                 </div>
-                            </div>
-                        </motion.div>
-                    </div>
+                            </div> {/* End Inner card content div */}
+                        </motion.div> {/* End Card Container */}
+                    </div> {/* End Service Card Column */}
                 </div> {/* End Main Content Grid */}
 
                 {/* Logo Section - Relocated and Updated */}
