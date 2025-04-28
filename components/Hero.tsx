@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRightIcon, ChevronLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
+import Image from 'next/image';
 
-// --- Data remains the same - Using ORIGINAL text ---
+// --- Data remains the same ---
 const serviceCards = [
     {
         id: 1,
@@ -27,8 +28,7 @@ const serviceCards = [
     }
 ];
 
-
-// --- Animation Variants (Defined ONCE here) ---
+// --- Animation Variants ---
 const staggerContainer = {
     hidden: { opacity: 0 },
     show: {
@@ -43,6 +43,20 @@ const staggerContainer = {
 const fadeInUp = {
     hidden: { opacity: 0, y: 25 },
     show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 20 } },
+};
+
+const logoVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { 
+        opacity: 1, 
+        y: 0,
+        transition: { 
+            type: 'spring',
+            stiffness: 100,
+            damping: 20,
+            delay: 0.5
+        } 
+    },
 };
 
 const cardVariants = {
@@ -65,17 +79,15 @@ const cardVariants = {
         opacity: 0,
         scale: 0.9,
         transition: { type: 'spring', stiffness: 300, damping: 30 }
-    }),
+    })
 };
 
 // --- Component ---
-
 interface HeroProps {
     scrollToSection: (id: string) => void;
 }
 
-// Renamed to reflect pattern + optimization
-const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) => {
+const EnhancedHeroWithPartners: React.FC<HeroProps> = ({ scrollToSection }) => {
     const [[activeIndex, direction], setActive] = useState([0, 0]);
 
     const paginate = (newDirection: number) => {
@@ -88,30 +100,26 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
     // Inline SVG for a subtle dot pattern background
     const dotPattern = `
         <svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'>
-            <circle cx='1' cy='1' r='1' fill='rgb(203 213 225 / 0.15)'/> {/* Slightly more transparent */}
+            <circle cx='1' cy='1' r='1' fill='rgb(203 213 225 / 0.15)'/> 
         </svg>
     `;
     const encodedDotPattern = `url("data:image/svg+xml,${encodeURIComponent(dotPattern)}")`;
 
     return (
-        // Section: Added pattern style + mobile padding optimization
         <section
             className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-bl from-blue-50 via-slate-50 to-purple-50 pt-24 pb-20 md:pt-32 md:pb-28"
             style={{ backgroundImage: encodedDotPattern, backgroundSize: '12px 12px' }}
         >
-            {/* Decorative Background Elements: Mobile opacity optimization */}
+            {/* Decorative Background Elements */}
             <div className="absolute inset-0 z-0 overflow-hidden opacity-30 md:opacity-40">
                 <div className="absolute -top-1/4 left-0 w-72 h-72 md:w-96 md:h-96 bg-blue-200 rounded-full filter blur-3xl mix-blend-multiply animate-pulse-slow"></div>
                 <div className="absolute -bottom-1/4 right-0 w-72 h-72 md:w-96 md:h-96 bg-purple-200 rounded-full filter blur-3xl mix-blend-multiply animation-delay-2000 animate-pulse-slow"></div>
             </div>
 
-            {/* Container: z-index + mobile padding */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                {/* Grid Layout: Mobile gap optimization */}
+                {/* Main Content Grid Layout */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
-
                     {/* --- Left Column: Text Content --- */}
-                    {/* Mobile alignment + text size optimization */}
                     <motion.div
                         className="text-center lg:text-left"
                         variants={staggerContainer}
@@ -126,7 +134,7 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                             Enterprise Solutions & Consulting
                         </motion.div>
 
-                        {/* Headline: Mobile margin optimization */}
+                        {/* Headline */}
                         <motion.h1
                             variants={fadeInUp}
                             className="text-4xl sm:text-5xl xl:text-6xl font-bold leading-tight mb-5 md:mb-6 text-slate-800"
@@ -138,7 +146,7 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                             </span>
                         </motion.h1>
 
-                        {/* Subtitle: Mobile text size + margin optimization */}
+                        {/* Subtitle */}
                         <motion.p
                             variants={fadeInUp}
                             className="text-base sm:text-lg text-slate-600 mb-8 md:mb-10 max-w-xl mx-auto lg:mx-0"
@@ -147,12 +155,10 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                         </motion.p>
 
                         {/* --- CTAs --- */}
-                        {/* Mobile gap + button padding optimization */}
                         <motion.div
                             variants={fadeInUp}
-                            className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-3 sm:gap-4"
+                            className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-3 sm:gap-4 mb-12"
                         >
-                            {/* Buttons */}
                             <motion.button
                                 whileHover={{ scale: 1.03, y: -2, boxShadow: "0 12px 25px -8px rgba(99, 102, 241, 0.4)" }}
                                 whileTap={{ scale: 0.98, y: 0 }}
@@ -171,12 +177,43 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                                 Contact Us
                             </motion.button>
                         </motion.div>
+
+                        {/* Technology Partners - Single Prominent Section */}
+                        <motion.div
+                            variants={logoVariants}
+                            className="w-full bg-white/80 backdrop-blur-md rounded-xl shadow-sm p-5 border border-slate-200/50"
+                        >
+                            <p className="text-center lg:text-left text-slate-500 font-medium mb-4">Trusted Technology Partners</p>
+                            <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-6 sm:gap-10">
+                                <motion.div 
+                                    className="relative h-12 w-48"
+                                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                >
+                                    <Image 
+                                        src="/images/microsoft-logo.png" 
+                                        alt="Microsoft Partner" 
+                                        layout="fill" 
+                                        objectFit="contain"
+                                    />
+                                </motion.div>
+                                <motion.div 
+                                    className="relative h-12 w-40"
+                                    whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                                >
+                                    <Image 
+                                        src="/images/zoho-logo.png" 
+                                        alt="Zoho Partner" 
+                                        layout="fill" 
+                                        objectFit="contain"
+                                    />
+                                </motion.div>
+                            </div>
+                        </motion.div>
                     </motion.div>
 
                     {/* --- Right Column: Carousel --- */}
-                     {/* Mobile margin + height optimization */}
                     <div className="relative w-full mt-8 lg:mt-0 min-h-[520px] sm:min-h-[550px] md:min-h-[580px] flex items-center justify-center">
-                        {/* Navigation Buttons: Mobile padding + icon size optimization */}
+                        {/* Navigation Buttons */}
                         <motion.button
                             onClick={() => paginate(-1)}
                             aria-label="Previous Service"
@@ -194,7 +231,7 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                             <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                         </motion.button>
 
-                        {/* Carousel Inner Container: Mobile height optimization */}
+                        {/* Carousel Inner Container */}
                         <div className="w-full max-w-md sm:max-w-lg md:max-w-xl h-[480px] sm:h-[520px] md:h-[550px] overflow-hidden relative">
                             <AnimatePresence initial={false} custom={direction} mode="popLayout">
                                 <motion.div
@@ -216,7 +253,7 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                                 >
                                     {/* Card Content Wrapper */}
                                     <div className="w-full h-full bg-gradient-to-br from-white via-white to-slate-50/50 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-400 overflow-hidden flex flex-col border border-slate-200/60">
-                                        {/* Image Area: Mobile height optimization */}
+                                        {/* Image Area */}
                                         <div className="w-full h-[40%] sm:h-[45%] flex-shrink-0 relative overflow-hidden">
                                             <img
                                                 src={currentService.imagePath}
@@ -226,13 +263,11 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent"></div>
                                         </div>
-                                        {/* Text Area: Mobile padding + text size optimization */}
+                                        {/* Text Area */}
                                         <div className="flex-grow p-4 sm:p-6 md:p-8 flex flex-col justify-start overflow-y-auto custom-scrollbar">
-                                            {/* Card Title: Mobile text size optimization */}
                                             <h3 className="text-lg md:text-xl font-semibold text-slate-800 mb-2 sm:mb-3">
                                                 {currentService.title}
                                             </h3>
-                                            {/* Card Content: Mobile text size optimization */}
                                             <p className="text-sm md:text-base text-slate-600 leading-relaxed flex-grow">
                                                 {currentService.content}
                                             </p>
@@ -242,7 +277,7 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                             </AnimatePresence>
                         </div>
 
-                        {/* Progress Indicators: Mobile positioning optimization */}
+                        {/* Progress Indicators */}
                         <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2.5 z-20">
                             {serviceCards.map((_, index) => (
                                 <button
@@ -258,8 +293,9 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                     </div>
                 </div>
             </div>
-             {/* Global Styles: Remain the same */}
-             <style jsx global>{`
+            
+            {/* Global Styles */}
+            <style jsx global>{`
                 @keyframes pulse-slow {
                     0%, 100% { opacity: 0.4; transform: scale(1); }
                     50% { opacity: 0.6; transform: scale(1.05); }
@@ -287,9 +323,9 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                     border-radius: 20px;
                     border: 3px solid transparent; /* Creates padding around thumb */
                 }
-             `}</style>
+            `}</style>
         </section>
     );
 };
 
-export default EnhancedHeroPatternOptimized;
+export default EnhancedHeroWithPartners;
