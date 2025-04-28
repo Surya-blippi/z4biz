@@ -9,21 +9,21 @@ const serviceCards = [
         title: "Consulting Services",
         content: "We offer functional and domain consulting as well as advisory services on Dynamics 365 platforms. Our expert Solution Architects and Functional Consultants provide tailored guidance to help you maximize the value of your investment in Dynamics 365. With over 15 years of experience across complex, multi-country, and multi-entity implementations, our senior consultants bring unparalleled expertise to ensure successful outcomes.",
         imageAlt: "Enterprise Consulting Services",
-        imagePath: "/images/consulting-services.jpg"
+        imagePath: "/images/consulting-services.jpg" // Replace with your actual image path
     },
     {
         id: 2,
         title: "Industry Verticals and Product Development",
         content: "We enhance CRM platforms by delivering industry-specific vertical and horizontal solutions that automate end-to-end operational processes for businesses not fully aligned with standard enterprise ERP and CRM systems. Our vertical solutions for Dynamics 365 and Zoho CRM complement your existing investments, seamlessly integrating with your business applications to enforce industry best practices across all operational processes.",
         imageAlt: "Industry Solutions Development",
-        imagePath: "/images/industry-verticals.jpg"
+        imagePath: "/images/industry-verticals.jpg" // Replace with your actual image path
     },
     {
         id: 3,
         title: "ESG & Data Solutions",
         content: "Drive Sustainability and Data Excellence. Our solution 4Scope helps organizations simplify their ESG reporting while ensuring alignment with top frameworks like GRI, SASB, and IFRS. Paired with expert consulting, 4Scope empowers businesses to meet regulatory requirements and engage stakeholders effectively. Our solution 4Vue is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With 4Vue, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data.",
         imageAlt: "ESG and Data Analytics",
-        imagePath: "/images/esg-solutions.jpg"
+        imagePath: "/images/esg-solutions.jpg" // Replace with your actual image path
     }
 ];
 
@@ -71,10 +71,10 @@ const cardVariants = {
 // --- Component ---
 
 interface HeroProps {
+    // Assume scrollToSection exists elsewhere or adjust as needed
     scrollToSection: (id: string) => void;
 }
 
-// Renamed to reflect pattern + optimization
 const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) => {
     const [[activeIndex, direction], setActive] = useState([0, 0]);
 
@@ -156,7 +156,7 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                             <motion.button
                                 whileHover={{ scale: 1.03, y: -2, boxShadow: "0 12px 25px -8px rgba(99, 102, 241, 0.4)" }}
                                 whileTap={{ scale: 0.98, y: 0 }}
-                                onClick={() => scrollToSection('services')}
+                                onClick={() => scrollToSection('services')} // Assuming 'services' is the ID of your services section
                                 className="w-full sm:w-auto group px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2"
                             >
                                 <span>Explore Services</span>
@@ -165,16 +165,45 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                             <motion.button
                                 whileHover={{ scale: 1.03, y: -2, backgroundColor: 'rgba(255, 255, 255, 1)', borderColor: 'rgb(129 140 248)' }}
                                 whileTap={{ scale: 0.98, y: 0 }}
-                                onClick={() => scrollToSection('footer')}
+                                onClick={() => scrollToSection('footer')} // Assuming 'footer' is the ID of your contact/footer section
                                 className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 backdrop-blur-sm bg-white/80 text-blue-700 text-base font-semibold rounded-full border-2 border-blue-200/80 hover:border-indigo-300 transition-all duration-300 ease-in-out shadow-sm hover:shadow-md"
                             >
                                 Contact Us
                             </motion.button>
                         </motion.div>
+
+                        {/* --- Trusted Partners Section --- */}
+                        <motion.div
+                            variants={fadeInUp}
+                            className="mt-12 md:mt-16" // Increased margin top slightly for bigger logos
+                        >
+                            <p className="text-sm text-slate-500 mb-4 text-center lg:text-left font-medium">
+                                Trusted Technology Partners:
+                            </p>
+                            {/* Adjusted gap for potentially larger logos */}
+                            <div className="flex items-center justify-center lg:justify-start gap-8 sm:gap-10">
+                                {/* Microsoft Logo - INCREASED SIZE */}
+                                <img
+                                    src="/images/microsoft-logo.png" // !! REPLACE with actual path !!
+                                    alt="Microsoft Partner Logo"
+                                    className="h-14 sm:h-16 opacity-70 hover:opacity-100 transition-opacity duration-300" // Increased height significantly
+                                    loading="lazy"
+                                />
+                                {/* Zoho Logo - INCREASED SIZE */}
+                                <img
+                                    src="/images/zoho-logo.png" // !! REPLACE with actual path !!
+                                    alt="Zoho Partner Logo"
+                                    className="h-14 sm:h-16 opacity-70 hover:opacity-100 transition-opacity duration-300" // Increased height significantly (kept same as MS for consistency)
+                                    loading="lazy"
+                                />
+                            </div>
+                        </motion.div>
+                        {/* --- End Trusted Partners Section --- */}
+
                     </motion.div>
 
                     {/* --- Right Column: Carousel --- */}
-                     {/* Mobile margin + height optimization */}
+                    {/* Mobile margin + height optimization */}
                     <div className="relative w-full mt-8 lg:mt-0 min-h-[520px] sm:min-h-[550px] md:min-h-[580px] flex items-center justify-center">
                         {/* Navigation Buttons: Mobile padding + icon size optimization */}
                         <motion.button
@@ -293,3 +322,34 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
 };
 
 export default EnhancedHeroPatternOptimized;
+
+// --- Mock scrollToSection function for standalone testing/example ---
+// In a real app, this would likely be passed down via context or props
+// const mockScrollToSection = (id: string) => {
+//   console.log(`Scrolling to section: ${id}`);
+//   const element = document.getElementById(id);
+//   if (element) {
+//     element.scrollIntoView({ behavior: 'smooth' });
+//   }
+// };
+
+// --- Example Usage (if needed in a parent component) ---
+// const App = () => {
+//   const scrollToSection = (id: string) => {
+//     // Implementation for scrolling
+//     console.log(`App: Scrolling to ${id}`);
+//      const element = document.getElementById(id);
+//      if (element) {
+//        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+//      }
+//   };
+
+//   return (
+//     <div>
+//       <EnhancedHeroPatternOptimized scrollToSection={scrollToSection} />
+//       {/* Add other sections with corresponding IDs like 'services', 'footer' */}
+//       <div id="services" style={{ height: '100vh', background: 'lightgray' }}>Services Section</div>
+//       <div id="footer" style={{ height: '50vh', background: 'darkgray' }}>Footer/Contact Section</div>
+//     </div>
+//   );
+// }
