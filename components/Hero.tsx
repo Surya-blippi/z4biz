@@ -102,13 +102,14 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Main Content Grid - Mobile First */}
+                {/* Adjusted order classes for mobile-first text */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
-                    {/* Text Content Column */}
+                    {/* Text Content Column - Now order-1 by default */}
                     <motion.div
                         variants={staggerContainer}
                         initial="hidden"
                         animate="visible"
-                        className="order-2 lg:order-1"
+                        className="order-1 lg:order-1" // Changed: order-1 default, order-1 lg
                     >
                         <motion.div variants={fadeInUp} className="mb-5 sm:mb-6 text-center lg:text-left">
                             <span className="inline-block text-indigo-600 font-semibold text-base sm:text-lg mb-2">Enterprise Solutions & Consulting</span>
@@ -149,8 +150,8 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                         </motion.div>
                     </motion.div>
 
-                    {/* Service Card - Mobile Optimized */}
-                    <div className="order-1 lg:order-2 mb-8 lg:mb-0">
+                    {/* Service Card - Now order-2 by default */}
+                    <div className="order-2 lg:order-2 mb-8 lg:mb-0"> {/* Changed: order-2 default, order-2 lg */}
                         {/* Card Container - Relative position established here */}
                         <motion.div
                             className="relative mx-auto max-w-lg lg:max-w-none"
@@ -178,9 +179,9 @@ const MobileOptimizedHero: React.FC<HeroProps> = ({ scrollToSection }) => {
                                 </button>
                             </div>
 
-                            {/* Service Card - overflow-hidden removed from here to prevent clipping arrows */}
+                            {/* Service Card - overflow-hidden for rounded corners */}
                             <div
-                                className="relative bg-white rounded-2xl shadow-xl sm:shadow-2xl border border-indigo-50 overflow-hidden" // Added overflow-hidden back here for rounded corners
+                                className="relative bg-white rounded-2xl shadow-xl sm:shadow-2xl border border-indigo-50 overflow-hidden"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                                 onTouchStart={() => setIsHovered(true)}
