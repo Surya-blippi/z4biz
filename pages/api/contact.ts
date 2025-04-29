@@ -53,7 +53,7 @@ export default async function handler(
     const { data, error } = await resend.emails.send({
       from: `Z4BIZ Contact Form <${fromEmail}>`, // IMPORTANT: Use a verified domain in production!
       to: [toEmail], // Your receiving email address
-      reply_to: email, // Set the reply-to header to the user's email
+      replyTo: email, // Set the reply-to header to the user's email
       subject: emailSubject,
       html: emailHtmlBody,
     });
