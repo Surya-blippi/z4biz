@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import {
@@ -116,6 +116,34 @@ const itemVariants = {
 };
 
 const DataManagementPage: React.FC = () => {
+  // Function to handle smooth scrolling with offset
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Calculate header offset (navbar height + additional padding)
+      const headerOffset = 100; // Adjust this value based on your navbar height
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Add global smooth scrolling CSS
+  useEffect(() => {
+    // This ensures smoother scrolling for all hash links
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -224,6 +252,7 @@ const DataManagementPage: React.FC = () => {
                     <a
                       href="#etl-pipelines"
                       className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-medium rounded-lg shadow-lg hover:bg-indigo-50 transition-colors duration-300 group"
+                      onClick={(e) => handleSmoothScroll(e, 'etl-pipelines')}
                     >
                       Explore Our Solutions
                       <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
