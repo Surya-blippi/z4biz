@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRightIcon, ChevronLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid';
 
-// --- Data remains the same - Using ORIGINAL text ---
+// --- Data with UPDATED text (bold tags added) ---
 const serviceCards = [
     {
         id: 1,
         title: "Consulting Services",
-        content: "We offer functional and domain consulting as well as advisory services on Dynamics 365 platforms. Our expert Solution Architects and Functional Consultants provide tailored guidance to help you maximize the value of your investment in Dynamics 365. With over 15 years of experience across complex, multi-country, and multi-entity implementations, our senior consultants bring unparalleled expertise to ensure successful outcomes.",
+        content: "We offer functional and domain consulting as well as advisory services on <strong>Dynamics 365</strong> platforms. Our expert Solution Architects and Functional Consultants provide tailored guidance to help you maximize the value of your investment in <strong>Dynamics 365</strong>. With over 15 years of experience across complex, multi-country, and multi-entity implementations, our senior consultants bring unparalleled expertise to ensure successful outcomes.",
         imageAlt: "Enterprise Consulting Services",
         imagePath: "/images/consulting-services.jpg" // Replace with your actual image path
     },
     {
         id: 2,
         title: "Industry Verticals and Product Development",
-        content: "We enhance CRM platforms by delivering industry-specific vertical and horizontal solutions that automate end-to-end operational processes for businesses not fully aligned with standard enterprise ERP and CRM systems. Our vertical solutions for Dynamics 365 and Zoho CRM complement your existing investments, seamlessly integrating with your business applications to enforce industry best practices across all operational processes.",
+        content: "We enhance CRM platforms by delivering industry-specific vertical and horizontal solutions that automate end-to-end operational processes for businesses not fully aligned with standard enterprise ERP and CRM systems. Our vertical solutions for <strong>Dynamics 365</strong> and <strong>Zoho CRM</strong> complement your existing investments, seamlessly integrating with your business applications to enforce industry best practices across all operational processes.",
         imageAlt: "Industry Solutions Development",
         imagePath: "/images/industry-verticals.jpg" // Replace with your actual image path
     },
     {
         id: 3,
         title: "ESG & Data Solutions",
-        content: "Drive Sustainability and Data Excellence. Our solution 4Scope helps organizations simplify their ESG reporting while ensuring alignment with top frameworks like GRI, SASB, and IFRS. Paired with expert consulting, 4Scope empowers businesses to meet regulatory requirements and engage stakeholders effectively. Our solution 4Vue is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With 4Vue, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data.",
+        content: "Our solution <strong>4Vue</strong> is an AI-driven data engineering platform that streamlines data collection, transformation, and governance. With <strong>4Vue</strong>, businesses can connect multiple data sources, automate data pipelines, and derive actionable insights from their data. Our solution <strong>4Scope</strong> helps organizations simplify their ESG reporting while ensuring alignment with top frameworks like GRI, SASB, and IFRS. Paired with expert consulting, <strong>4Scope</strong> empowers businesses to meet regulatory requirements and engage stakeholders effectively.",
         imageAlt: "ESG and Data Analytics",
         imagePath: "/images/esg-solutions.jpg" // Replace with your actual image path
     }
@@ -262,8 +262,8 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
                                                 {currentService.title}
                                             </h3>
                                             {/* Card Content: Mobile text size optimization */}
-                                            <p className="text-sm md:text-base text-slate-600 leading-relaxed flex-grow">
-                                                {currentService.content}
+                                            <p className="text-sm md:text-base text-slate-600 leading-relaxed flex-grow"
+                                               dangerouslySetInnerHTML={{ __html: currentService.content }}>
                                             </p>
                                         </div>
                                     </div>
@@ -322,34 +322,3 @@ const EnhancedHeroPatternOptimized: React.FC<HeroProps> = ({ scrollToSection }) 
 };
 
 export default EnhancedHeroPatternOptimized;
-
-// --- Mock scrollToSection function for standalone testing/example ---
-// In a real app, this would likely be passed down via context or props
-// const mockScrollToSection = (id: string) => {
-//   console.log(`Scrolling to section: ${id}`);
-//   const element = document.getElementById(id);
-//   if (element) {
-//     element.scrollIntoView({ behavior: 'smooth' });
-//   }
-// };
-
-// --- Example Usage (if needed in a parent component) ---
-// const App = () => {
-//   const scrollToSection = (id: string) => {
-//     // Implementation for scrolling
-//     console.log(`App: Scrolling to ${id}`);
-//      const element = document.getElementById(id);
-//      if (element) {
-//        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-//      }
-//   };
-
-//   return (
-//     <div>
-//       <EnhancedHeroPatternOptimized scrollToSection={scrollToSection} />
-//       {/* Add other sections with corresponding IDs like 'services', 'footer' */}
-//       <div id="services" style={{ height: '100vh', background: 'lightgray' }}>Services Section</div>
-//       <div id="footer" style={{ height: '50vh', background: 'darkgray' }}>Footer/Contact Section</div>
-//     </div>
-//   );
-// }
