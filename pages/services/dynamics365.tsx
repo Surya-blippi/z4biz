@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import {
@@ -100,6 +100,34 @@ const itemVariants = {
 };
 
 const Dynamics365Page: React.FC = () => {
+  // Function to handle smooth scrolling with offset
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string): void => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Calculate header offset (navbar height + additional padding)
+      const headerOffset = 100; // Adjust this value based on your navbar height
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Add global smooth scrolling CSS
+  useEffect(() => {
+    // This ensures smoother scrolling for all hash links
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -112,7 +140,6 @@ const Dynamics365Page: React.FC = () => {
 
       <div className="flex flex-col min-h-screen relative overflow-hidden">
         {/* Global Background Colors and Decorations */}
-        {/* ... (keep background styles the same) ... */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white" />
           <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-100 to-transparent opacity-70" />
@@ -120,7 +147,6 @@ const Dynamics365Page: React.FC = () => {
         </div>
 
         {/* Animated blobs */}
-        {/* ... (keep animated blobs the same) ... */}
         <motion.div
           className="absolute top-20 left-20 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
@@ -137,14 +163,12 @@ const Dynamics365Page: React.FC = () => {
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* <ServiceNavigation /> REMOVED */}
-        <Navigation /> {/* ADDED */}
+        <Navigation />
 
         {/* Ensure main content has padding-top */}
         <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
-            {/* ... (keep hero section the same) ... */}
             <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
@@ -202,6 +226,7 @@ const Dynamics365Page: React.FC = () => {
                     <a
                       href="#finance-operations"
                       className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-medium rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group"
+                      onClick={(e) => handleSmoothScroll(e, 'finance-operations')}
                     >
                       Explore Our Solutions
                       <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
@@ -223,13 +248,12 @@ const Dynamics365Page: React.FC = () => {
             </motion.div>
 
             {/* D365 Offerings */}
-            {/* ... (keep offerings section the same) ... */}
-             <motion.div
+            <motion.div
               className="space-y-16"
               variants={containerVariants}
               initial="hidden"
-              animate="visible" // Changed from whileInView for immediate animation
-              viewport={{ once: true }} // Keep viewport for optimization if preferred
+              animate="visible"
+              viewport={{ once: true }}
             >
               {D365Offerings.map((offering, index) => (
                 <motion.div
