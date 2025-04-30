@@ -376,9 +376,9 @@ const ZEstateFacilityManagementPage: React.FC = () => {
                     className="relative group"
                   >
                     <a 
-                      href="#footer" 
+                      href="#footer-section" 
                       className="block text-center p-6 bg-gray-700 rounded-lg shadow-md group-hover:bg-gray-600 transition-colors duration-300 h-full"
-                      onClick={(e) => handleSmoothScroll(e, 'footer')}
+                      onClick={(e) => handleSmoothScroll(e, 'footer-section')}
                     >
                       <div className="flex flex-col items-center h-full">
                         <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-md">
@@ -412,7 +412,10 @@ const ZEstateFacilityManagementPage: React.FC = () => {
 
         </main>
 
-        <Footer id="footer" />
+        {/* Add a div wrapper with the ID instead of directly on the Footer component */}
+        <div id="footer-section">
+          <Footer />
+        </div>
       </div>
     </>
   );
