@@ -279,11 +279,36 @@ const Dynamics365Page: React.FC = () => {
                           </ul>
                         </div>
 
-                        {/* Conclusion */}
+                        {/* Conclusion - Modified to highlight specific parts of text */}
                         <div className="border-t border-blue-100 pt-6">
-                          <p className={`font-medium text-lg text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>
-                            {offering.conclusion}
-                          </p>
+                          <a 
+                            href="#footer" 
+                            className={`inline-flex items-center group font-medium text-lg`}
+                          >
+                            <span className={`text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient} group-hover:border-solid transition-all duration-300`}>
+                              {offering.id === "finance-operations" && (
+                                <><span className="font-bold underline">Let us help you</span> drive innovation, efficiency, and profitability with Dynamics 365 Finance and Operations.</>
+                              )}
+                              {offering.id === "business-central" && (
+                                <><span className="font-bold underline">Partner with us</span> to unlock the full potential of Dynamics 365 Business Central and drive digital transformation across your business.</>
+                              )}
+                              {offering.id === "ls-central" && (
+                                <><span className="font-bold underline">Let our Consultants take you through</span>, how you can use LS Retail to revolutionize your retail business.</>
+                              )}
+                              {offering.id === "crm" && (
+                                <><span className="font-bold underline">Leverage our expertise</span> to transform customer engagement, automate key processes, and drive business success with Dynamics 365 CRM.</>
+                              )}
+                            </span>
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className={`w-5 h-5 ml-1 transform group-hover:translate-x-1 transition-transform duration-300 text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`} 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              stroke="currentColor"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" transform="rotate(90 12 12)" />
+                            </svg>
+                          </a>
                         </div>
                       </div>
                     </div>

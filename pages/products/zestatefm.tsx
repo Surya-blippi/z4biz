@@ -321,12 +321,12 @@ const ZEstateFacilityManagementPage: React.FC = () => {
             </div>
           </section>
 
-          {/* Get Started Section (Keep Same) */}
+          {/* Get Started Section - MODIFIED to add hyperlinks */}
           <section id="get-started" className="py-16 md:py-24 bg-gray-800 text-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <motion.h2
                 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16"
-                 initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
@@ -335,7 +335,7 @@ const ZEstateFacilityManagementPage: React.FC = () => {
               </motion.h2>
               <motion.div
                 className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-16"
-                 variants={containerVariants}
+                variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
@@ -344,24 +344,38 @@ const ZEstateFacilityManagementPage: React.FC = () => {
                   <motion.div
                     key={step.title}
                     variants={itemVariants}
-                    className="text-center p-6 bg-gray-700 rounded-lg shadow-md hover:bg-gray-600 transition-colors duration-300 flex flex-col items-center"
+                    className="relative group"
                   >
-                    <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-md">
-                       <step.icon className="w-7 h-7 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                    <p className="text-gray-300 flex-grow">{step.description}</p>
+                    <a 
+                      href="#footer" 
+                      className="block text-center p-6 bg-gray-700 rounded-lg shadow-md group-hover:bg-gray-600 transition-colors duration-300 h-full"
+                    >
+                      <div className="flex flex-col items-center h-full">
+                        <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-md">
+                          <step.icon className="w-7 h-7 text-white" />
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2 underline font-bold">{step.title}</h3>
+                        <p className="text-gray-300 flex-grow">{step.description}</p>
+                        
+                        {/* Arrow indicator that appears on hover */}
+                        <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                          </svg>
+                        </div>
+                      </div>
+                    </a>
                   </motion.div>
                 ))}
               </motion.div>
               <motion.p
                 className="text-xl md:text-2xl font-semibold text-center text-cyan-300"
-                 initial={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
-                 "Z-Estate Facility Management – The Smarter Way to Manage Facilities" <LightBulbIcon className="inline-block w-6 h-6 ml-1"/>
+                "Z-Estate Facility Management – The Smarter Way to Manage Facilities" <LightBulbIcon className="inline-block w-6 h-6 ml-1"/>
               </motion.p>
             </div>
           </section>

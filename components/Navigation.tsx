@@ -42,7 +42,7 @@ const navItems: NavItem[] = [
   },
   {
     label: 'Resources',
-    href: '/resources',
+    href: '/#resources',
     subItems: [
       { label: 'News', href: '/news' },
       { label: 'Case Studies', href: '/case-studies' },
