@@ -91,7 +91,7 @@ const itemVariants = {
 
 const ExtendedITPage: React.FC = () => {
   // Function to handle smooth scrolling with offset
-  const handleSmoothScroll = (e, targetId) => {
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     const targetElement = document.getElementById(targetId);
     
