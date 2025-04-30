@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import {
@@ -90,6 +90,34 @@ const itemVariants = {
 };
 
 const ExtendedITPage: React.FC = () => {
+  // Function to handle smooth scrolling with offset
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Calculate header offset (navbar height + additional padding)
+      const headerOffset = 100; // Adjust this value based on your navbar height
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Add global smooth scrolling CSS
+  useEffect(() => {
+    // This ensures smoother scrolling for all hash links
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -197,6 +225,7 @@ const ExtendedITPage: React.FC = () => {
                     <a
                       href="#onshore"
                       className="inline-flex items-center px-6 py-3 bg-white text-cyan-600 font-medium rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group mr-4 mb-4 sm:mb-0" // Added margin-bottom for mobile stacking
+                      onClick={(e) => handleSmoothScroll(e, 'onshore')}
                     >
                       Onshore Teams
                       <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
@@ -204,6 +233,7 @@ const ExtendedITPage: React.FC = () => {
                     <a
                       href="#offshore"
                       className="inline-flex items-center px-6 py-3 bg-blue-900/30 text-white border border-white/30 backdrop-blur-sm font-medium rounded-lg shadow-lg hover:bg-blue-900/50 transition-colors duration-300 group mt-4 sm:mt-0"
+                      onClick={(e) => handleSmoothScroll(e, 'offshore')}
                     >
                       Offshore Teams
                       <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
