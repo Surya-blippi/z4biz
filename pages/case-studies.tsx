@@ -330,9 +330,9 @@ const CaseStudiesPage: React.FC = () => {
                 <Navigation />
 
                 <main className="flex-grow">
-                    {/* --- Hero Section --- */}
-                    <section className="relative py-24 md:py-32 bg-gradient-to-b from-indigo-900 to-indigo-700 text-white">
-                        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+                    {/* --- Hero Section --- UPDATED COLORS FOR BETTER NAVBAR VISIBILITY --- */}
+                    <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 bg-gradient-to-b from-blue-100 to-indigo-200 text-slate-800">
+                        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
                         <motion.div
                             className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center"
                             initial="hidden"
@@ -340,25 +340,25 @@ const CaseStudiesPage: React.FC = () => {
                             variants={staggerContainer}
                         >
                             <motion.div
-                                className="inline-block p-2 px-4 mb-6 rounded-full bg-indigo-600 bg-opacity-30 text-white text-sm font-medium"
+                                className="inline-block p-2 px-4 mb-6 rounded-full bg-indigo-500 text-white text-sm font-medium"
                                 variants={fadeInUp}
                             >
                                 Real-World Impact
                             </motion.div>
                             <motion.h1
-                                className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight tracking-tight"
+                                className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight tracking-tight text-indigo-900"
                                 variants={fadeInUp}
                             >
                                 Client Success Stories
                             </motion.h1>
                             <motion.p
-                                className="text-lg md:text-xl text-indigo-100 max-w-2xl mx-auto mb-8"
+                                className="text-lg md:text-xl text-indigo-700 max-w-2xl mx-auto mb-8"
                                 variants={fadeInUp}
                             >
                                 Discover how we partner with businesses to overcome challenges and achieve tangible results through innovative solutions.
                             </motion.p>
                             <motion.div variants={fadeInUp}>
-                                <a href="#case-studies" className="inline-flex items-center px-6 py-3 rounded-lg bg-white text-indigo-700 font-medium shadow-lg hover:shadow-xl transition-all duration-300">
+                                <a href="#case-studies" className="inline-flex items-center px-6 py-3 rounded-lg bg-indigo-600 text-white font-medium shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all duration-300">
                                     Explore Our Work
                                     <ArrowRightIcon className="ml-2 w-4 h-4" />
                                 </a>
@@ -765,7 +765,7 @@ const CaseStudiesPage: React.FC = () => {
                 <style jsx global>{`
                     html { scroll-behavior: smooth; }
                     .bg-grid-pattern {
-                        background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3C/g%3E%3C/svg%3E");
+                        background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23312e81' fill-opacity='0.1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3C/g%3E%3C/svg%3E");
                     }
                     @keyframes pulse-slow {
                         0%, 100% { opacity: 0.6; transform: scale(1); }
