@@ -19,7 +19,7 @@ const developmentTeams = [
   {
     id: "onshore",
     title: "Onshore Development Team",
-    description: "Z4BIC enhances your in-house capabilities by seamlessly integrating our skilled engineering, testing, and support specialists into your team. Our experts continuously refine their domain-specific expertise, ensuring smooth collaboration within your existing processes and methodologies. This cooperative model allows you to leverage our advanced R&D and engineering competencies while maximizing the synergy of our combined resources for optimal efficiency and innovation.",
+    description: "Z4BIZ enhances your in-house capabilities by seamlessly integrating our skilled engineering, testing, and support specialists into your team. Our experts continuously refine their domain-specific expertise, ensuring smooth collaboration within your existing processes and methodologies. This cooperative model allows you to leverage our advanced R&D and engineering competencies while maximizing the synergy of our combined resources for optimal efficiency and innovation.",
     icon: BuildingOfficeIcon,
     gradient: "from-cyan-500 to-blue-600",
     bgPattern: "radial-gradient(circle at 90% 10%, rgba(6, 182, 212, 0.1) 0%, transparent 60%)",
