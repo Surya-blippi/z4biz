@@ -9,7 +9,8 @@ import {
     HomeModernIcon, // Using for Hero or Masters
     ArrowRightIcon, // For CTA
     PuzzlePieceIcon, // For Modularity/Integration
-    DocumentCheckIcon // For Tenant App features
+    DocumentCheckIcon, // For Tenant App features
+    PhoneIcon // Added for Call CTA
 } from '@heroicons/react/24/solid';
 
 // Assuming these components exist
@@ -112,41 +113,48 @@ const ZEstateFinalRedesignPage: React.FC = () => {
 
                 <main className="flex-grow">
 
-                    {/* --- Hero Section --- */}
+                    {/* --- Hero Section --- UPDATED COLORS FOR BETTER NAVBAR VISIBILITY --- */}
                     <motion.section
-                        className="relative bg-gradient-to-br from-indigo-600 to-blue-500 text-white pt-28 pb-36 md:pt-36 md:pb-44 overflow-hidden"
+                        className="relative bg-gradient-to-br from-blue-100 to-indigo-200 text-slate-800 pt-32 pb-36 md:pt-40 md:pb-44 overflow-hidden"
                         initial="hidden"
                         animate="visible"
                         variants={fadeInUp} // Section uses simple fade-in
                     >
-                         <div className="absolute inset-0 opacity-[0.04]">
-                             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="heroGrid" patternUnits="userSpaceOnUse" width="30" height="30"><path d="M0 15h30 M15 0v30" stroke="white" strokeWidth="0.5" shapeRendering="crispEdges"/></pattern></defs><rect width="100%" height="100%" fill="url(#heroGrid)" /></svg>
+                         <div className="absolute inset-0 opacity-[0.06]">
+                             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="heroGrid" patternUnits="userSpaceOnUse" width="30" height="30"><path d="M0 15h30 M15 0v30" stroke="#312e81" strokeWidth="0.5" shapeRendering="crispEdges"/></pattern></defs><rect width="100%" height="100%" fill="url(#heroGrid)" /></svg>
                          </div>
 
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                             {/* Use helper for viewport trigger */}
                             <motion.div {...motionProps()}>
-                                <HomeModernIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto mb-5 text-indigo-200" />
+                                <HomeModernIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto mb-5 text-indigo-600" />
                             </motion.div>
                             <motion.h1
-                                className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4"
+                                className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 text-indigo-900"
                                 {...motionProps()}
                             >
                                 Boost Your Real Estate Business with Z-ESTATE
                             </motion.h1>
                             <motion.p
-                                className="text-lg md:text-xl lg:text-2xl text-indigo-100 max-w-3xl mx-auto mb-8"
+                                className="text-lg md:text-xl lg:text-2xl text-indigo-700 max-w-3xl mx-auto mb-8"
                                 {...motionProps()}
                             >
                                 The comprehensive, Zoho CRM-based solution to manage sales, leads, rentals, marketing, facilities, and more – effectively and efficiently.
                             </motion.p>
-                            <motion.div {...motionProps()}>
+                            <motion.div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6" {...motionProps()}>
                                 <a
                                     href="#features"
-                                    className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 transition duration-300 group"
+                                    className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 transition duration-300 group"
                                 >
                                     Explore Features
                                     <ArrowRightIcon className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                                </a>
+                                <a
+                                    href="#footer"
+                                    className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 group"
+                                >
+                                    <PhoneIcon className="mr-2 h-5 w-5" />
+                                    Book a Call Now
                                 </a>
                             </motion.div>
                         </div>
@@ -346,27 +354,22 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                         </div>
                     </section>
 
-                    {/* --- Final CTA Section REMOVED --- */}
-                    {/*
-                     <section className="bg-white">
+                    {/* --- Final CTA Section ADDED BACK WITH MODIFICATIONS --- */}
+                    <section className="bg-white">
                         <div className="max-w-4xl mx-auto py-16 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 lg:flex lg:items-center lg:justify-between">
                            <motion.h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl" {...motionProps()}>
                              <span className="block">Ready to Elevate Your Real Estate Operations?</span>
                              <span className="block text-indigo-600 mt-1">See Z-Estate in Action Today.</span>
                            </motion.h2>
                            <motion.div className="mt-6 space-y-4 sm:space-y-0 sm:flex sm:space-x-5 lg:mt-0 lg:ml-10 lg:flex-shrink-0" {...motionProps()}>
-                             <a href="#" // Replace with Demo link
+                             <a href="#footer" 
                                className="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md shadow text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300">
-                               Request a Demo
-                             </a>
-                             <a href="#" // Replace with Contact link
-                                className="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition duration-300">
-                               Contact Sales
+                               <PhoneIcon className="mr-2 h-5 w-5" />
+                               Book a Call Now
                              </a>
                            </motion.div>
                          </div>
                      </section>
-                    */}
 
                 </main>
 
