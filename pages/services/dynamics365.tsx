@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import {
@@ -6,10 +6,11 @@ import {
   BuildingStorefrontIcon,
   ShoppingBagIcon,
   UserGroupIcon,
-  ArrowRightIcon // Import ArrowRightIcon if not already (it is used later)
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
-import Navigation from '../../components/Navigation'; // Ensure this path is correct
-import Footer from '../../components/Footer'; // Ensure this path is correct
+// import ServiceNavigation from '../../components/ServiceNavigation'; // REMOVED
+import Navigation from '../../components/Navigation'; // ADDED
+import Footer from '../../components/Footer';
 
 const D365Offerings = [
   // ... (keep array content the same)
@@ -99,35 +100,6 @@ const itemVariants = {
 };
 
 const Dynamics365Page: React.FC = () => {
-  // Function to handle smooth scrolling with offset
-  // FIXED: Added types for 'e' and 'targetId'
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-
-    if (targetElement) {
-      // Calculate header offset (navbar height + additional padding)
-      const headerOffset = 100; // Adjust this value based on your navbar height
-      const elementPosition = targetElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  // Add global smooth scrolling CSS
-  useEffect(() => {
-    // This ensures smoother scrolling for all hash links
-    document.documentElement.style.scrollBehavior = 'smooth';
-
-    return () => {
-      document.documentElement.style.scrollBehavior = ''; // Cleanup on unmount
-    };
-  }, []);
-
   return (
     <>
       <Head>
@@ -136,35 +108,43 @@ const Dynamics365Page: React.FC = () => {
           name="description"
           content="Specialized consulting services for Microsoft Dynamics 365 implementation, customization, and optimization by Z4BIZ."
         />
-        {/* Consider adding canonical URL, Open Graph tags, etc. */}
       </Head>
 
-      <div className="flex flex-col min-h-screen relative overflow-hidden bg-gradient-to-b from-blue-50 to-white">
-        {/* Removed redundant background divs as the main div now has the gradient */}
+      <div className="flex flex-col min-h-screen relative overflow-hidden">
+        {/* Global Background Colors and Decorations */}
+        {/* ... (keep background styles the same) ... */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white" />
+          <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-blue-100 to-transparent opacity-70" />
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-indigo-100 to-transparent opacity-70" />
+        </div>
 
-        {/* Animated blobs - kept as is */}
+        {/* Animated blobs */}
+        {/* ... (keep animated blobs the same) ... */}
         <motion.div
-          className="absolute top-20 left-20 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 -z-10" // Added z-index
+          className="absolute top-20 left-20 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-1/3 right-32 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 -z-10" // Added z-index
+          className="absolute top-1/3 right-32 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [1.2, 1, 1.2], rotate: [90, 0, 90] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-20 left-1/4 w-80 h-80 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 -z-10" // Added z-index
+          className="absolute bottom-20 left-1/4 w-80 h-80 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{ scale: [0.8, 1, 0.8], rotate: [0, -90, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        <Navigation />
+        {/* <ServiceNavigation /> REMOVED */}
+        <Navigation /> {/* ADDED */}
 
         {/* Ensure main content has padding-top */}
         <main className="flex-grow relative z-10 pt-24 pb-16"> {/* pt-24 ensures content starts below Nav */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> {/* Adjusted padding for responsiveness */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-8">
             {/* Hero Section */}
+            {/* ... (keep hero section the same) ... */}
             <motion.div
               className="mb-16 rounded-3xl overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-xl"
               initial={{ opacity: 0, y: 20 }}
@@ -176,7 +156,8 @@ const Dynamics365Page: React.FC = () => {
                 <div className="absolute inset-0 opacity-10">
                   <div className="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full transform translate-x-1/3 -translate-y-1/2" />
                   <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/20 rounded-full transform -translate-x-1/3 translate-y-1/2" />
-                  {/* Grid pattern - Consider removing if too busy */}
+
+                  {/* Grid pattern */}
                   <div className="absolute inset-0 grid grid-cols-10 grid-rows-10">
                     {[...Array(100)].map((_, i) => (
                       <div key={i} className="border-t border-l border-white/5"></div>
@@ -220,8 +201,7 @@ const Dynamics365Page: React.FC = () => {
                   >
                     <a
                       href="#finance-operations"
-                      className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group text-base" // Changed font-medium to font-semibold, added text-base
-                      onClick={(e) => handleSmoothScroll(e, 'finance-operations')}
+                      className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-medium rounded-lg shadow-lg hover:bg-blue-50 transition-colors duration-300 group"
                     >
                       Explore Our Solutions
                       <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
@@ -230,11 +210,11 @@ const Dynamics365Page: React.FC = () => {
                 </div>
               </div>
 
-              {/* Wave Bottom Border - Adjusted fill color */}
-              <div className="h-16 bg-white relative -mb-px"> {/* Changed -mb-1 to -mb-px for better overlap */}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-px left-0 w-full h-auto"> {/* Added h-auto */}
+              {/* Wave Bottom Border */}
+              <div className="h-16 bg-white relative -mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="absolute -top-1 left-0 w-full">
                   <path
-                    fill="rgb(79 70 229 / 1)" // Match indigo-700 (end of gradient)
+                    fill="#4f46e5" // Match hero bg gradient end
                     fillOpacity="1"
                     d="M0,96L48,112C96,128,192,160,288,176C384,192,480,192,576,170.7C672,149,768,107,864,101.3C960,96,1056,128,1152,133.3C1248,139,1344,117,1392,106.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
                   ></path>
@@ -243,14 +223,15 @@ const Dynamics365Page: React.FC = () => {
             </motion.div>
 
             {/* D365 Offerings */}
-            <motion.div
+            {/* ... (keep offerings section the same) ... */}
+             <motion.div
               className="space-y-16"
               variants={containerVariants}
               initial="hidden"
-              whileInView="visible" // Animate when in view
-              viewport={{ once: true, amount: 0.2 }} // Trigger animation when 20% visible
+              animate="visible" // Changed from whileInView for immediate animation
+              viewport={{ once: true }} // Keep viewport for optimization if preferred
             >
-              {D365Offerings.map((offering) => ( // Removed index as key is offering.id
+              {D365Offerings.map((offering, index) => (
                 <motion.div
                   key={offering.id}
                   variants={itemVariants}
@@ -259,77 +240,74 @@ const Dynamics365Page: React.FC = () => {
                   style={{ background: `${offering.bgPattern}, white` }}
                 >
                   <div className="p-6 sm:p-8 md:p-10">
-                    <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8"> {/* Increased gap on medium screens */}
+                    <div className="flex flex-col md:flex-row md:items-start gap-6">
                       {/* Icon */}
-                      <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-br ${offering.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}> {/* Changed gradient direction */}
-                        <offering.icon className="w-8 h-8 text-white" aria-hidden="true" />
+                      <div className={`flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r ${offering.gradient} shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                        <offering.icon className="w-8 h-8 text-white" />
                       </div>
 
                       <div className="flex-grow">
                         {/* Title with gradient underline */}
                         <div className="relative mb-4 pb-2">
-                          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900"> {/* Darker text */}
+                          <h2 className="text-2xl sm:text-3xl font-bold text-blue-900">
                             {offering.title}
                           </h2>
-                          <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${offering.gradient} rounded-full group-hover:w-32 transition-all duration-500`}></div> {/* Added rounded-full */}
+                          <div className={`absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r ${offering.gradient} group-hover:w-32 transition-all duration-500`}></div>
                         </div>
 
                         {/* Description */}
-                        <p className="text-gray-700 mb-8 text-base sm:text-lg leading-relaxed"> {/* Slightly darker text */}
+                        <p className="text-blue-700/90 mb-8 text-base sm:text-lg leading-relaxed">
                           {offering.description}
                         </p>
 
                         {/* Features */}
-                        <div className="mb-8 bg-gradient-to-br from-white to-blue-50/30 rounded-xl p-6 border border-gray-100"> {/* Subtle gradient background + border */}
+                        <div className="mb-8 bg-blue-50/50 rounded-xl p-6">
                           <h3 className={`text-xl font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>
-                            Unlock Your Business Potential
+                            Unlock Your Business Potential with Our Expertise
                           </h3>
                           <ul className="space-y-4">
                             {offering.features.map((feature, idx) => (
                               <li key={idx} className="flex items-start">
-                                <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 bg-gradient-to-r ${offering.gradient} shadow-sm`}> {/* Added shadow */}
-                                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"> {/* Increased size slightly */}
+                                <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 bg-gradient-to-r ${offering.gradient}`}>
+                                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"></path>
                                   </svg>
                                 </div>
-                                <span className="text-gray-700">{feature}</span> {/* Adjusted text color */}
+                                <span className="text-blue-700/90">{feature}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
 
-                        {/* Conclusion Link */}
-                        <div className="border-t border-gray-200 pt-6"> {/* Slightly darker border */}
-                          <a
-                            href="#footer" // Points to footer ID
-                            onClick={(e) => handleSmoothScroll(e, 'footer')} // Use smooth scroll handler
-                            className="inline-flex items-center group font-medium text-lg text-gray-800 hover:text-gray-900 transition-colors duration-300" // Base text color
+                        {/* Conclusion - Modified to highlight specific parts of text */}
+                        <div className="border-t border-blue-100 pt-6">
+                          <a 
+                            href="#footer" 
+                            className={`inline-flex items-center group font-medium text-lg`}
                           >
-                            {/* Conditional Text Styling */}
-                            <span className="group-hover:underline decoration-2 underline-offset-4" style={{ textDecorationColor: 'transparent' }}> {/* Base span for hover underline */}
+                            <span className={`text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient} group-hover:border-solid transition-all duration-300`}>
                               {offering.id === "finance-operations" && (
-                                <>
-                                  <span className={`font-bold text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>Let us help you</span> drive innovation, efficiency, and profitability with Dynamics 365 Finance and Operations.
-                                </>
+                                <><span className="font-bold underline">Let us help you</span> drive innovation, efficiency, and profitability with Dynamics 365 Finance and Operations.</>
                               )}
                               {offering.id === "business-central" && (
-                                <>
-                                  <span className={`font-bold text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>Partner with us</span> to unlock the full potential of Dynamics 365 Business Central and drive digital transformation.
-                                </>
+                                <><span className="font-bold underline">Partner with us</span> to unlock the full potential of Dynamics 365 Business Central and drive digital transformation across your business.</>
                               )}
                               {offering.id === "ls-central" && (
-                                <>
-                                  <span className={`font-bold text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>Let our Consultants guide you</span> on how LS Retail can revolutionize your retail business.
-                                </>
+                                <><span className="font-bold underline">Let our Consultants take you through</span>, how you can use LS Retail to revolutionize your retail business.</>
                               )}
                               {offering.id === "crm" && (
-                                <>
-                                  <span className={`font-bold text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`}>Leverage our expertise</span> to transform customer engagement and drive success with Dynamics 365 CRM.
-                                </>
+                                <><span className="font-bold underline">Leverage our expertise</span> to transform customer engagement, automate key processes, and drive business success with Dynamics 365 CRM.</>
                               )}
                             </span>
-                             {/* Using Heroicon ArrowRightIcon for consistency */}
-                            <ArrowRightIcon className={`w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300 text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`} />
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className={`w-5 h-5 ml-1 transform group-hover:translate-x-1 transition-transform duration-300 text-transparent bg-clip-text bg-gradient-to-r ${offering.gradient}`} 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              stroke="currentColor"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" transform="rotate(90 12 12)" />
+                            </svg>
                           </a>
                         </div>
                       </div>
@@ -341,7 +319,7 @@ const Dynamics365Page: React.FC = () => {
           </div>
         </main>
 
-        <Footer id="footer" /> {/* Added id="footer" to the Footer component */}
+        <Footer />
       </div>
     </>
   );
