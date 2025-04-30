@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import {
@@ -105,6 +105,34 @@ const itemVariants = {
 };
 
 const ZEstateFacilityManagementPage: React.FC = () => {
+  // Function to handle smooth scrolling with offset
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      // Calculate header offset (navbar height + additional padding)
+      const headerOffset = 100; // Adjust this value based on your navbar height
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Add global smooth scrolling CSS
+  useEffect(() => {
+    // This ensures smoother scrolling for all hash links
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+
   return (
     <>
       <Head>
@@ -156,10 +184,11 @@ const ZEstateFacilityManagementPage: React.FC = () => {
                   Z-Estate Facility management Solution: An all-in-one solution to streamline, automate, and optimize facility management processes. Built on Zoho CRM, designed for scalability and flexibility.
                 </p>
                 <motion.a
-                  href="#get-started" // Link to the get started section
+                  href="#key-benefits" // Updated to link to the key benefits section
                   className="inline-flex items-center px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-blue-50 transition duration-300 group"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={(e) => handleSmoothScroll(e, 'key-benefits')}
                 >
                   Learn More
                   <ArrowRightIcon className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -171,7 +200,7 @@ const ZEstateFacilityManagementPage: React.FC = () => {
 
 
           {/* Key Benefits Section (Keep Same) */}
-          <section className="py-16 md:py-24 bg-white">
+          <section id="key-benefits" className="py-16 md:py-24 bg-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <motion.h2
                 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12 md:mb-16"
@@ -349,6 +378,7 @@ const ZEstateFacilityManagementPage: React.FC = () => {
                     <a 
                       href="#footer" 
                       className="block text-center p-6 bg-gray-700 rounded-lg shadow-md group-hover:bg-gray-600 transition-colors duration-300 h-full"
+                      onClick={(e) => handleSmoothScroll(e, 'footer')}
                     >
                       <div className="flex flex-col items-center h-full">
                         <div className="mb-4 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-md">
@@ -382,7 +412,7 @@ const ZEstateFacilityManagementPage: React.FC = () => {
 
         </main>
 
-        <Footer />
+        <Footer id="footer" />
       </div>
     </>
   );
