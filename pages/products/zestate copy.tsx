@@ -253,6 +253,40 @@ const ZEstateFinalRedesignPage: React.FC = () => {
                         </div>
                     </section>
 
+                    {/* --- Process Flow (Figure 2) Section --- */}
+                     <section className="py-20 md:py-28 bg-slate-50">
+                        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                             <motion.div
+                                className="max-w-3xl mx-auto text-center mb-16 md:mb-20"
+                                {...motionContainerProps()}
+                            >
+                                <motion.h2 className="text-base font-semibold text-blue-600 tracking-wide uppercase" variants={fadeInUp}>
+                                    Integrated Workflow
+                                </motion.h2>
+                                <motion.p className="mt-2 text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight" variants={fadeInUp}>
+                                    See the Seamless Flow in Action
+                                </motion.p>
+                                <motion.p className="mt-4 max-w-2xl mx-auto text-xl text-slate-500" variants={fadeInUp}>
+                                    Z-Estate connects critical functions and processes implemented for our customers, ensuring smooth operations.
+                                </motion.p>
+                             </motion.div>
+
+                             {/* CORRECTED: Using motionProps helper with scaleUp */}
+                             <motion.div className="max-w-6xl mx-auto" {...motionProps(scaleUp)}>
+                                 <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-xl border border-slate-200">
+                                    <Image
+                                        src="/images/zestate-figure-2.png" // ADJUST PATH & DIMENSIONS
+                                        alt="Figure 2: Z-Estate High-Level Process Flow"
+                                        width={1800}
+                                        height={1013}
+                                        className="rounded-lg"
+                                    />
+                                 </div>
+                                 <p className="text-sm text-slate-500 mt-4 text-center">Figure 2: High-Level Process Flow</p>
+                             </motion.div>
+                        </div>
+                    </section>
+
                     {/* --- Tenant App Section --- */}
                     <section className="py-20 md:py-28 bg-gradient-to-br from-slate-800 to-gray-900 text-white relative overflow-hidden">
                         {/* ... background elements ... */}
